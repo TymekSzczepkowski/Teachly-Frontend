@@ -1,19 +1,20 @@
-import React from "react";
-
+import React, { useState } from "react";
+import UserDetails from "./UserDetails";
 function Register() {
+  const [state, setState] = useState({
+    step: 1,
+    email: "",
+    password: "",
+    repeatpassword: "",
+    firstName: "",
+    lastName: "",
+    country: "",
+    city: "",
+  });
+
   return (
     <div>
-      <div>
-        <div>
-          <h1>Zarejestruj się</h1>
-        </div>
-        <div>
-          <input placeholder='Podaj email'></input>
-        </div>
-        <div>
-          <button>Dalej</button>
-        </div>
-      </div>
+      <UserDetails></UserDetails>
     </div>
   );
 }
