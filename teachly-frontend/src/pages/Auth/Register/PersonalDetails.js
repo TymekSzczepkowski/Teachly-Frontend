@@ -1,9 +1,19 @@
 import React from "react";
 
-function UserDetails() {
+function PersonalDetails({ nextStep, previousStep,step}) {
+  const Continue = (e) => {
+    e.preventDefault();
+    nextStep();
+  };
+
+  const Previous = (e) => {
+    e.preventDefault();
+    previousStep();
+  };
   return (
     <div>
       <div>
+      <div>Krok {step}-4</div>
         <div>Załóż konto</div>
         <form>
           <div>
@@ -22,8 +32,8 @@ function UserDetails() {
             <input placeholder='Miasto'></input>
           </div>
           <div>
-            <button>Kontynuuj</button>
-            <button>Powrót</button>
+            <button onClick={Previous}>Powrót</button>
+            <button onClick={Continue}>Kontynuuj</button>
           </div>
         </form>
       </div>
@@ -31,4 +41,4 @@ function UserDetails() {
   );
 }
 
-export default UserDetails;
+export default PersonalDetails;
