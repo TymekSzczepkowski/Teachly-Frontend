@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   TextField,
   ToggleButtonGroup,
   ToggleButton,
   Grid,
+  IconButton,
+  InputAdornment,
 } from "@mui/material/";
 
 function UserDetails({ state, setState }) {
-  const [alignment, setAlignment] = React.useState("Uczeń");
+  const [alignment, setAlignment] = useState("Uczeń");
+  const [showPassword, setShowPassword] = useState(true);
+
   const handleChange = (e, newAlignment) => {
     e.preventDefault();
     setAlignment(newAlignment);
     setState({ ...state, profileType: e.target.value });
   };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       <ToggleButtonGroup
@@ -43,11 +57,23 @@ function UserDetails({ state, setState }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}>
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             fullWidth
             variant='standard'
             label='Hasło'
             value={state.password}
-            type='password'
+            type={showPassword ? "password" : "text"}
             onChange={(e) => {
               setState({ ...state, password: e.target.value });
             }}
@@ -55,11 +81,24 @@ function UserDetails({ state, setState }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  {" "}
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}>
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             fullWidth
             variant='standard'
             label='Powtórz hasło'
             value={state.repeatPassword}
-            type='password'
+            type={showPassword ? "password" : "text"}
             onChange={(e) => {
               setState({ ...state, repeatPassword: e.target.value });
             }}

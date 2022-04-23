@@ -103,6 +103,9 @@ function PersonalDetails({ state, setState }) {
         <Grid item xs={12}>
           <label>
             <Input
+              onChange={(event) => {
+                setState({ ...state, image: event.target.files[0] });
+              }}
               accept='image/*'
               multiple
               type='file'

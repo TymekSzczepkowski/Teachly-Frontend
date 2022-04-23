@@ -12,6 +12,8 @@ import {
   Step,
   StepLabel,
   Stack,
+  Link,
+  Box,
 } from "@mui/material/";
 
 import Success from "./Success";
@@ -25,6 +27,7 @@ function Register() {
     firstName: "",
     secondName: "",
     gender: "",
+    iamge: "",
     country: "",
     region: "",
     city: "",
@@ -37,30 +40,31 @@ function Register() {
     setStep(step + 1);
   };
 
-  const profileTypeVerifier = () => {
-    if (state.profileType === "") {
-      console.log("Proszę wybrać typ profilu");
-      return false;
-    }
-  };
-
   const emailVerifier = emailVerification(state);
 
   const passwordVerifier = () => {
-    if (state.password === "") console.log("Proszę wpisać hasło");
-    else if (state.repeatPassword === "")
+    if (state.password === "") {
+      console.log("Proszę wpisać hasło");
+      return false;
+    } else if (state.repeatPassword === "") {
       console.log("Proszę wpisać powtórzenie hasła");
-    else if (state.password !== state.repeatPassword) {
+      return false;
+    } else if (state.password !== state.repeatPassword) {
       console.log("\nHasło nie pasuje: Spróbuj ponownie...");
       return false;
-    } else {
-      nextStep();
     }
   };
 
   const dataVerifier = () => {
-    if (state.firstName === "" || state.secondName === "", state.gender === "", state.country === "", state.region === "", state.city === "") console.log("Proszę uzupełnić dane") 
-  }
+    if (
+      (state.firstName === "" || state.secondName === "",
+      state.gender === "",
+      state.country === "",
+      state.region === "",
+      state.city === "")
+    )
+      console.log("Proszę uzupełnić dane");
+  };
 
   function getStepContent(step) {
     switch (step) {
@@ -115,10 +119,11 @@ function Register() {
           ))}
         </Stepper>
         {getStepContent(step)}
-        <Stack direction='row' spacing={2} sx={{ my: 4 }}>
+        <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
           {step !== 1 && (
             <Button
               fullWidth
+              color='inherit'
               variant='text'
               onClick={() => {
                 previousStep();
@@ -131,14 +136,28 @@ function Register() {
             variant='contained'
             onClick={(e) => {
               e.preventDefault();
-              nextStep();
-              // profileTypeVerifier();
               // emailVerifier();
               // passwordVerifier();
+              if (step === 1) {
+                if (emailVerifier() && passwordVerifier()) {
+                  nextStep();
+                }
+              }
             }}>
             Kontynuuj
           </Button>
         </Stack>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}>
+          {step === 1 && (
+            <Link href='/login' variant='body2'>
+              Masz już konto? Zaloguj się
+            </Link>
+          )}
+        </Box>
       </Paper>
     </Container>
   );
