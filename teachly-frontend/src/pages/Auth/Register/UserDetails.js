@@ -1,26 +1,28 @@
 import React from "react";
+import emailVerification from "../../../hooks/Auth/emailVerification";
 
-function UserDetails({ nextStep, step }) {
-  const [userDetails, setUserDetails] = [
-    {
-      email: "",
-      password: "",
-      repeatpassword: "",
-    },
-  ];
-  const Continue = (e) => {
-    e.preventDefault();
-    nextStep();
-  };
-  const passwordVerifier = () => {
-    if (userDetails.password == "") alert("Please enter Password");
-    else if (userDetails.repeatpassword == "")
-      alert("Please enter confirm password");
-    else if (userDetails.password != userDetails.repeatpassword) {
-      alert("\nPassword did not match: Please try again...");
+function UserDetails({ nextStep, step, state, setState }) {
+  const profileTypeVerifier = () => {
+    if (state.profileType === "") {
+      console.log("Please choose profile type");
       return false;
     }
   };
+
+  const emailVerifier = emailVerification(state);
+
+  const passwordVerifier = () => {
+    if (state.password === "") console.log("Please enter Password");
+    else if (state.repeatPassword === "")
+      console.log("Please enter confirm password");
+    else if (state.password !== state.repeatPassword) {
+      console.log("\nPassword did not match: Please try again...");
+      return false;
+    } else {
+      nextStep();
+    }
+  };
+
   return (
     <div>
       <div>
@@ -28,31 +30,63 @@ function UserDetails({ nextStep, step }) {
         <div>Załóż konto</div>
         <form>
           <div>
+            <label>
+              <input
+                type='radio'
+                name='profileType'
+                onChange={() => {
+                  setState({ ...state, profileType: "Uczeń" });
+                }}
+              />
+              Uczeń
+            </label>
+            <label>
+              <input
+                type='radio'
+                name='profileType'
+                onChange={() => {
+                  setState({ ...state, profileType: "Korepetytor" });
+                }}
+              />
+              Korepetytor
+            </label>
+          </div>
+          <div>
             <input
               placeholder='Adres email'
+              value={state.email}
               onChange={(e) => {
-                setUserDetails({ ...userDetails, email: e.target.value });
+                setState({ ...state, email: e.target.value });
               }}></input>
           </div>
           <div>
             <input
               placeholder='Hasło'
+              value={state.password}
+              type='password'
               onChange={(e) => {
-                setUserDetails({ ...userDetails, password: e.target.value });
+                setState({ ...state, password: e.target.value });
               }}></input>
           </div>
           <div>
             <input
               placeholder='Powtórz hasło'
+              value={state.repeatPassword}
+              type='password'
               onChange={(e) => {
-                setUserDetails({
-                  ...userDetails,
-                  repeatpassword: e.target.value,
-                });
+                setState({ ...state, repeatPassword: e.target.value });
               }}></input>
           </div>
           <div>
-            <button onClick={Continue}>Kontynuuj</button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                profileTypeVerifier();
+                emailVerifier();
+                passwordVerifier();
+              }}>
+              Kontynuuj
+            </button>
           </div>
         </form>
       </div>
