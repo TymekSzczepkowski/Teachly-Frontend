@@ -1,5 +1,5 @@
 import React from "react";
-import imageUrl from "./data/guy.jpeg";
+import MailIcon from "@mui/icons-material/Mail";
 import SchoolIcon from "@mui/icons-material/School";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
@@ -21,6 +21,18 @@ function Confirmation({ state }) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={6}>
+        <Card>
+          <CardActionArea>
+            <CardMedia
+              component='img'
+              height='380'
+              image={URL.createObjectURL(state.image)}
+              alt='guy'
+            />
+          </CardActionArea>
+        </Card>
+      </Grid>
+      <Grid item xs={12} sm={6}>
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
           <ListItem>
@@ -37,6 +49,14 @@ function Confirmation({ state }) {
           <ListItem>
             <ListItemAvatar>
               <Avatar>
+                <MailIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='Adres email' secondary={state.email} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
                 <SchoolIcon />
               </Avatar>
             </ListItemAvatar>
@@ -45,14 +65,14 @@ function Confirmation({ state }) {
           <ListItem>
             <ListItemAvatar>
               <Avatar>
-                {state.gender === "Kobieta" ? (
+                {state.sex === "Kobieta" ? (
                   <FemaleOutlinedIcon />
                 ) : (
                   <MaleOutlinedIcon />
                 )}
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary='Płeć' secondary={state.gender} />
+            <ListItemText primary='Płeć' secondary={state.sex} />
           </ListItem>
           <ListItem>
             <ListItemAvatar>
@@ -66,18 +86,6 @@ function Confirmation({ state }) {
             />
           </ListItem>
         </List>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Card>
-          <CardActionArea>
-            <CardMedia
-              component='img'
-              height='310'
-              image={URL.createObjectURL(state.image)}
-              alt='guy'
-            />
-          </CardActionArea>
-        </Card>
       </Grid>
     </Grid>
   );

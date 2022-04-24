@@ -8,16 +8,27 @@ import {
   Grid,
   IconButton,
   InputAdornment,
+  Alert,
 } from "@mui/material/";
 
-function UserDetails({ state, setState }) {
-  const [alignment, setAlignment] = useState("Uczeń");
+function UserDetails({
+  state,
+  setState,
+  alignment,
+  setAlignment,
+  errorInfo,
+  setErrorInfo,
+}) {
   const [showPassword, setShowPassword] = useState(true);
 
   const handleChange = (e, newAlignment) => {
     e.preventDefault();
     setAlignment(newAlignment);
     setState({ ...state, profileType: e.target.value });
+    setErrorInfo({
+      ...errorInfo,
+      profileTypeError: "",
+    });
   };
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -43,9 +54,14 @@ function UserDetails({ state, setState }) {
           Korepetytor
         </ToggleButton>
       </ToggleButtonGroup>
+      {errorInfo.profileTypeError !== "" && (
+        <Alert severity='error'>{errorInfo.profileTypeError}</Alert>
+      )}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
+            error={errorInfo.emailError === "" ? false : true}
+            helperText={errorInfo.emailError}
             fullWidth
             variant='standard'
             label='E-mail'
@@ -69,6 +85,8 @@ function UserDetails({ state, setState }) {
                 </InputAdornment>
               ),
             }}
+            error={errorInfo.passwordError === "" ? false : true}
+            helperText={errorInfo.passwordError}
             fullWidth
             variant='standard'
             label='Hasło'
@@ -94,6 +112,8 @@ function UserDetails({ state, setState }) {
                 </InputAdornment>
               ),
             }}
+            error={errorInfo.repeatPasswordError === "" ? false : true}
+            helperText={errorInfo.repeatPasswordError}
             fullWidth
             variant='standard'
             label='Powtórz hasło'

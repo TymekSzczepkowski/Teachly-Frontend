@@ -18,20 +18,30 @@ import {
 
 import Success from "./Success";
 function Register() {
+  const [alignment, setAlignment] = useState("");
   const [step, setStep] = useState(1);
   const [state, setState] = useState({
-    profileType: "Uczeń",
+    profileType: "",
     email: "",
     password: "",
     repeatPassword: "",
     firstName: "",
-    secondName: "",
-    gender: "",
-    iamge: "",
+    lastName: "",
+    sex: "",
+    image: "",
     country: "",
     region: "",
     city: "",
   });
+  const [errorInfo, setErrorInfo] = useState({
+    profileTypeError: "",
+    emailError: "",
+    passwordError: "",
+    repeatPasswordError: "",
+    detailsError: "",
+  });
+
+  const toBigLetter = (word) => {};
 
   const previousStep = () => {
     setStep(step - 1);
@@ -40,30 +50,80 @@ function Register() {
     setStep(step + 1);
   };
 
-  const emailVerifier = emailVerification(state);
+  const emailVerifier = emailVerification(state, errorInfo, setErrorInfo);
 
-  const passwordVerifier = () => {
-    if (state.password === "") {
-      console.log("Proszę wpisać hasło");
+  const profileTypeVerifier = () => {
+    if (alignment === "") {
+      setErrorInfo({
+        ...errorInfo,
+        profileTypeError: "Proszę wybrać typ profilu",
+      });
       return false;
-    } else if (state.repeatPassword === "") {
-      console.log("Proszę wpisać powtórzenie hasła");
-      return false;
-    } else if (state.password !== state.repeatPassword) {
-      console.log("\nHasło nie pasuje: Spróbuj ponownie...");
-      return false;
+    } else {
+      return true;
     }
   };
+  const passwordVerifier = () => {
+    if (state.password === "") {
+      setErrorInfo({ ...errorInfo, passwordError: "Proszę wpisać hasło" });
+      return false;
+    } else if (state.repeatPassword === "") {
+      setErrorInfo({
+        ...errorInfo,
+        repeatPasswordError: "Powtórz hasło",
+      });
+      return false;
+    } else if (state.password !== state.repeatPassword) {
+      setErrorInfo({
+        ...errorInfo,
+        passwordError: "Hasła nie są takie same",
+      });
+      return false;
+    } else
+      setErrorInfo({
+        ...errorInfo,
+        repeatPasswordError: "",
+        passwordError: "",
+      });
+    return true;
+  };
 
-  const dataVerifier = () => {
+  const detailsVerifier = () => {
     if (
-      (state.firstName === "" || state.secondName === "",
-      state.gender === "",
-      state.country === "",
-      state.region === "",
-      state.city === "")
-    )
-      console.log("Proszę uzupełnić dane");
+      state.firstName === "" ||
+      state.lastName === "" ||
+      state.sex === "" ||
+      state.country === "" ||
+      state.region === "" ||
+      state.city === "" ||
+      state.image === ""
+    ) {
+      setErrorInfo({
+        ...errorInfo,
+        detailsError: "Wszystkie pola muszą zostać wypełnione",
+      });
+      return false;
+    } else
+      setErrorInfo({
+        ...errorInfo,
+        detailsError: "",
+      });
+    return true;
+  };
+
+  const conutineHandler = () => {
+    if (step === 1) {
+      if (profileTypeVerifier() && emailVerifier() && passwordVerifier()) {
+        nextStep();
+      }
+    } else if (step === 2) {
+      if (detailsVerifier()) {
+        nextStep();
+      }
+    } else if (step === 3) {
+      //send to backend
+      nextStep();
+    }
   };
 
   function getStepContent(step) {
@@ -75,6 +135,10 @@ function Register() {
             state={state}
             setState={setState}
             step={step}
+            alignment={alignment}
+            setAlignment={setAlignment}
+            errorInfo={errorInfo}
+            setErrorInfo={setErrorInfo}
           />
         );
       case 2:
@@ -85,6 +149,8 @@ function Register() {
             setState={setState}
             state={state}
             step={step}
+            errorInfo={errorInfo}
+            setErrorInfo={setErrorInfo}
           />
         );
       case 3:
@@ -136,13 +202,7 @@ function Register() {
             variant='contained'
             onClick={(e) => {
               e.preventDefault();
-              // emailVerifier();
-              // passwordVerifier();
-              if (step === 1) {
-                if (emailVerifier() && passwordVerifier()) {
-                  nextStep();
-                }
-              }
+              conutineHandler();
             }}>
             Kontynuuj
           </Button>

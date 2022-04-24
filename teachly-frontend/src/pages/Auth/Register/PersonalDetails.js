@@ -12,9 +12,11 @@ import {
   Select,
   MenuItem,
   Autocomplete,
+  Alert,
 } from "@mui/material/";
 
-function PersonalDetails({ state, setState }) {
+function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
+  const [alertOpen, setAlertOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedRegion, setSelectedRegion] = useState(null);
@@ -26,6 +28,11 @@ function PersonalDetails({ state, setState }) {
   return (
     <div>
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+          {errorInfo.detailsError !== "" && (
+            <Alert severity='error'>{errorInfo.detailsError}</Alert>
+          )}
+        </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
@@ -52,7 +59,7 @@ function PersonalDetails({ state, setState }) {
           <FormControl variant='standard' fullWidth>
             <InputLabel>Płeć</InputLabel>
             <Select
-              onChange={(e) => setState({ ...state, gender: e.target.value })}>
+              onChange={(e) => setState({ ...state, sex: e.target.value })}>
               <MenuItem value='Mężczyzna'>Mężczyzna</MenuItem>
               <MenuItem value='Kobieta'>Kobieta</MenuItem>
             </Select>
@@ -105,8 +112,9 @@ function PersonalDetails({ state, setState }) {
             <Input
               onChange={(event) => {
                 setState({ ...state, image: event.target.files[0] });
+                setAlertOpen(true);
               }}
-              accept='image/*'
+              accept='image/png, image/jpeg"'
               multiple
               type='file'
               sx={{ display: "none" }}
@@ -115,6 +123,15 @@ function PersonalDetails({ state, setState }) {
               Upload your photo
             </Button>
           </label>
+          {alertOpen && (
+            <Alert
+              onClose={() => {
+                setAlertOpen(false);
+              }}
+              severity={"success"}>
+              Zdjęcie załadowane pomyślnie.
+            </Alert>
+          )}
         </Grid>
       </Grid>
     </div>

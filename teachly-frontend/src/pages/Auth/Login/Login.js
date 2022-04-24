@@ -6,6 +6,8 @@ import {
   Grid,
   TextField,
   Button,
+  Box, 
+  Link
 } from "@mui/material/";
 
 function Login() {
@@ -36,6 +38,15 @@ function Login() {
             </Button>
           </Grid>
         </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}>
+          <Link href='/register' variant='body2'>
+            Nie posiadasz konta? Zarejestruj się
+          </Link>
+        </Box>
       </Paper>
     </Container>
   );
