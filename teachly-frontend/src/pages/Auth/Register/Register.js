@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
+import registerVerification from "../../../hooks/Auth/registerVerification";
 import emailVerification from "../../../hooks/Auth/emailVerification";
 import {
   Container,
@@ -40,8 +41,9 @@ function Register() {
     repeatPasswordError: "",
     detailsError: "",
   });
-
-  const toBigLetter = (word) => {};
+  const emailVerifier = emailVerification(state, errorInfo, setErrorInfo);
+  const { profileTypeVerifier, passwordVerifier, detailsVerifier } =
+    registerVerification(alignment, setErrorInfo, errorInfo, state);
 
   const previousStep = () => {
     setStep(step - 1);
@@ -50,79 +52,30 @@ function Register() {
     setStep(step + 1);
   };
 
-  const emailVerifier = emailVerification(state, errorInfo, setErrorInfo);
-
-  const profileTypeVerifier = () => {
-    if (alignment === "") {
-      setErrorInfo({
-        ...errorInfo,
-        profileTypeError: "Proszę wybrać typ profilu",
-      });
-      return false;
-    } else {
-      return true;
-    }
-  };
-  const passwordVerifier = () => {
-    if (state.password === "") {
-      setErrorInfo({ ...errorInfo, passwordError: "Proszę wpisać hasło" });
-      return false;
-    } else if (state.repeatPassword === "") {
-      setErrorInfo({
-        ...errorInfo,
-        repeatPasswordError: "Powtórz hasło",
-      });
-      return false;
-    } else if (state.password !== state.repeatPassword) {
-      setErrorInfo({
-        ...errorInfo,
-        passwordError: "Hasła nie są takie same",
-      });
-      return false;
-    } else
-      setErrorInfo({
-        ...errorInfo,
-        repeatPasswordError: "",
-        passwordError: "",
-      });
-    return true;
+  const toBigLetter = (word) => {
+    word = word[0].toUpperCase() + word.slice(1);
+    return word;
   };
 
-  const detailsVerifier = () => {
-    if (
-      state.firstName === "" ||
-      state.lastName === "" ||
-      state.sex === "" ||
-      state.country === "" ||
-      state.region === "" ||
-      state.city === "" ||
-      state.image === ""
-    ) {
-      setErrorInfo({
-        ...errorInfo,
-        detailsError: "Wszystkie pola muszą zostać wypełnione",
-      });
-      return false;
-    } else
-      setErrorInfo({
-        ...errorInfo,
-        detailsError: "",
-      });
-    return true;
-  };
-
-  const conutineHandler = () => {
+  const continueHandler = () => {
     if (step === 1) {
       if (profileTypeVerifier() && emailVerifier() && passwordVerifier()) {
         nextStep();
       }
     } else if (step === 2) {
       if (detailsVerifier()) {
+        setState({
+          ...state,
+          firstName: toBigLetter(state.firstName),
+          lastName: toBigLetter(state.lastName),
+        });
         nextStep();
       }
     } else if (step === 3) {
       //send to backend
       nextStep();
+    } else if (step === 4) {
+      //mailing
     }
   };
 
@@ -174,19 +127,23 @@ function Register() {
   return (
     <Container maxWidth='sm' sx={{ mb: 4 }}>
       <Paper sx={{ my: { xs: 10, md: 6 }, p: { xs: 3.5, md: 3 } }}>
-        <Typography variant='h4' align='center'>
-          Zarejestruj się
-        </Typography>
-        <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 5 }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        {step !== 4 && (
+          <div>
+            <Typography variant='h4' align='center'>
+              Zarejestruj się
+            </Typography>
+            <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 5 }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </div>
+        )}
         {getStepContent(step)}
         <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
-          {step !== 1 && (
+          {step !== 1 && step !== 4 && (
             <Button
               fullWidth
               color='inherit'
@@ -202,7 +159,7 @@ function Register() {
             variant='contained'
             onClick={(e) => {
               e.preventDefault();
-              conutineHandler();
+              continueHandler();
             }}>
             Kontynuuj
           </Button>
