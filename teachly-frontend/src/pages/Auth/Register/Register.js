@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
-import registerVerification from "../../../hooks/Auth/registerVerification";
 import { emailVerification } from "../../../hooks/Auth/emailVerification";
+import {
+  profileTypeVerifier,
+  passwordVerifier,
+  repeatPasswordVerifier,
+  detailsVerifier,
+} from "../../../hooks/Auth/registerVerification";
 import {
   Container,
   Paper,
@@ -42,12 +47,6 @@ function Register() {
     repeatPasswordError: "",
     detailsError: "",
   });
-  const {
-    profileTypeVerifier,
-    passwordVerifier,
-    detailsVerifier,
-    repeatPasswordVerifier,
-  } = registerVerification(alignment, setErrorInfo, errorInfo, state);
 
   const previousStep = () => {
     setStep(step - 1);
@@ -65,10 +64,19 @@ function Register() {
     if (click) {
       setErrorInfo({
         ...errorInfo,
-        profileTypeError: profileTypeVerifier(),
+        profileTypeError: profileTypeVerifier(alignment),
         emailError: emailVerification(state.email),
-        passwordError: passwordVerifier(),
-        repeatPasswordError: repeatPasswordVerifier(),
+        passwordError: passwordVerifier(
+          state.password,
+          errorInfo,
+          setErrorInfo
+        ),
+        repeatPasswordError: repeatPasswordVerifier(
+          state.password,
+          state.repeatPassword,
+          errorInfo,
+          setErrorInfo
+        ),
       });
     }
   }, [click, state]);
@@ -76,15 +84,32 @@ function Register() {
   const continueHandler = () => {
     if (step === 1) {
       if (
-        profileTypeVerifier() === "" &&
+        profileTypeVerifier(alignment) === "" &&
         emailVerification(state.email) === "" &&
-        passwordVerifier() === "" &&
-        repeatPasswordVerifier() === ""
+        passwordVerifier(state.password, errorInfo, setErrorInfo) === "" &&
+        repeatPasswordVerifier(
+          state.password,
+          state.repeatPassword,
+          errorInfo,
+          setErrorInfo
+        ) === ""
       ) {
         nextStep();
       }
     } else if (step === 2) {
-      if (detailsVerifier() === "") {
+      if (
+        detailsVerifier(
+          state.firstName,
+          state.lastName,
+          state.sex,
+          state.country,
+          state.region,
+          state.city,
+          state.image,
+          errorInfo,
+          setErrorInfo
+        ) === ""
+      ) {
         setState({
           ...state,
           firstName: toBigLetter(state.firstName),
@@ -185,7 +210,17 @@ function Register() {
               if (step === 2)
                 setErrorInfo({
                   ...errorInfo,
-                  detailsError: detailsVerifier(),
+                  detailsError: detailsVerifier(
+                    state.firstName,
+                    state.lastName,
+                    state.sex,
+                    state.country,
+                    state.region,
+                    state.city,
+                    state.image,
+                    errorInfo,
+                    setErrorInfo
+                  ),
                 });
             }}>
             Kontynuuj

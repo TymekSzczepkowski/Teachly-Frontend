@@ -27,7 +27,6 @@ function Confirmation({ state }) {
               component='img'
               height='380'
               image={URL.createObjectURL(state.image)}
-              alt='guy'
             />
           </CardActionArea>
         </Card>

@@ -119,7 +119,7 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
                 setState({ ...state, image: event.target.files[0] });
                 setAlertOpen(true);
               }}
-              accept='image/png, image/jpeg"'
+              accept='image/png, image/jpeg'
               multiple
               type='file'
               sx={{ display: "none" }}
