@@ -67,18 +67,20 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
+          {console.log(state.city)}
           <Autocomplete
             options={citiesInPoland}
             renderInput={(params) => (
               <TextField {...params} label='Miasto' variant='standard' />
             )}
-            getOptionLabel={(option) => option.city}
-            value={selectedCity}
+            defaultValue={state.city === "" ? selectedCity : state.city}
+            getOptionLabel={(option) => option.city || state.city}
             onChange={(e, newCity) => {
               setSelectedCity(newCity);
               setState({ ...state, city: newCity.city });
             }}
           />
+          {console.log(state.city)}
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
@@ -86,8 +88,8 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
             renderInput={(params) => (
               <TextField {...params} label='Województwo' variant='standard' />
             )}
-            getOptionLabel={(option) => option.name}
-            value={selectedRegion}
+            defaultValue={state.region === "" ? selectedRegion : state.region}
+            getOptionLabel={(option) => option.name || state.region}
             onChange={(e, newRegion) => {
               setSelectedRegion(newRegion);
               setState({ ...state, region: newRegion.name });
@@ -100,8 +102,10 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
             renderInput={(params) => (
               <TextField {...params} label='Narodowość' variant='standard' />
             )}
-            getOptionLabel={(option) => option.name}
-            value={selectedCountry}
+            defaultValue={
+              state.country === "" ? selectedCountry : state.country
+            }
+            getOptionLabel={(option) => option.name || state.country}
             onChange={(e, newCountry) => {
               setSelectedCountry(newCountry);
               setState({ ...state, country: newCountry.name });
