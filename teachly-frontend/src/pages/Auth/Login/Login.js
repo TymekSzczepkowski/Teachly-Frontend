@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import emailVerification from "../../../hooks/Auth/emailVerification";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -18,12 +18,11 @@ import {
 
 function Login() {
   const [showPassword, setShowPassword] = useState(true);
-
+  const [click, setClick] = useState(false);
   const [state, setState] = useState({
     email: "",
     password: "",
   });
-
   const [errorInfo, setErrorInfo] = useState({
     emailError: "",
     passwordError: "",
@@ -31,9 +30,21 @@ function Login() {
 
   const emailVerifier = emailVerification(state, errorInfo, setErrorInfo);
 
+  useEffect(() => {
+    if (click) {
+      setErrorInfo({
+        ...errorInfo,
+        emailError: emailVerifier(),
+        passwordError: passwordVerifier(),
+      });
+    }
+  }, [click, state]);
+
   const passwordVerifier = () => {
     if (state.password === "") {
-      setErrorInfo({ ...errorInfo, passwordError: "Proszę wpisać hasło" });
+      return "Proszę wpisać hasło";
+    } else {
+      return "";
     }
   };
 
@@ -97,8 +108,7 @@ function Login() {
           <Button
             onClick={(e) => {
               e.preventDefault();
-              passwordVerifier();
-              emailVerifier();
+              setClick(true);
             }}
             fullWidth
             variant='contained'>

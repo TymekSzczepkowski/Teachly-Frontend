@@ -59,6 +59,7 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
           <FormControl variant='standard' fullWidth>
             <InputLabel>Płeć</InputLabel>
             <Select
+              value={state.sex}
               onChange={(e) => setState({ ...state, sex: e.target.value })}>
               <MenuItem value='Mężczyzna'>Mężczyzna</MenuItem>
               <MenuItem value='Kobieta'>Kobieta</MenuItem>

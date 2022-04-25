@@ -6,39 +6,34 @@ export default function registerVerification(
 ) {
   const profileTypeVerifier = () => {
     if (alignment === "") {
-      setErrorInfo({
-        ...errorInfo,
-        profileTypeError: "Proszę wybrać typ profilu",
-      });
-      return false;
+      return "Proszę wybrać typ profilu";
     } else {
-      return true;
+      return "";
     }
   };
 
   const passwordVerifier = () => {
     if (state.password === "") {
-      setErrorInfo({ ...errorInfo, passwordError: "Proszę wpisać hasło" });
-      return false;
-    } else if (state.repeatPassword === "") {
-      setErrorInfo({
-        ...errorInfo,
-        repeatPasswordError: "Powtórz hasło",
-      });
-      return false;
-    } else if (state.password !== state.repeatPassword) {
-      setErrorInfo({
-        ...errorInfo,
-        passwordError: "Hasła nie są takie same",
-      });
-      return false;
+      return "Proszę wpisać hasło";
     } else
       setErrorInfo({
         ...errorInfo,
-        repeatPasswordError: "",
         passwordError: "",
       });
-    return true;
+    return "";
+  };
+
+  const repeatPasswordVerifier = () => {
+    if (state.repeatPassword === "") {
+      return "Proszę wpisać hasło";
+    } else if (state.password !== state.repeatPassword) {
+      return "Hasło nie jest takie same";
+    } else
+      setErrorInfo({
+        ...errorInfo,
+        passwordError: "",
+      });
+    return "";
   };
 
   const detailsVerifier = () => {
@@ -51,17 +46,18 @@ export default function registerVerification(
       state.city === "" ||
       state.image === ""
     ) {
-      setErrorInfo({
-        ...errorInfo,
-        detailsError: "Wszystkie pola muszą zostać wypełnione",
-      });
-      return false;
+      return "Wszystkie pola muszą zostać wypełnione";
     } else
       setErrorInfo({
         ...errorInfo,
         detailsError: "",
       });
-    return true;
+    return "";
   };
-  return { profileTypeVerifier, passwordVerifier, detailsVerifier };
+  return {
+    profileTypeVerifier,
+    passwordVerifier,
+    detailsVerifier,
+    repeatPasswordVerifier,
+  };
 }

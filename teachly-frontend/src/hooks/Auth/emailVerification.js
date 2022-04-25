@@ -1,14 +1,12 @@
 export default function emailVerification(state, errorInfo, setErrorInfo) {
   return () => {
     if (state.email === "") {
-      setErrorInfo({ ...errorInfo, emailError: "Proszę podać email" });
-      return false;
+      return "Proszę podać email";
     } else if (
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(state.email)
     ) {
-      return true;
+      return "";
     }
-    setErrorInfo({ ...errorInfo, emailError: "Email jest niepoprawny" });
-    return false;
+    return "Email jest niepoprawny";
   };
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
@@ -19,6 +19,7 @@ import {
 
 import Success from "./Success";
 function Register() {
+  const [click, setClick] = useState(false);
   const [alignment, setAlignment] = useState("");
   const [step, setStep] = useState(1);
   const [state, setState] = useState({
@@ -42,8 +43,12 @@ function Register() {
     detailsError: "",
   });
   const emailVerifier = emailVerification(state, errorInfo, setErrorInfo);
-  const { profileTypeVerifier, passwordVerifier, detailsVerifier } =
-    registerVerification(alignment, setErrorInfo, errorInfo, state);
+  const {
+    profileTypeVerifier,
+    passwordVerifier,
+    detailsVerifier,
+    repeatPasswordVerifier,
+  } = registerVerification(alignment, setErrorInfo, errorInfo, state);
 
   const previousStep = () => {
     setStep(step - 1);
@@ -57,13 +62,30 @@ function Register() {
     return word;
   };
 
+  useEffect(() => {
+    if (click) {
+      setErrorInfo({
+        ...errorInfo,
+        profileTypeError: profileTypeVerifier(),
+        emailError: emailVerifier(),
+        passwordError: passwordVerifier(),
+        repeatPasswordError: repeatPasswordVerifier(),
+      });
+    }
+  }, [click, state]);
+
   const continueHandler = () => {
     if (step === 1) {
-      if (profileTypeVerifier() && emailVerifier() && passwordVerifier()) {
+      if (
+        profileTypeVerifier() === "" &&
+        emailVerifier() === "" &&
+        passwordVerifier() === "" &&
+        repeatPasswordVerifier() === ""
+      ) {
         nextStep();
       }
     } else if (step === 2) {
-      if (detailsVerifier()) {
+      if (detailsVerifier() === "") {
         setState({
           ...state,
           firstName: toBigLetter(state.firstName),
@@ -160,6 +182,12 @@ function Register() {
             onClick={(e) => {
               e.preventDefault();
               continueHandler();
+              setClick(true);
+              if (step === 2)
+                setErrorInfo({
+                  ...errorInfo,
+                  detailsError: detailsVerifier(),
+                });
             }}>
             Kontynuuj
           </Button>
