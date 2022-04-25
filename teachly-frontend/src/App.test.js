@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import App from "./App";
+import { passwordVerifier } from "./pages/Auth/Login/Login";
 
-test("renders learn react link", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("login", () => {
+  test("validate function should pass on correct input", () => {
+    const email = "test@test.com";
+    expect(passwordVerifier("dfs")).toBe("");
+  });
 });

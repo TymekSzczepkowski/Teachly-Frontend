@@ -28,7 +28,7 @@ function Login() {
     passwordError: "",
   });
 
-  const emailVerifier = emailVerification(state, errorInfo, setErrorInfo);
+  const emailVerifier = emailVerification(state);
 
   useEffect(() => {
     if (click) {

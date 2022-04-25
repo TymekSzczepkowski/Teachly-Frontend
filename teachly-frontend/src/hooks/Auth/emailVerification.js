@@ -1,4 +1,4 @@
-export default function emailVerification(state, errorInfo, setErrorInfo) {
+export default function emailVerification(state) {
   return () => {
     if (state.email === "") {
       return "Proszę podać email";
