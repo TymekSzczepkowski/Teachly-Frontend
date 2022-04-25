@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import emailVerification from "../../../hooks/Auth/emailVerification";
+import { emailVerification } from "../../../hooks/Auth/emailVerification";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
@@ -16,6 +16,14 @@ import {
   InputAdornment,
 } from "@mui/material/";
 
+export const passwordVerifier = (password) => {
+  if (password === "") {
+    return "Proszę wpisać hasło";
+  } else {
+    return "";
+  }
+};
+
 function Login() {
   const [showPassword, setShowPassword] = useState(true);
   const [click, setClick] = useState(false);
@@ -28,25 +36,15 @@ function Login() {
     passwordError: "",
   });
 
-  const emailVerifier = emailVerification(state);
-
   useEffect(() => {
     if (click) {
       setErrorInfo({
         ...errorInfo,
-        emailError: emailVerifier(),
-        passwordError: passwordVerifier(),
+        emailError: emailVerification(state.email),
+        passwordError: passwordVerifier(state.password),
       });
     }
   }, [click, state]);
-
-  const passwordVerifier = () => {
-    if (state.password === "") {
-      return "Proszę wpisać hasło";
-    } else {
-      return "";
-    }
-  };
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);

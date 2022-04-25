@@ -3,7 +3,7 @@ import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
 import registerVerification from "../../../hooks/Auth/registerVerification";
-import emailVerification from "../../../hooks/Auth/emailVerification";
+import { emailVerification } from "../../../hooks/Auth/emailVerification";
 import {
   Container,
   Paper,
@@ -42,7 +42,6 @@ function Register() {
     repeatPasswordError: "",
     detailsError: "",
   });
-  const emailVerifier = emailVerification(state, errorInfo, setErrorInfo);
   const {
     profileTypeVerifier,
     passwordVerifier,
@@ -67,7 +66,7 @@ function Register() {
       setErrorInfo({
         ...errorInfo,
         profileTypeError: profileTypeVerifier(),
-        emailError: emailVerifier(),
+        emailError: emailVerification(state.email),
         passwordError: passwordVerifier(),
         repeatPasswordError: repeatPasswordVerifier(),
       });
@@ -78,7 +77,7 @@ function Register() {
     if (step === 1) {
       if (
         profileTypeVerifier() === "" &&
-        emailVerifier() === "" &&
+        emailVerification(state.email) === "" &&
         passwordVerifier() === "" &&
         repeatPasswordVerifier() === ""
       ) {
