@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
+import { passwordVerification } from "../../../hooks/Auth/passwordVerification";
 import { emailVerification } from "../../../hooks/Auth/emailVerification";
 import {
   profileTypeVerifier,
-  passwordVerifier,
   repeatPasswordVerifier,
   detailsVerifier,
 } from "../../../hooks/Auth/registerVerification";
@@ -66,16 +66,10 @@ function Register() {
         ...errorInfo,
         profileTypeError: profileTypeVerifier(alignment),
         emailError: emailVerification(state.email),
-        passwordError: passwordVerifier(
-          state.password,
-          errorInfo,
-          setErrorInfo
-        ),
+        passwordError: passwordVerification(state.password),
         repeatPasswordError: repeatPasswordVerifier(
           state.password,
-          state.repeatPassword,
-          errorInfo,
-          setErrorInfo
+          state.repeatPassword
         ),
       });
     }
@@ -86,13 +80,8 @@ function Register() {
       if (
         profileTypeVerifier(alignment) === "" &&
         emailVerification(state.email) === "" &&
-        passwordVerifier(state.password, errorInfo, setErrorInfo) === "" &&
-        repeatPasswordVerifier(
-          state.password,
-          state.repeatPassword,
-          errorInfo,
-          setErrorInfo
-        ) === ""
+        passwordVerification(state.password) === "" &&
+        repeatPasswordVerifier(state.password, state.repeatPassword) === ""
       ) {
         nextStep();
       }
@@ -105,9 +94,7 @@ function Register() {
           state.country,
           state.region,
           state.city,
-          state.image,
-          errorInfo,
-          setErrorInfo
+          state.image
         ) === ""
       ) {
         setState({
@@ -217,9 +204,7 @@ function Register() {
                     state.country,
                     state.region,
                     state.city,
-                    state.image,
-                    errorInfo,
-                    setErrorInfo
+                    state.image
                   ),
                 });
             }}>

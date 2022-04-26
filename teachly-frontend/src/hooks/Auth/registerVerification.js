@@ -5,32 +5,12 @@ export const profileTypeVerifier = (alignment) => {
     return "";
   }
 };
-export const passwordVerifier = (password, state, setState) => {
-  if (password === "") {
-    return "Proszę wpisać hasło";
-  } else
-    setState({
-      ...state,
-      passwordError: "",
-    });
-  return "";
-};
-export const repeatPasswordVerifier = (
-  password,
-  repeatPassword,
-  state,
-  setState
-) => {
+export const repeatPasswordVerifier = (password, repeatPassword) => {
   if (repeatPassword === "") {
     return "Proszę wpisać hasło";
   } else if (password !== repeatPassword) {
     return "Hasło nie jest takie same";
-  } else
-    setState({
-      ...state,
-      passwordError: "",
-    });
-  return "";
+  } else return "";
 };
 
 export const detailsVerifier = (
@@ -40,9 +20,7 @@ export const detailsVerifier = (
   country,
   region,
   city,
-  image,
-  state,
-  setState
+  image
 ) => {
   if (
     firstName === "" ||
@@ -54,10 +32,5 @@ export const detailsVerifier = (
     image === ""
   ) {
     return "Wszystkie pola muszą zostać wypełnione";
-  } else
-    setState({
-      ...state,
-      detailsError: "",
-    });
-  return "";
+  } else return "";
 };
