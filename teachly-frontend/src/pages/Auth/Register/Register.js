@@ -1,28 +1,13 @@
 import React, { useState, useEffect } from "react";
+import Success from "./Success";
 import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
-import { passwordVerification } from "../../../hooks/Auth/passwordVerification";
-import { emailVerification } from "../../../hooks/Auth/emailVerification";
-import {
-  profileTypeVerifier,
-  repeatPasswordVerifier,
-  detailsVerifier,
-} from "../../../hooks/Auth/registerVerification";
-import {
-  Container,
-  Paper,
-  Typography,
-  Button,
-  Stepper,
-  Step,
-  StepLabel,
-  Stack,
-  Link,
-  Box,
-} from "@mui/material/";
+import { validatePassword } from "../../../hooks/Auth/passwordVerification";
+import { validateEmail } from "../../../hooks/Auth/emailVerification";
+import { validateProfileType, validateRepeatPassowrd, validateDetails } from "../../../hooks/Auth/registerVerification";
+import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, Link, Box } from "@mui/material/";
 
-import Success from "./Success";
 function Register() {
   const [click, setClick] = useState(false);
   const [alignment, setAlignment] = useState("");
@@ -46,6 +31,7 @@ function Register() {
     passwordError: "",
     repeatPasswordError: "",
     detailsError: "",
+    imageError: "",
   });
 
   const previousStep = () => {
@@ -59,113 +45,51 @@ function Register() {
     word = word[0].toUpperCase() + word.slice(1);
     return word;
   };
-
-  useEffect(() => {
-    if (click) {
-      setErrorInfo({
-        ...errorInfo,
-        profileTypeError: profileTypeVerifier(alignment),
-        emailError: emailVerification(state.email),
-        passwordError: passwordVerification(state.password),
-        repeatPasswordError: repeatPasswordVerifier(
-          state.password,
-          state.repeatPassword
-        ),
-      });
-    }
-  }, [click, state]);
-
-  const continueHandler = () => {
+  function continueHandler() {
     if (step === 1) {
-      if (
-        profileTypeVerifier(alignment) === "" &&
-        emailVerification(state.email) === "" &&
-        passwordVerification(state.password) === "" &&
-        repeatPasswordVerifier(state.password, state.repeatPassword) === ""
-      ) {
+      if (validateProfileType(alignment) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatPassowrd(state.password, state.repeatPassword) === "") {
         nextStep();
       }
     } else if (step === 2) {
       setErrorInfo({
         ...errorInfo,
-        detailsError: detailsVerifier(
-          state.firstName,
-          state.lastName,
-          state.sex,
-          state.country,
-          state.region,
-          state.city,
-          state.image
-        ),
+        detailsError: validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image),
       });
-      if (
-        detailsVerifier(
-          state.firstName,
-          state.lastName,
-          state.sex,
-          state.country,
-          state.region,
-          state.city,
-          state.image
-        ) === ""
-      ) {
-        setState({
-          ...state,
-          firstName: toBigLetter(state.firstName),
-          lastName: toBigLetter(state.lastName),
-        });
+      if (validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image) === "") {
         nextStep();
       }
     } else if (step === 3) {
       //send to backend
       nextStep();
-    } else if (step === 4) {
-      //mailing
     }
-  };
+  }
 
   function getStepContent(step) {
     switch (step) {
       case 1:
-        return (
-          <UserDetails
-            nextStep={nextStep}
-            state={state}
-            setState={setState}
-            step={step}
-            alignment={alignment}
-            setAlignment={setAlignment}
-            errorInfo={errorInfo}
-            setErrorInfo={setErrorInfo}
-          />
-        );
+        return <UserDetails nextStep={nextStep} state={state} setState={setState} step={step} alignment={alignment} setAlignment={setAlignment} errorInfo={errorInfo} setErrorInfo={setErrorInfo} />;
       case 2:
-        return (
-          <PersonalDetails
-            nextStep={nextStep}
-            previousStep={previousStep}
-            setState={setState}
-            state={state}
-            step={step}
-            errorInfo={errorInfo}
-            setErrorInfo={setErrorInfo}
-          />
-        );
+        return <PersonalDetails nextStep={nextStep} previousStep={previousStep} setState={setState} state={state} step={step} errorInfo={errorInfo} setErrorInfo={setErrorInfo} />;
       case 3:
-        return (
-          <Confirmation
-            nextStep={nextStep}
-            previousStep={previousStep}
-            step={step}
-            state={state}
-          />
-        );
+        return <Confirmation nextStep={nextStep} previousStep={previousStep} step={step} state={state} />;
       case 4:
         return <Success />;
       default:
         return <div>error</div>;
     }
   }
+
+  useEffect(() => {
+    if (click) {
+      setErrorInfo({
+        ...errorInfo,
+        profileTypeError: validateProfileType(alignment),
+        emailError: validateEmail(state.email),
+        passwordError: validatePassword(state.password),
+        repeatPasswordError: validateRepeatPassowrd(state.password, state.repeatPassword),
+      });
+    }
+  }, [click, state]);
 
   const steps = ["Dane rejestracji", "Dane osobowe", "Weryfikacja danych"];
 
@@ -199,16 +123,24 @@ function Register() {
               Powrót
             </Button>
           )}
-          <Button
-            fullWidth
-            variant='contained'
-            onClick={(e) => {
-              e.preventDefault();
-              continueHandler();
-              setClick(true);
-            }}>
-            Kontynuuj
-          </Button>
+          {step !== 4 && (
+            <Button
+              fullWidth
+              variant='contained'
+              onClick={(e) => {
+                e.preventDefault();
+                continueHandler();
+                setClick(true);
+                if (step === 2)
+                  setState({
+                    ...state,
+                    firstName: toBigLetter(state.firstName),
+                    lastName: toBigLetter(state.lastName),
+                  });
+              }}>
+              Dalej
+            </Button>
+          )}
         </Stack>
         <Box
           sx={{

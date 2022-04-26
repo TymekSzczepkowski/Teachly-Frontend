@@ -1,88 +1,95 @@
-import { passwordVerification } from "./hooks/Auth/passwordVerification";
-import { emailVerification } from "./hooks/Auth/emailVerification";
-import {
-  profileTypeVerifier,
-  repeatPasswordVerifier,
-  detailsVerifier,
-} from "./hooks/Auth/registerVerification";
+import { render, screen } from "@testing-library/react";
+import Register from "../src/pages/Auth/Register/Register";
+import { validatePassword } from "./hooks/Auth/passwordVerification";
+import { validateEmail } from "./hooks/Auth/emailVerification";
+import { validateProfileType, validateRepeatPassowrd, validateDetails, validateFileUpload } from "./hooks/Auth/registerVerification";
 
-describe("Login", () => {
-  test("Validate function should pass with correct email", () => {
+describe("Login validation form", () => {
+  test("Validate email function should pass with correct email", () => {
     const sampleEmail = "example@gmail.com";
-    expect(emailVerification(sampleEmail)).toBe("");
+    expect(validateEmail(sampleEmail)).toBe("");
   });
-  test("Validate function should not pass with incorrect email", () => {
+  test("Validate email function should not pass with incorrect email", () => {
     const sampleIncorrectEmail = "more unusual”example.com";
-    expect(emailVerification(sampleIncorrectEmail)).toBe(
-      "Email jest niepoprawny"
-    );
+    expect(validateEmail(sampleIncorrectEmail)).toBe("Email jest niepoprawny");
   });
-  test("Validate function should not pass with no typed email", () => {
+  test("Validate email function should not pass with no typed email", () => {
     const sampleIncorrectEmail = "";
-    expect(emailVerification(sampleIncorrectEmail)).toBe("Proszę podać email");
+    expect(validateEmail(sampleIncorrectEmail)).toBe("Proszę podać email");
   });
 
-  test("Validate function should pass with correct password", () => {
+  test("Validate password function should pass with correct password", () => {
     const samplePassword = "password";
-    expect(passwordVerification(samplePassword)).toBe("");
+    expect(validatePassword(samplePassword)).toBe("");
   });
-  test("Validate function should not pass with incorrect password", () => {
+  test("Validate password function should not pass with incorrect password", () => {
     const sampleIncorrectPassword = "";
-    expect(passwordVerification(sampleIncorrectPassword)).toBe(
-      "Proszę wpisać hasło"
-    );
+    expect(validatePassword(sampleIncorrectPassword)).toBe("Proszę wpisać hasło");
   });
 });
-describe("Register", () => {
-  test("Validate function should pass with selected profileType", () => {
+describe("Register validation form", () => {
+  test("Validate profileType function should pass with selected profileType", () => {
     const alignment = "Uczeń";
-    expect(profileTypeVerifier(alignment)).toBe("");
+    expect(validateProfileType(alignment)).toBe("");
   });
-  test("Validate function should not pass with no selected profileType", () => {
+  test("Validate profileType function should not pass with no selected profileType", () => {
     const alignment = "";
-    expect(profileTypeVerifier(alignment)).toBe("Proszę wybrać typ profilu");
+    expect(validateProfileType(alignment)).toBe("Proszę wybrać typ profilu");
   });
-  test("Validate function should pass with the same typed passwords", () => {
+  test("Validate passwords function should pass with the same typed passwords", () => {
     const samplePassword = "example";
     const sampleRepeatPassword = "example";
-    expect(repeatPasswordVerifier(samplePassword, sampleRepeatPassword)).toBe(
-      ""
-    );
+    expect(validateRepeatPassowrd(samplePassword, sampleRepeatPassword)).toBe("");
   });
-  test("Validate function should not pass with not the same typed passwords", () => {
+  test("Validate passwords function should not pass with not the same typed passwords", () => {
     const samplePassword = "example";
     const sampleRepeatPassword = "example2";
-    expect(repeatPasswordVerifier(samplePassword, sampleRepeatPassword)).toBe(
-      "Hasło nie jest takie same"
-    );
+    expect(validateRepeatPassowrd(samplePassword, sampleRepeatPassword)).toBe("Hasło nie jest takie same");
   });
-  test("Validate function should not pass with not typed repeat password", () => {
+  test("Validate passwords function should not pass with not typed repeat password", () => {
     const samplePassword = "";
     const sampleRepeatPassword = "";
-    expect(repeatPasswordVerifier(samplePassword, sampleRepeatPassword)).toBe(
-      "Proszę wpisać hasło"
-    );
+    expect(validateRepeatPassowrd(samplePassword, sampleRepeatPassword)).toBe("Proszę wpisać hasło");
   });
-  test("Validate function should pass with all typed details inputs", () => {
+  test("Validate details function should pass with all typed details inputs", () => {
     const firstName = "John";
     const lastName = "Doe";
     const sex = "Mężczyzna";
     const city = "Warsaw";
     const region = "Mazowieckie";
     const country = "Poland";
-    expect(
-      detailsVerifier(firstName, lastName, sex, city, region, country)
-    ).toBe("");
+    expect(validateDetails(firstName, lastName, sex, city, region, country)).toBe("");
   });
-  test("Validate function should not pass with one not typed input in details form", () => {
+  test("Validate details function should not pass with one not typed input in details form", () => {
     const firstName = "John";
     const lastName = "Doe";
     const sex = "Mężczyzna";
     const city = "Warsaw";
     const region = "Mazowieckie";
     const country = "";
-    expect(
-      detailsVerifier(firstName, lastName, sex, city, region, country)
-    ).toBe("Wszystkie pola muszą zostać wypełnione");
+    expect(validateDetails(firstName, lastName, sex, city, region, country)).toBe("Wszystkie pola muszą zostać wypełnione");
+  });
+  test("Validate file upload function should pass with file with correct extension", () => {
+    const filename = "filename.jpg";
+    const filename2 = "filename.png";
+    const filename3 = "filename.jpeg";
+    expect(validateFileUpload(filename)).toBe(true);
+    expect(validateFileUpload(filename2)).toBe(true);
+    expect(validateFileUpload(filename3)).toBe(true);
+  });
+  test("Validate file upload function should not pass with file with incorrect extension", () => {
+    const filename = "filename.gif";
+    const filename2 = "filename.xml";
+    const filename3 = "filename.tiff";
+    expect(validateFileUpload(filename)).toBe(false);
+    expect(validateFileUpload(filename2)).toBe(false);
+    expect(validateFileUpload(filename3)).toBe(false);
+  });
+});
+describe("Register", () => {
+  test("Render Register page", () => {
+    render(<Register />);
+    const element = screen.getByText(/Zarejestruj się/);
+    expect(element).toBeInTheDocument();
   });
 });

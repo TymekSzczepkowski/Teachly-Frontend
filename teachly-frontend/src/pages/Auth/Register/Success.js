@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import { Box, LinearProgress, Fade, Typography } from "@mui/material";
+import { Button, Box, LinearProgress, Fade, Typography } from "@mui/material";
 
 function Success() {
   const [show, setShow] = useState(false);
-  const time = setTimeout(() => {
+  setTimeout(() => {
     setShow(true);
-  }, 4000);
+  }, 3000);
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", pt: 5 }}>
       {show ? (
-        <Fade in>
-          <Typography align='center' variant='h2'>
-            Witaj w Teachly
-          </Typography>
-        </Fade>
+        <>
+          <Fade in>
+            <Typography sx={{ mb: 5 }} gutterBottom align='center' variant='h2'>
+              Witaj w Teachly
+            </Typography>
+          </Fade>
+          <Fade in>
+            <Button size='large' fullWidth variant='contained'>
+              Dalej
+            </Button>
+          </Fade>
+        </>
       ) : (
         <LinearProgress />
       )}

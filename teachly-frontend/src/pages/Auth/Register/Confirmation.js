@@ -5,17 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ApartmentOutlinedIcon from "@mui/icons-material/ApartmentOutlined";
 import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
 import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Grid,
-  Card,
-  CardMedia,
-  CardActionArea,
-} from "@mui/material/";
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Grid, Card, CardMedia, CardActionArea } from "@mui/material/";
 
 function Confirmation({ state }) {
   return (
@@ -23,27 +13,19 @@ function Confirmation({ state }) {
       <Grid item xs={12} sm={6}>
         <Card>
           <CardActionArea>
-            <CardMedia
-              component='img'
-              height='380'
-              image={URL.createObjectURL(state.image)}
-            />
+            <CardMedia component='img' height='380' image={URL.createObjectURL(state.image)} />
           </CardActionArea>
         </Card>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+        <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
           <ListItem>
             <ListItemAvatar>
               <Avatar>
                 <AccountCircleIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText
-              primary='Imię i nazwisko'
-              secondary={state.firstName + " " + state.lastName}
-            />
+            <ListItemText primary='Imię i nazwisko' secondary={state.firstName + " " + state.lastName} />
           </ListItem>
           <ListItem>
             <ListItemAvatar>
@@ -63,13 +45,7 @@ function Confirmation({ state }) {
           </ListItem>
           <ListItem>
             <ListItemAvatar>
-              <Avatar>
-                {state.sex === "Kobieta" ? (
-                  <FemaleOutlinedIcon />
-                ) : (
-                  <MaleOutlinedIcon />
-                )}
-              </Avatar>
+              <Avatar>{state.sex === "Kobieta" ? <FemaleOutlinedIcon /> : <MaleOutlinedIcon />}</Avatar>
             </ListItemAvatar>
             <ListItemText primary='Płeć' secondary={state.sex} />
           </ListItem>
@@ -79,10 +55,7 @@ function Confirmation({ state }) {
                 <ApartmentOutlinedIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText
-              primary='Miejsce zamieszkania'
-              secondary={state.region + ", " + state.city}
-            />
+            <ListItemText primary='Miejsce zamieszkania' secondary={state.region + ", " + state.city} />
           </ListItem>
         </List>
       </Grid>

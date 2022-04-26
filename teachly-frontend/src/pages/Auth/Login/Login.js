@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { emailVerification } from "../../../hooks/Auth/emailVerification";
-import { passwordVerification } from "../../../hooks/Auth/passwordVerification";
+import { validateEmail } from "../../../hooks/Auth/emailVerification";
+import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
-  Container,
-  Paper,
-  Typography,
-  Grid,
-  TextField,
-  Stack,
-  Button,
-  Box,
-  Link,
-  IconButton,
-  InputAdornment,
-} from "@mui/material/";
+import { Container, Paper, Typography, Grid, TextField, Stack, Button, Box, Link, IconButton, InputAdornment } from "@mui/material/";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(true);
@@ -33,8 +21,8 @@ function Login() {
     if (click) {
       setErrorInfo({
         ...errorInfo,
-        passwordError: passwordVerification(state.password),
-        emailError: emailVerification(state.email),
+        passwordError: validatePassword(state.password),
+        emailError: validateEmail(state.email),
       });
     }
   }, [click, state]);
@@ -73,10 +61,7 @@ function Login() {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}>
+                    <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>

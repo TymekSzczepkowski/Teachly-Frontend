@@ -1,24 +1,9 @@
 import React, { useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {
-  TextField,
-  ToggleButtonGroup,
-  ToggleButton,
-  Grid,
-  IconButton,
-  InputAdornment,
-  Alert,
-} from "@mui/material/";
+import { TextField, ToggleButtonGroup, ToggleButton, Grid, IconButton, InputAdornment, Alert } from "@mui/material/";
 
-function UserDetails({
-  state,
-  setState,
-  alignment,
-  setAlignment,
-  errorInfo,
-  setErrorInfo,
-}) {
+function UserDetails({ state, setState, alignment, setAlignment, errorInfo, setErrorInfo }) {
   const [showPassword, setShowPassword] = useState(true);
 
   const handleChange = (e, newAlignment) => {
@@ -40,13 +25,7 @@ function UserDetails({
 
   return (
     <div>
-      <ToggleButtonGroup
-        sx={{ mb: 1.5 }}
-        fullWidth
-        color='primary'
-        exclusive
-        onChange={handleChange}
-        value={alignment}>
+      <ToggleButtonGroup sx={{ mb: 1.5 }} fullWidth color='primary' exclusive onChange={handleChange} value={alignment}>
         <ToggleButton value='Uczeń' type='radio' name='profileType'>
           Uczeń
         </ToggleButton>
@@ -54,9 +33,7 @@ function UserDetails({
           Korepetytor
         </ToggleButton>
       </ToggleButtonGroup>
-      {errorInfo.profileTypeError !== "" && (
-        <Alert severity='error'>{errorInfo.profileTypeError}</Alert>
-      )}
+      {errorInfo.profileTypeError !== "" && <Alert severity='error'>{errorInfo.profileTypeError}</Alert>}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
@@ -76,10 +53,7 @@ function UserDetails({
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}>
+                  <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
@@ -103,10 +77,7 @@ function UserDetails({
               endAdornment: (
                 <InputAdornment position='end'>
                   {" "}
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}>
+                  <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>

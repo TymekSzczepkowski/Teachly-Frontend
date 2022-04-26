@@ -2,18 +2,8 @@ import React, { useState } from "react";
 import cities from "./data/cities.json";
 import countries from "./data/countries.json";
 import region from "./data/region.json";
-import {
-  Input,
-  Button,
-  TextField,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Autocomplete,
-  Alert,
-} from "@mui/material/";
+import { validateFileUpload } from "../../../hooks/Auth/registerVerification";
+import { Input, Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
 
 function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
   const [alertOpen, setAlertOpen] = useState(false);
@@ -24,14 +14,11 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
   const citiesInPoland = cities;
   const allCountries = countries;
   const allRegions = region;
-
   return (
     <div>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {errorInfo.detailsError !== "" && (
-            <Alert severity='error'>{errorInfo.detailsError}</Alert>
-          )}
+          {errorInfo.detailsError !== "" && <Alert severity='error'>{errorInfo.detailsError}</Alert>}
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -58,9 +45,7 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
         <Grid item xs={12} sm={6}>
           <FormControl variant='standard' fullWidth>
             <InputLabel>Płeć</InputLabel>
-            <Select
-              value={state.sex}
-              onChange={(e) => setState({ ...state, sex: e.target.value })}>
+            <Select value={state.sex} onChange={(e) => setState({ ...state, sex: e.target.value })}>
               <MenuItem value='Mężczyzna'>Mężczyzna</MenuItem>
               <MenuItem value='Kobieta'>Kobieta</MenuItem>
             </Select>
@@ -70,9 +55,7 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
           {console.log(state.city)}
           <Autocomplete
             options={citiesInPoland}
-            renderInput={(params) => (
-              <TextField {...params} label='Miasto' variant='standard' />
-            )}
+            renderInput={(params) => <TextField {...params} label='Miasto' variant='standard' />}
             defaultValue={state.city === "" ? selectedCity : state.city}
             getOptionLabel={(option) => option.city || state.city}
             onChange={(e, newCity) => {
@@ -85,9 +68,7 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
         <Grid item xs={12} sm={6}>
           <Autocomplete
             options={allRegions}
-            renderInput={(params) => (
-              <TextField {...params} label='Województwo' variant='standard' />
-            )}
+            renderInput={(params) => <TextField {...params} label='Województwo' variant='standard' />}
             defaultValue={state.region === "" ? selectedRegion : state.region}
             getOptionLabel={(option) => option.name || state.region}
             onChange={(e, newRegion) => {
@@ -99,12 +80,8 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
         <Grid item xs={12} sm={6}>
           <Autocomplete
             options={allCountries}
-            renderInput={(params) => (
-              <TextField {...params} label='Narodowość' variant='standard' />
-            )}
-            defaultValue={
-              state.country === "" ? selectedCountry : state.country
-            }
+            renderInput={(params) => <TextField {...params} label='Narodowość' variant='standard' />}
+            defaultValue={state.country === "" ? selectedCountry : state.country}
             getOptionLabel={(option) => option.name || state.country}
             onChange={(e, newCountry) => {
               setSelectedCountry(newCountry);
@@ -116,15 +93,21 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
           <label>
             <Input
               onChange={(event) => {
-                setState({ ...state, image: event.target.files[0] });
-                setAlertOpen(true);
+                console.log(event.target.files[0].name);
+                if (validateFileUpload(event.target.files[0].name)) {
+                  setState({ ...state, image: event.target.files[0] });
+                  setErrorInfo({ ...errorInfo, imageError: "Zdjęcie załadowane pomyślnie." });
+                  setAlertOpen(true);
+                } else {
+                  setAlertOpen(true);
+                  setErrorInfo({ ...errorInfo, imageError: "Nieprawidłowe rozszerzenie pliku" });
+                }
               }}
-              accept='image/png, image/jpeg'
-              multiple
+              accept='image/'
               type='file'
               sx={{ display: "none" }}
             />
-            <Button fullWidth variant='contained' component='span'>
+            <Button fullWidth variant='contained' component='span' name='upload'>
               Upload your photo
             </Button>
           </label>
@@ -133,8 +116,8 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
               onClose={() => {
                 setAlertOpen(false);
               }}
-              severity={"success"}>
-              Zdjęcie załadowane pomyślnie.
+              severity={state.image === "" ? "warning" : "success"}>
+              {errorInfo.imageError}
             </Alert>
           )}
         </Grid>
