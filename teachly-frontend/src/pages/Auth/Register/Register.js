@@ -23,6 +23,55 @@ import {
 } from "@mui/material/";
 
 import Success from "./Success";
+
+export const continueHandler = (
+  alignment,
+  email,
+  password,
+  repeatPassword,
+  func,
+  firstName,
+  lastName,
+  sex,
+  country,
+  region,
+  city,
+  image,
+  step
+) => {
+  if (step === 1) {
+    if (
+      profileTypeVerifier(alignment) === "" &&
+      emailVerification(email) === "" &&
+      passwordVerification(password) === "" &&
+      repeatPasswordVerifier(password, repeatPassword) === ""
+    ) {
+      func();
+      return "Dane rejestracji są kompletne";
+    }
+  } else if (step === 2) {
+    if (
+      detailsVerifier(
+        firstName,
+        lastName,
+        sex,
+        country,
+        region,
+        city,
+        image
+      ) === ""
+    ) {
+      func();
+      return "Dane osobowe nie są kompletne";
+    }
+  } else if (step === 3) {
+    //send to backend
+    func();
+  } else if (step === 4) {
+    //mailing
+  }
+};
+
 function Register() {
   const [click, setClick] = useState(false);
   const [alignment, setAlignment] = useState("");
@@ -74,44 +123,6 @@ function Register() {
       });
     }
   }, [click, state]);
-
-  const continueHandler = () => {
-    if (step === 1) {
-      if (
-        profileTypeVerifier(alignment) === "" &&
-        emailVerification(state.email) === "" &&
-        passwordVerification(state.password) === "" &&
-        repeatPasswordVerifier(state.password, state.repeatPassword) === ""
-      ) {
-        nextStep();
-      }
-    } else if (step === 2) {
-      if (
-        detailsVerifier(
-          state.firstName,
-          state.lastName,
-          state.sex,
-          state.country,
-          state.region,
-          state.city,
-          state.image
-        ) === ""
-      ) {
-        setState({
-          ...state,
-          firstName: toBigLetter(state.firstName),
-          lastName: toBigLetter(state.lastName),
-        });
-        nextStep();
-      }
-    } else if (step === 3) {
-      //send to backend
-      nextStep();
-    } else if (step === 4) {
-      //mailing
-    }
-  };
-
   function getStepContent(step) {
     switch (step) {
       case 1:
@@ -192,9 +203,23 @@ function Register() {
             variant='contained'
             onClick={(e) => {
               e.preventDefault();
-              continueHandler();
+              continueHandler(
+                alignment,
+                state.email,
+                state.password,
+                state.repeatPassword,
+                nextStep,
+                state.firstName,
+                state.lastName,
+                state.sex,
+                state.country,
+                state.region,
+                state.city,
+                state.image,
+                step
+              );
               setClick(true);
-              if (step === 2)
+              if (step === 2) {
                 setErrorInfo({
                   ...errorInfo,
                   detailsError: detailsVerifier(
@@ -207,6 +232,12 @@ function Register() {
                     state.image
                   ),
                 });
+                setState({
+                  ...state,
+                  firstName: toBigLetter(state.firstName),
+                  lastName: toBigLetter(state.lastName),
+                });
+              }
             }}>
             Kontynuuj
           </Button>
