@@ -3,16 +3,16 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { TextField, ToggleButtonGroup, ToggleButton, Grid, IconButton, InputAdornment, Alert } from "@mui/material/";
 
-function UserDetails({ state, setState, alignment, setAlignment, errorInfo, setErrorInfo }) {
+function UserDetails({ state, setState, alignment, setAlignment, inputMessage, setInputMessage }) {
   const [showPassword, setShowPassword] = useState(true);
 
   const handleChange = (e, newAlignment) => {
     e.preventDefault();
     setAlignment(newAlignment);
     setState({ ...state, profileType: e.target.value });
-    setErrorInfo({
-      ...errorInfo,
-      profileTypeError: "",
+    setInputMessage({
+      ...inputMessage,
+      profileTypeMessage: "",
     });
   };
   const handleClickShowPassword = () => {
@@ -33,12 +33,12 @@ function UserDetails({ state, setState, alignment, setAlignment, errorInfo, setE
           Korepetytor
         </ToggleButton>
       </ToggleButtonGroup>
-      {errorInfo.profileTypeError !== "" && <Alert severity='error'>{errorInfo.profileTypeError}</Alert>}
+      {inputMessage.profileTypeMessage !== "" && <Alert severity='error'>{inputMessage.profileTypeMessage}</Alert>}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
-            error={errorInfo.emailError === "" ? false : true}
-            helperText={errorInfo.emailError}
+            error={inputMessage.emailMessage === "" ? false : true}
+            helperText={inputMessage.emailMessage}
             fullWidth
             variant='standard'
             label='E-mail'
@@ -59,8 +59,8 @@ function UserDetails({ state, setState, alignment, setAlignment, errorInfo, setE
                 </InputAdornment>
               ),
             }}
-            error={errorInfo.passwordError === "" ? false : true}
-            helperText={errorInfo.passwordError}
+            error={inputMessage.passwordMessage === "" ? false : true}
+            helperText={inputMessage.passwordMessage}
             fullWidth
             variant='standard'
             label='Hasło'
@@ -83,8 +83,8 @@ function UserDetails({ state, setState, alignment, setAlignment, errorInfo, setE
                 </InputAdornment>
               ),
             }}
-            error={errorInfo.repeatPasswordError === "" ? false : true}
-            helperText={errorInfo.repeatPasswordError}
+            error={inputMessage.repeatPasswordMessage === "" ? false : true}
+            helperText={inputMessage.repeatPasswordMessage}
             fullWidth
             variant='standard'
             label='Powtórz hasło'

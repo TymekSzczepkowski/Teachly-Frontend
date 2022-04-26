@@ -12,17 +12,17 @@ function Login() {
     email: "",
     password: "",
   });
-  const [errorInfo, setErrorInfo] = useState({
-    emailError: "",
-    passwordError: "",
+  const [inputMessage, setInputMessage] = useState({
+    emailMessage: "",
+    passwordMessage: "",
   });
 
   useEffect(() => {
     if (click) {
-      setErrorInfo({
-        ...errorInfo,
-        passwordError: validatePassword(state.password),
-        emailError: validateEmail(state.email),
+      setInputMessage({
+        ...inputMessage,
+        passwordMessage: validatePassword(state.password),
+        emailMessage: validateEmail(state.email),
       });
     }
   }, [click, state]);
@@ -45,8 +45,8 @@ function Login() {
             <TextField
               fullWidth
               variant='standard'
-              error={errorInfo.emailError === "" ? false : true}
-              helperText={errorInfo.emailError}
+              error={inputMessage.emailMessage === "" ? false : true}
+              helperText={inputMessage.emailMessage}
               fullWidth
               variant='standard'
               label='E-mail'
@@ -67,8 +67,8 @@ function Login() {
                   </InputAdornment>
                 ),
               }}
-              error={errorInfo.passwordError === "" ? false : true}
-              helperText={errorInfo.passwordError}
+              error={inputMessage.passwordMessage === "" ? false : true}
+              helperText={inputMessage.passwordMessage}
               fullWidth
               variant='standard'
               label='Hasło'
@@ -96,7 +96,7 @@ function Login() {
             display: "flex",
             justifyContent: "center",
           }}>
-          <Link href='/register' variant='body2'>
+          <Link href='/register' variant='body2' data-testid='login-link'>
             Nie masz konta? Zarejestruj się
           </Link>
         </Box>

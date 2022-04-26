@@ -11,7 +11,7 @@ import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, 
 function Register() {
   const [click, setClick] = useState(false);
   const [alignment, setAlignment] = useState("");
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [state, setState] = useState({
     profileType: "",
     email: "",
@@ -25,13 +25,13 @@ function Register() {
     region: "",
     city: "",
   });
-  const [errorInfo, setErrorInfo] = useState({
-    profileTypeError: "",
-    emailError: "",
-    passwordError: "",
-    repeatPasswordError: "",
-    detailsError: "",
-    imageError: "",
+  const [inputMessage, setInputMessage] = useState({
+    profileTypeMessage: "",
+    emailMessage: "",
+    passwordMessage: "",
+    repeatPasswordMessage: "",
+    detailsMessage: "",
+    imageMessage: "",
   });
 
   const previousStep = () => {
@@ -51,9 +51,9 @@ function Register() {
         nextStep();
       }
     } else if (step === 2) {
-      setErrorInfo({
-        ...errorInfo,
-        detailsError: validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image),
+      setInputMessage({
+        ...inputMessage,
+        detailsMessage: validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image),
       });
       if (validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image) === "") {
         nextStep();
@@ -67,9 +67,9 @@ function Register() {
   function getStepContent(step) {
     switch (step) {
       case 1:
-        return <UserDetails nextStep={nextStep} state={state} setState={setState} step={step} alignment={alignment} setAlignment={setAlignment} errorInfo={errorInfo} setErrorInfo={setErrorInfo} />;
+        return <UserDetails nextStep={nextStep} state={state} setState={setState} step={step} alignment={alignment} setAlignment={setAlignment} inputMessage={inputMessage} setInputMessage={setInputMessage} />;
       case 2:
-        return <PersonalDetails nextStep={nextStep} previousStep={previousStep} setState={setState} state={state} step={step} errorInfo={errorInfo} setErrorInfo={setErrorInfo} />;
+        return <PersonalDetails nextStep={nextStep} previousStep={previousStep} setState={setState} state={state} step={step} inputMessage={inputMessage} setInputMessage={setInputMessage} />;
       case 3:
         return <Confirmation nextStep={nextStep} previousStep={previousStep} step={step} state={state} />;
       case 4:
@@ -81,12 +81,12 @@ function Register() {
 
   useEffect(() => {
     if (click) {
-      setErrorInfo({
-        ...errorInfo,
-        profileTypeError: validateProfileType(alignment),
-        emailError: validateEmail(state.email),
-        passwordError: validatePassword(state.password),
-        repeatPasswordError: validateRepeatPassowrd(state.password, state.repeatPassword),
+      setInputMessage({
+        ...inputMessage,
+        profileTypeMessage: validateProfileType(alignment),
+        emailMessage: validateEmail(state.email),
+        passwordMessage: validatePassword(state.password),
+        repeatPasswordMessage: validateRepeatPassowrd(state.password, state.repeatPassword),
       });
     }
   }, [click, state]);

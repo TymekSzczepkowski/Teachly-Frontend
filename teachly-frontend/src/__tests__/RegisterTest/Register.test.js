@@ -1,32 +1,7 @@
+import Register from "../../pages/Auth/Register/Register";
 import { render, screen } from "@testing-library/react";
-import Register from "../src/pages/Auth/Register/Register";
-import { validatePassword } from "./hooks/Auth/passwordVerification";
-import { validateEmail } from "./hooks/Auth/emailVerification";
-import { validateProfileType, validateRepeatPassowrd, validateDetails, validateFileTypeUpload, validateFileSizeUpload } from "./hooks/Auth/registerVerification";
+import { validateProfileType, validateRepeatPassowrd, validateDetails, validateFileTypeUpload, validateFileSizeUpload } from "../../hooks/Auth/registerVerification";
 
-describe("Login validation form", () => {
-  test("Validate email function should pass with correct email", () => {
-    const sampleEmail = "example@gmail.com";
-    expect(validateEmail(sampleEmail)).toBe("");
-  });
-  test("Validate email function should not pass with incorrect email", () => {
-    const sampleIncorrectEmail = "more unusual”example.com";
-    expect(validateEmail(sampleIncorrectEmail)).toBe("Email jest niepoprawny");
-  });
-  test("Validate email function should not pass with no typed email", () => {
-    const sampleIncorrectEmail = "";
-    expect(validateEmail(sampleIncorrectEmail)).toBe("Proszę podać email");
-  });
-
-  test("Validate password function should pass with correct password", () => {
-    const samplePassword = "password";
-    expect(validatePassword(samplePassword)).toBe("");
-  });
-  test("Validate password function should not pass with incorrect password", () => {
-    const sampleIncorrectPassword = "";
-    expect(validatePassword(sampleIncorrectPassword)).toBe("Proszę wpisać hasło");
-  });
-});
 describe("Register validation form", () => {
   test("Validate profileType function should pass with selected profileType", () => {
     const alignment = "Uczeń";

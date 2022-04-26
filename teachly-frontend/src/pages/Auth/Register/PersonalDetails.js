@@ -5,7 +5,7 @@ import region from "./data/region.json";
 import { validateFileTypeUpload, validateFileSizeUpload } from "../../../hooks/Auth/registerVerification";
 import { Input, Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
 
-function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
+function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const [alertOpen, setAlertOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -18,7 +18,7 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
     <div>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {errorInfo.detailsError !== "" && <Alert severity='error'>{errorInfo.detailsError}</Alert>}
+          {inputMessage.detailsMessage !== "" && <Alert severity='error'>{inputMessage.detailsMessage}</Alert>}
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -96,11 +96,11 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
                 console.log(event.target.files[0].size);
                 if (validateFileTypeUpload(event.target.files[0].name) && validateFileSizeUpload(event.target.files[0].size)) {
                   setState({ ...state, image: event.target.files[0] });
-                  setErrorInfo({ ...errorInfo, imageError: "Zdjęcie załadowane pomyślnie." });
+                  setInputMessage({ ...inputMessage, imageMessage: "Zdjęcie załadowane pomyślnie." });
                   setAlertOpen(true);
                 } else {
                   setAlertOpen(true);
-                  setErrorInfo({ ...errorInfo, imageError: `Nieprawidłowe rozszerzenie pliku lub rozmiar jest zbyt duży` });
+                  setInputMessage({ ...inputMessage, imageMessage: `Nieprawidłowe rozszerzenie pliku lub rozmiar jest zbyt duży` });
                 }
               }}
               accept='image/'
@@ -116,8 +116,8 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
               onClose={() => {
                 setAlertOpen(false);
               }}
-              severity={errorInfo.imageError === "Zdjęcie załadowane pomyślnie." ? "success" : "warning"}>
-              {errorInfo.imageError}
+              severity={inputMessage.imageMessage === "Zdjęcie załadowane pomyślnie." ? "success" : "warning"}>
+              {inputMessage.imageMessage}
             </Alert>
           )}
         </Grid>
