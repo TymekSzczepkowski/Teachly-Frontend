@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import cities from "./data/cities.json";
 import countries from "./data/countries.json";
 import region from "./data/region.json";
-import { validateFileUpload } from "../../../hooks/Auth/registerVerification";
+import { validateFileTypeUpload, validateFileSizeUpload } from "../../../hooks/Auth/registerVerification";
 import { Input, Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
 
 function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
@@ -93,14 +93,14 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
           <label>
             <Input
               onChange={(event) => {
-                console.log(event.target.files[0].name);
-                if (validateFileUpload(event.target.files[0].name)) {
+                console.log(event.target.files[0].size);
+                if (validateFileTypeUpload(event.target.files[0].name) && validateFileSizeUpload(event.target.files[0].size)) {
                   setState({ ...state, image: event.target.files[0] });
                   setErrorInfo({ ...errorInfo, imageError: "Zdjęcie załadowane pomyślnie." });
                   setAlertOpen(true);
                 } else {
                   setAlertOpen(true);
-                  setErrorInfo({ ...errorInfo, imageError: "Nieprawidłowe rozszerzenie pliku" });
+                  setErrorInfo({ ...errorInfo, imageError: `Nieprawidłowe rozszerzenie pliku lub rozmiar jest zbyt duży` });
                 }
               }}
               accept='image/'
@@ -116,7 +116,7 @@ function PersonalDetails({ state, setState, errorInfo, setErrorInfo }) {
               onClose={() => {
                 setAlertOpen(false);
               }}
-              severity={state.image === "" ? "warning" : "success"}>
+              severity={errorInfo.imageError === "Zdjęcie załadowane pomyślnie." ? "success" : "warning"}>
               {errorInfo.imageError}
             </Alert>
           )}

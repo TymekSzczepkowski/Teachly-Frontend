@@ -19,14 +19,22 @@ export const validateDetails = (firstName, lastName, sex, country, region, city,
   } else return "";
 };
 
-export const validateFileUpload = (fileName) => {
+export const validateFileTypeUpload = (fileName) => {
   const allowedExtensions = new Array("jpg", "png", "jpeg");
-  let fileExtension = fileName.split(".").pop().toLowerCase(); // split function will split the filename by dot(.), and pop function will pop the last element from the array which will give you the extension as well. If there will be no extension then it will return the filename.
+  let fileExtension = fileName.split(".").pop().toLowerCase();
 
   for (let i = 0; i <= allowedExtensions.length; i++) {
     if (allowedExtensions[i] == fileExtension) {
       return true;
     }
+  }
+  return false;
+};
+export const validateFileSizeUpload = (fileName) => {
+  let fileSize = (fileName = Math.round(fileName / 1024 / 1024));
+  //3MB
+  if (fileSize <= 3) {
+    return true;
   }
   return false;
 };

@@ -11,7 +11,7 @@ import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, 
 function Register() {
   const [click, setClick] = useState(false);
   const [alignment, setAlignment] = useState("");
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [state, setState] = useState({
     profileType: "",
     email: "",

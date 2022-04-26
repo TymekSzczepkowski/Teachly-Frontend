@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Register from "../src/pages/Auth/Register/Register";
 import { validatePassword } from "./hooks/Auth/passwordVerification";
 import { validateEmail } from "./hooks/Auth/emailVerification";
-import { validateProfileType, validateRepeatPassowrd, validateDetails, validateFileUpload } from "./hooks/Auth/registerVerification";
+import { validateProfileType, validateRepeatPassowrd, validateDetails, validateFileTypeUpload, validateFileSizeUpload } from "./hooks/Auth/registerVerification";
 
 describe("Login validation form", () => {
   test("Validate email function should pass with correct email", () => {
@@ -73,17 +73,25 @@ describe("Register validation form", () => {
     const filename = "filename.jpg";
     const filename2 = "filename.png";
     const filename3 = "filename.jpeg";
-    expect(validateFileUpload(filename)).toBe(true);
-    expect(validateFileUpload(filename2)).toBe(true);
-    expect(validateFileUpload(filename3)).toBe(true);
+    expect(validateFileTypeUpload(filename)).toBe(true);
+    expect(validateFileTypeUpload(filename2)).toBe(true);
+    expect(validateFileTypeUpload(filename3)).toBe(true);
   });
   test("Validate file upload function should not pass with file with incorrect extension", () => {
     const filename = "filename.gif";
     const filename2 = "filename.xml";
     const filename3 = "filename.tiff";
-    expect(validateFileUpload(filename)).toBe(false);
-    expect(validateFileUpload(filename2)).toBe(false);
-    expect(validateFileUpload(filename3)).toBe(false);
+    expect(validateFileTypeUpload(filename)).toBe(false);
+    expect(validateFileTypeUpload(filename2)).toBe(false);
+    expect(validateFileTypeUpload(filename3)).toBe(false);
+  });
+  test("Validate file size upload function should pass with correct file size", () => {
+    const filesize = 648822;
+    expect(validateFileSizeUpload(filesize)).toBe(true);
+  });
+  test("Validate file size upload function should not pass with incorrect file size", () => {
+    const filesize = 6488220;
+    expect(validateFileSizeUpload(filesize)).toBe(false);
   });
 });
 describe("Register", () => {
