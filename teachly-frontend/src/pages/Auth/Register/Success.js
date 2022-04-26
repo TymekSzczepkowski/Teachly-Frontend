@@ -10,7 +10,9 @@ function Success() {
     <Box sx={{ width: "100%" }}>
       {show ? (
         <Fade in>
-          <Typography align="center" variant='h2'>Witaj w Teachly</Typography>
+          <Typography align='center' variant='h2'>
+            Witaj w Teachly
+          </Typography>
         </Fade>
       ) : (
         <LinearProgress />
