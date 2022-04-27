@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Container, Paper, Typography, Grid, TextField, Stack, Button, Box, Link, IconButton, InputAdornment } from "@mui/material/";
+import { Container, Paper, Typography, Grid, TextField, Stack, Button, Box, IconButton, InputAdornment, Link as LinkUI } from "@mui/material/";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(true);
@@ -37,7 +38,7 @@ function Login() {
   return (
     <Container maxWidth='sm' sx={{ mb: 4 }}>
       <Paper sx={{ my: { xs: 10, md: 6 }, p: { xs: 3.5, md: 3 } }}>
-        <Typography variant='h4' align='center'>
+        <Typography variant='h4' align='center' data-testid='zaloguj'>
           Zaloguj się
         </Typography>
         <Grid container spacing={3}>
@@ -87,6 +88,7 @@ function Login() {
               setClick(true);
             }}
             fullWidth
+            data-testid='buttonContinue'
             variant='contained'>
             Kontynuuj
           </Button>
@@ -96,8 +98,8 @@ function Login() {
             display: "flex",
             justifyContent: "center",
           }}>
-          <Link href='/register' variant='body2' data-testid='login-link'>
-            Nie masz konta? Zarejestruj się
+          <Link to='/register' data-testid='link'>
+            <LinkUI variant='body2'>Nie masz konta? Zarejestruj się</LinkUI>
           </Link>
         </Box>
       </Paper>

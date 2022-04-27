@@ -1,4 +1,5 @@
 import Register from "../../pages/Auth/Register/Register";
+import { BrowserRouter } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { validateProfileType, validateRepeatPassowrd, validateDetails, validateFileTypeUpload, validateFileSizeUpload } from "../../hooks/Auth/registerVerification";
 
@@ -71,7 +72,11 @@ describe("Register validation form", () => {
 });
 describe("Register", () => {
   test("Render Register page", () => {
-    render(<Register />);
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
     const element = screen.getByText(/Zarejestruj się/);
     expect(element).toBeInTheDocument();
   });

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Success from "./Success";
 import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
@@ -6,7 +7,7 @@ import Confirmation from "./Confirmation";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { validateProfileType, validateRepeatPassowrd, validateDetails } from "../../../hooks/Auth/registerVerification";
-import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, Link, Box } from "@mui/material/";
+import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
 
 function Register() {
   const [click, setClick] = useState(false);
@@ -98,7 +99,7 @@ function Register() {
       <Paper sx={{ my: { xs: 10, md: 6 }, p: { xs: 3.5, md: 3 } }}>
         {step !== 4 && (
           <div>
-            <Typography variant='h4' align='center'>
+            <Typography variant='h4' align='center' data-testid='zarejestruj'>
               Zarejestruj się
             </Typography>
             <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 5 }}>
@@ -148,8 +149,8 @@ function Register() {
             justifyContent: "center",
           }}>
           {step === 1 && (
-            <Link href='/login' variant='body2'>
-              Masz już konto? Zaloguj się
+            <Link to='/login' data-testid='link'>
+              <LinkUI variant='body2'>Masz już konto? Zaloguj się</LinkUI>
             </Link>
           )}
         </Box>

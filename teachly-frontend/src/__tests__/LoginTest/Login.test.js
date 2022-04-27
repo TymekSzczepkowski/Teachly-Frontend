@@ -1,11 +1,10 @@
+import Login from "../../pages/Auth/Login/Login";
+import { BrowserRouter } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { validatePassword } from "../../hooks/Auth/passwordVerification";
 import { validateEmail } from "../../hooks/Auth/emailVerification";
-import userEvent from "@testing-library/user-event";
-
-import Login from "../../pages/Auth/Login/Login";
-import { createMemoryHistory } from "history";
-import { BrowserRouter, Router } from "react-router-dom";
+import { createHistory, createMemorySource, LocationProvider } from "@reach/router";
+import "@testing-library/jest-dom";
 
 describe("Login validation functions", () => {
   test("Validate email function should pass with correct email", () => {
@@ -32,38 +31,55 @@ describe("Login validation functions", () => {
 });
 describe("Login form", () => {
   test("Render Login page", () => {
-    render(<Login />);
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     const element = screen.getByText(/Zaloguj się/);
     expect(element).toBeInTheDocument();
   });
   test("Find Email input", () => {
-    render(<Login />);
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     const loginInput = screen.getByLabelText(/E-mail/);
     fireEvent.change(loginInput, { target: { value: "test@gmail.com" } });
     expect(loginInput.value).toBe("test@gmail.com");
   });
-  // test("Click on link", () => {
-  //   render(<Login />);
-  //   const link = screen.getByTestId("login-link");
-  //   fireEvent.click(link);
-  //   expect(window.location.pathname).toBe("http://localhost:3000/register");
-  //   // expect(link).toHaveAttribute("href", "/register");
-  // });
-  test("Click on link", async () => {
-    const history = createMemoryHistory();
+  test("Find Password input", () => {
     render(
-      <Router history={history}>
+      <BrowserRouter>
         <Login />
-      </Router>
+      </BrowserRouter>
     );
-    const user = userEvent.setup();
-    // verify page content for expected route
-    // often you'd use a data-testid or role query, but this is also possible
-    expect(screen.getByText(/Zaloguj się/)).toBeInTheDocument();
-
-    user.click(screen.getByTestId("login-link"));
-
-    // check that the content changed to the new page
-    expect(screen.getByText(/Zarejestruj się/)).toBeInTheDocument();
+    const passwordInput = screen.getByLabelText(/Hasło/);
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    expect(passwordInput.value).toBe("password");
+  });
+  test("Verify if no typed inputs error appears", () => {
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
+    const buttonContinue = screen.getByTestId("buttonContinue");
+    fireEvent.click(buttonContinue);
+    expect(screen.getByText(/Proszę podać email/)).toBeInTheDocument();
+    expect(screen.getByText(/Proszę wpisać hasło/)).toBeInTheDocument();
+  });
+  test("Verify if wrong email error appears, when email is incorrect", () => {
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
+    const loginInput = screen.getByLabelText(/E-mail/);
+    fireEvent.change(loginInput, { target: { value: "testgmail.com" } });
+    const buttonContinue = screen.getByTestId("buttonContinue");
+    fireEvent.click(buttonContinue);
+    expect(screen.getByText(/Email jest niepoprawny/)).toBeInTheDocument();
   });
 });
