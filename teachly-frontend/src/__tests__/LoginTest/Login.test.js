@@ -3,8 +3,6 @@ import { BrowserRouter } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { validatePassword } from "../../hooks/Auth/passwordVerification";
 import { validateEmail } from "../../hooks/Auth/emailVerification";
-import { createHistory, createMemorySource, LocationProvider } from "@reach/router";
-import "@testing-library/jest-dom";
 
 describe("Login validation functions", () => {
   test("Validate email function should pass with correct email", () => {
@@ -39,17 +37,17 @@ describe("Login form", () => {
     const element = screen.getByText(/Zaloguj się/);
     expect(element).toBeInTheDocument();
   });
-  test("Find Email input", () => {
+  test("Find email input", () => {
     render(
       <BrowserRouter>
         <Login />
       </BrowserRouter>
     );
-    const loginInput = screen.getByLabelText(/E-mail/);
-    fireEvent.change(loginInput, { target: { value: "test@gmail.com" } });
-    expect(loginInput.value).toBe("test@gmail.com");
+    const emailInput = screen.getByLabelText(/E-mail/);
+    fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
+    expect(emailInput.value).toBe("test@gmail.com");
   });
-  test("Find Password input", () => {
+  test("Find password input", () => {
     render(
       <BrowserRouter>
         <Login />

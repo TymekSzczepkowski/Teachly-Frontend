@@ -38,7 +38,7 @@ function Login() {
   return (
     <Container maxWidth='sm' sx={{ mb: 4 }}>
       <Paper sx={{ my: { xs: 10, md: 6 }, p: { xs: 3.5, md: 3 } }}>
-        <Typography variant='h4' align='center' data-testid='zaloguj'>
+        <Typography variant='h4' align='center' data-testid='signin'>
           Zaloguj się
         </Typography>
         <Grid container spacing={3}>

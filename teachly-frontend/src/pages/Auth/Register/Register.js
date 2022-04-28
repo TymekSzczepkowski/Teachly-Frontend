@@ -99,7 +99,7 @@ function Register() {
       <Paper sx={{ my: { xs: 10, md: 6 }, p: { xs: 3.5, md: 3 } }}>
         {step !== 4 && (
           <div>
-            <Typography variant='h4' align='center' data-testid='zarejestruj'>
+            <Typography variant='h4' align='center' data-testid='signup'>
               Zarejestruj się
             </Typography>
             <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 5 }}>
@@ -126,6 +126,7 @@ function Register() {
           )}
           {step !== 4 && (
             <Button
+              data-testid='continue-button'
               fullWidth
               variant='contained'
               onClick={(e) => {
@@ -133,11 +134,12 @@ function Register() {
                 continueHandler();
                 setClick(true);
                 if (step === 2)
-                  setState({
-                    ...state,
-                    firstName: toBigLetter(state.firstName),
-                    lastName: toBigLetter(state.lastName),
-                  });
+                  if (state.firstName !== "" && state.lastName !== "")
+                    setState({
+                      ...state,
+                      firstName: toBigLetter(state.firstName),
+                      lastName: toBigLetter(state.lastName),
+                    });
               }}>
               Dalej
             </Button>

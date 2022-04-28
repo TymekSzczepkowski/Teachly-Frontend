@@ -45,7 +45,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         <Grid item xs={12} sm={6}>
           <FormControl variant='standard' fullWidth>
             <InputLabel>Płeć</InputLabel>
-            <Select value={state.sex} onChange={(e) => setState({ ...state, sex: e.target.value })}>
+            <Select data-testid='sex-input' value={state.sex} onChange={(e) => setState({ ...state, sex: e.target.value })}>
               <MenuItem value='Mężczyzna'>Mężczyzna</MenuItem>
               <MenuItem value='Kobieta'>Kobieta</MenuItem>
             </Select>
@@ -91,7 +91,9 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12}>
           <label>
-            <Input
+            <input
+              data-testid='upload-file'
+              style={{ display: "none" }}
               onChange={(event) => {
                 console.log(event.target.files[0].size);
                 if (validateFileTypeUpload(event.target.files[0].name) && validateFileSizeUpload(event.target.files[0].size)) {
@@ -103,9 +105,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
                   setInputMessage({ ...inputMessage, imageMessage: `Nieprawidłowe rozszerzenie pliku lub rozmiar jest zbyt duży` });
                 }
               }}
-              accept='image/'
               type='file'
-              sx={{ display: "none" }}
             />
             <Button fullWidth variant='contained' component='span' name='upload'>
               Upload your photo

@@ -1,7 +1,8 @@
 import Register from "../../pages/Auth/Register/Register";
 import { BrowserRouter } from "react-router-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { validateProfileType, validateRepeatPassowrd, validateDetails, validateFileTypeUpload, validateFileSizeUpload } from "../../hooks/Auth/registerVerification";
+import userEvent from "@testing-library/user-event";
 
 describe("Register validation form", () => {
   test("Validate profileType function should pass with selected profileType", () => {
@@ -25,7 +26,7 @@ describe("Register validation form", () => {
   test("Validate passwords function should not pass with not typed repeat password", () => {
     const samplePassword = "";
     const sampleRepeatPassword = "";
-    expect(validateRepeatPassowrd(samplePassword, sampleRepeatPassword)).toBe("Proszę wpisać hasło");
+    expect(validateRepeatPassowrd(samplePassword, sampleRepeatPassword)).toBe("Proszę wpisać powtórzone hasło");
   });
   test("Validate details function should pass with all typed details inputs", () => {
     const firstName = "John";
@@ -79,5 +80,151 @@ describe("Register", () => {
     );
     const element = screen.getByText(/Zarejestruj się/);
     expect(element).toBeInTheDocument();
+  });
+  test("Find email input", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const emailInput = screen.getByLabelText(/E-mail/);
+    fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
+    expect(emailInput.value).toBe("test@gmail.com");
+  });
+  test("Find password input", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const passwordInput = screen.getByLabelText(/Hasło/);
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    expect(passwordInput.value).toBe("password");
+  });
+  test("Find repeat password input", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const repeatpasswordInput = screen.getByLabelText(/Hasło/);
+    fireEvent.change(repeatpasswordInput, { target: { value: "password" } });
+    expect(repeatpasswordInput.value).toBe("password");
+  });
+  test("Find profile type toogle button", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const toogleButtonUczeń = screen.getByTestId(/student/);
+    const toogleButtonKorepetytor = screen.getByTestId(/teacher/);
+    fireEvent.click(toogleButtonUczeń);
+    fireEvent.click(toogleButtonKorepetytor);
+    expect(toogleButtonUczeń.value).toBe("Uczeń");
+    expect(toogleButtonKorepetytor.value).toBe("Korepetytor");
+  });
+  test("Verify if no typed inputs error appears", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const conutineButton = screen.getByTestId("continue-button");
+    fireEvent.click(conutineButton);
+    expect(screen.getByText(/Proszę wybrać typ profilu/)).toBeInTheDocument();
+    expect(screen.getByText(/Proszę podać email/)).toBeInTheDocument();
+    expect(screen.getByText(/Proszę wpisać hasło/)).toBeInTheDocument();
+    expect(screen.getByText(/Proszę wpisać powtórzone hasło/)).toBeInTheDocument();
+  });
+  test("Verify email is incorrect error appears", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const conutineButton = screen.getByTestId("continue-button");
+    fireEvent.click(conutineButton);
+    const emailInput = screen.getByLabelText(/E-mail/);
+    fireEvent.change(emailInput, { target: { value: "examplegmail.com" } });
+    expect(screen.getByText(/Email jest niepoprawny/)).toBeInTheDocument();
+  });
+  test("Verify if password does not match error appears", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    const conutineButton = screen.getByTestId("continue-button");
+    fireEvent.click(conutineButton);
+    const passwordInput = screen.getByLabelText(/Hasło/);
+    const repeatPasswordInput = screen.getByLabelText(/Powtórz hasło/);
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    fireEvent.change(repeatPasswordInput, { target: { value: "password2" } });
+    expect(screen.getByText(/Hasło nie jest takie same/)).toBeInTheDocument();
+  });
+
+  const setup = () => {
+    const conutineButton = screen.getByTestId("continue-button");
+    const toogleButtonUczeń = screen.getByTestId(/student/);
+    const emailInput = screen.getByLabelText(/E-mail/);
+    const passwordInput = screen.getByLabelText(/Hasło/);
+    const repeatPasswordInput = screen.getByLabelText(/Powtórz hasło/);
+    fireEvent.click(toogleButtonUczeń);
+    fireEvent.change(emailInput, { target: { value: "example@test.com" } });
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    fireEvent.change(repeatPasswordInput, { target: { value: "password" } });
+    fireEvent.click(conutineButton);
+  };
+
+  test("Verify if after filing all inputs you are able to click continue", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    setup();
+    expect(screen.getByLabelText(/Imię/)).toBeInTheDocument();
+  });
+  test("Verify if no typed inputs error appears in second step", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    setup();
+    const conutineButton = screen.getByTestId("continue-button");
+    fireEvent.click(conutineButton);
+    expect(screen.getByText(/Wszystkie pola muszą zostać wypełnione/)).toBeInTheDocument();
+  });
+  test("verify if success message appears after uploading file with correct extension", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    setup();
+    const file = new File(["hello"], "hello.jpg", { type: "image/hpg" });
+    const input = screen.getByTestId("upload-file");
+
+    userEvent.upload(input, file);
+
+    expect(input.files[0]).toBe(file);
+    expect(input.files.item(0)).toBe(file);
+    expect(screen.getByText(/Zdjęcie załadowane pomyślnie./)).toBeInTheDocument();
+  });
+  test("Verify if error message appears after uploading file with incorrect extension", () => {
+    render(
+      <BrowserRouter>
+        <Register />
+      </BrowserRouter>
+    );
+    setup();
+    const file = new File(["hello"], "hello.tiff", { type: "image/tiff" });
+    const input = screen.getByTestId("upload-file");
+    userEvent.upload(input, file);
+    expect(input.files[0]).toBe(file);
+    expect(input.files.item(0)).toBe(file);
+    expect(screen.getByText(/Nieprawidłowe rozszerzenie pliku lub rozmiar jest zbyt duży/)).toBeInTheDocument();
   });
 });

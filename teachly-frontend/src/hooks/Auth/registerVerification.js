@@ -7,7 +7,7 @@ export const validateProfileType = (alignment) => {
 };
 export const validateRepeatPassowrd = (password, repeatPassword) => {
   if (repeatPassword === "") {
-    return "Proszę wpisać hasło";
+    return "Proszę wpisać powtórzone hasło";
   } else if (password !== repeatPassword) {
     return "Hasło nie jest takie same";
   } else return "";

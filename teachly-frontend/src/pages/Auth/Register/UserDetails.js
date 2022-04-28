@@ -26,10 +26,10 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
   return (
     <div>
       <ToggleButtonGroup sx={{ mb: 1.5 }} fullWidth color='primary' exclusive onChange={handleChange} value={alignment}>
-        <ToggleButton value='Uczeń' type='radio' name='profileType'>
+        <ToggleButton value='Uczeń' type='radio' name='profileType' data-testid='student'>
           Uczeń
         </ToggleButton>
-        <ToggleButton value='Korepetytor' type='radio' name='profileType'>
+        <ToggleButton value='Korepetytor' type='radio' name='profileType' data-testid='teacher'>
           Korepetytor
         </ToggleButton>
       </ToggleButtonGroup>

@@ -55,7 +55,7 @@ function Confirmation({ state }) {
                 <ApartmentOutlinedIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary='Miejsce zamieszkania' secondary={state.region + ", " + state.city} />
+            <ListItemText data-testid='place-of-residence' primary='Miejsce zamieszkania' secondary={state.region + ", " + state.city} />
           </ListItem>
         </List>
       </Grid>
