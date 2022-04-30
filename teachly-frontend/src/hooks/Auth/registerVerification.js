@@ -1,5 +1,5 @@
-export const validateProfileType = (alignment) => {
-  if (alignment === "") {
+export const validateProfileType = (profileType) => {
+  if (profileType === "") {
     return "Proszę wybrać typ profilu";
   } else {
     return "";
@@ -18,17 +18,11 @@ export const validateDetails = (firstName, lastName, sex, country, region, city,
     return "Wszystkie pola muszą zostać wypełnione";
   } else return "";
 };
-
 export const validateFileTypeUpload = (fileName) => {
   const allowedExtensions = new Array("jpg", "png", "jpeg");
   let fileExtension = fileName.split(".").pop().toLowerCase();
 
-  for (let i = 0; i <= allowedExtensions.length; i++) {
-    if (allowedExtensions[i] == fileExtension) {
-      return true;
-    }
-  }
-  return false;
+  return allowedExtensions.includes(fileExtension);
 };
 export const validateFileSizeUpload = (fileName) => {
   let fileSize = (fileName = Math.round(fileName / 1024 / 1024));

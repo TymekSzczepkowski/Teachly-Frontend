@@ -3,7 +3,7 @@ import cities from "./data/cities.json";
 import countries from "./data/countries.json";
 import region from "./data/region.json";
 import { validateFileTypeUpload, validateFileSizeUpload } from "../../../hooks/Auth/registerVerification";
-import { Input, Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
+import { Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
 
 function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const [alertOpen, setAlertOpen] = useState(false);
@@ -52,7 +52,6 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          {console.log(state.city)}
           <Autocomplete
             options={citiesInPoland}
             renderInput={(params) => <TextField {...params} label='Miasto' variant='standard' />}
@@ -63,7 +62,6 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
               setState({ ...state, city: newCity.city });
             }}
           />
-          {console.log(state.city)}
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
@@ -95,7 +93,6 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
               data-testid='upload-file'
               style={{ display: "none" }}
               onChange={(event) => {
-                console.log(event.target.files[0].size);
                 if (validateFileTypeUpload(event.target.files[0].name) && validateFileSizeUpload(event.target.files[0].size)) {
                   setState({ ...state, image: event.target.files[0] });
                   setInputMessage({ ...inputMessage, imageMessage: "Zdjęcie załadowane pomyślnie." });

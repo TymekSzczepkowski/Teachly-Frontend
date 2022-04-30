@@ -11,7 +11,7 @@ import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, 
 
 function Register() {
   const [click, setClick] = useState(false);
-  const [alignment, setAlignment] = useState("");
+  const [profileTypeSelection, setProfileTypeSelection] = useState("");
   const [step, setStep] = useState(1);
   const [state, setState] = useState({
     profileType: "",
@@ -48,7 +48,7 @@ function Register() {
   };
   function continueHandler() {
     if (step === 1) {
-      if (validateProfileType(alignment) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatPassowrd(state.password, state.repeatPassword) === "") {
+      if (validateProfileType(profileTypeSelection) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatPassowrd(state.password, state.repeatPassword) === "") {
         nextStep();
       }
     } else if (step === 2) {
@@ -68,7 +68,7 @@ function Register() {
   function getStepContent(step) {
     switch (step) {
       case 1:
-        return <UserDetails nextStep={nextStep} state={state} setState={setState} step={step} alignment={alignment} setAlignment={setAlignment} inputMessage={inputMessage} setInputMessage={setInputMessage} />;
+        return <UserDetails nextStep={nextStep} state={state} setState={setState} step={step} alignment={profileTypeSelection} setAlignment={setProfileTypeSelection} inputMessage={inputMessage} setInputMessage={setInputMessage} />;
       case 2:
         return <PersonalDetails nextStep={nextStep} previousStep={previousStep} setState={setState} state={state} step={step} inputMessage={inputMessage} setInputMessage={setInputMessage} />;
       case 3:
@@ -84,7 +84,7 @@ function Register() {
     if (click) {
       setInputMessage({
         ...inputMessage,
-        profileTypeMessage: validateProfileType(alignment),
+        profileTypeMessage: validateProfileType(profileTypeSelection),
         emailMessage: validateEmail(state.email),
         passwordMessage: validatePassword(state.password),
         repeatPasswordMessage: validateRepeatPassowrd(state.password, state.repeatPassword),
