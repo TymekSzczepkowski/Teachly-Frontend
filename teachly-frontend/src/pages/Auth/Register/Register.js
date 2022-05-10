@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Success from "./Success";
 import UserDetails from "./UserDetails";
@@ -9,7 +11,9 @@ import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { validateProfileType, validateRepeatPassowrd, validateDetails } from "../../../hooks/Auth/registerVerification";
 import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
 
+const API_URL = process.env.REACT_APP_API_URL;
 function Register() {
+  const [auth, setAuth] = useAuth();
   const [click, setClick] = useState(false);
   const [profileTypeSelection, setProfileTypeSelection] = useState("");
   const [step, setStep] = useState(1);
@@ -46,7 +50,8 @@ function Register() {
     word = word[0].toUpperCase() + word.slice(1);
     return word;
   };
-  function continueHandler() {
+
+  async function continueHandler() {
     if (step === 1) {
       if (validateProfileType(profileTypeSelection) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatPassowrd(state.password, state.repeatPassword) === "") {
         nextStep();
@@ -60,8 +65,29 @@ function Register() {
         nextStep();
       }
     } else if (step === 3) {
-      //send to backend
-      nextStep();
+      //first name i last name nie jest uwzględnione w rejetracji
+      try {
+        const response = await axios.post(
+          API_URL + `accounts/users/`,
+          {
+            first_name: state.firstName,
+            last_name: state.lastName,
+            sex: state.sex,
+            email: state.email,
+            password: state.password,
+            re_password: state.repeatPassword,
+            avatar: state.image,
+            type: state.profileType,
+            country: state.country,
+            county: state.region,
+            city: state.city,
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        nextStep();
+      } catch (exception) {}
     }
   }
 
@@ -74,7 +100,7 @@ function Register() {
       case 3:
         return <Confirmation nextStep={nextStep} previousStep={previousStep} step={step} state={state} />;
       case 4:
-        return <Success />;
+        return <Success state={state} />;
       default:
         return <div>error</div>;
     }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, Box, LinearProgress, Fade, Typography } from "@mui/material";
+import { Box, LinearProgress, Fade, Typography } from "@mui/material";
 
-function Success() {
+function Success({ state }) {
   const [show, setShow] = useState(false);
   setTimeout(() => {
     setShow(true);
@@ -11,14 +11,14 @@ function Success() {
       {show ? (
         <>
           <Fade in>
-            <Typography sx={{ mb: 5 }} gutterBottom align='center' variant='h2'>
-              Witaj w Teachly
+            <Typography sx={{ mb: 3 }} gutterBottom align='center' variant='h2'>
+              {`Witaj ${state.firstName} ${state.lastName}`}
             </Typography>
           </Fade>
           <Fade in>
-            <Button size='large' fullWidth variant='contained'>
-              Dalej
-            </Button>
+            <Typography sx={{ mb: 4 }} gutterBottom align='center' variant='body1'>
+              Na Twojego maila wysłaliśmy link weryfikacyjny, kliknij w niego, aby potwierdzić rejestracje.
+            </Typography>
           </Fade>
         </>
       ) : (
