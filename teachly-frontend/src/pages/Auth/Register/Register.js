@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 import Success from "./Success";
 import UserDetails from "./UserDetails";
 import PersonalDetails from "./PersonalDetails";
@@ -14,6 +14,8 @@ import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, 
 const API_URL = process.env.REACT_APP_API_URL;
 function Register() {
   const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
+
   const [click, setClick] = useState(false);
   const [profileTypeSelection, setProfileTypeSelection] = useState("");
   const [step, setStep] = useState(1);
@@ -90,6 +92,9 @@ function Register() {
       } catch (exception) {}
     }
   }
+  useEffect(() => {
+    auth && navigate("/");
+  }, []);
 
   function getStepContent(step) {
     switch (step) {
@@ -122,25 +127,26 @@ function Register() {
 
   return (
     <Container maxWidth='sm' sx={{ mb: 4 }}>
-      <Paper sx={{ my: { xs: 10, md: 6 }, p: { xs: 3.5, md: 3 } }}>
+      <Paper elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
         {step !== 4 && (
-          <div>
-            <Typography variant='h4' align='center' data-testid='signup'>
+          <Box>
+            <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' data-testid='signup'>
               Zarejestruj się
             </Typography>
-            <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 5 }}>
+            <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 2 }}>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               ))}
             </Stepper>
-          </div>
+          </Box>
         )}
         {getStepContent(step)}
         <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
           {step !== 1 && step !== 4 && (
             <Button
+              sx={{ p: 1 }}
               fullWidth
               color='inherit'
               variant='text'
@@ -152,6 +158,7 @@ function Register() {
           )}
           {step !== 4 && (
             <Button
+              sx={{ p: 1 }}
               data-testid='continue-button'
               fullWidth
               variant='contained'
@@ -177,9 +184,9 @@ function Register() {
             justifyContent: "center",
           }}>
           {step === 1 && (
-            <Link to='/login' data-testid='link'>
-              <LinkUI variant='body2'>Masz już konto? Zaloguj się</LinkUI>
-            </Link>
+            <LinkUI color='secondary' component={Link} to={"/login"} variant='body2'>
+              Masz już konto? Zaloguj się
+            </LinkUI>
           )}
         </Box>
       </Paper>

@@ -14,6 +14,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const citiesInPoland = cities;
   const allCountries = countries;
   const allRegions = region;
+
   return (
     <div>
       <Grid container spacing={3}>
@@ -22,6 +23,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            autoComplete='off'
             fullWidth
             variant='standard'
             label='Imię'
@@ -33,6 +35,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            autoComplete='off'
             fullWidth
             variant='standard'
             label='Nazwisko'

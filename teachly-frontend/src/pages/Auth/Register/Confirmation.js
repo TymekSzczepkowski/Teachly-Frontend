@@ -18,7 +18,7 @@ function Confirmation({ state }) {
         </Card>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+        <List sx={{ width: "100%", maxWidth: 360 }}>
           <ListItem>
             <ListItemAvatar>
               <Avatar>

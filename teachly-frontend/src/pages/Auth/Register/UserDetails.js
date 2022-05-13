@@ -37,6 +37,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
+            autoComplete='off'
             error={inputMessage.emailMessage === "" ? false : true}
             helperText={inputMessage.emailMessage}
             fullWidth
@@ -53,12 +54,13 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
-                  <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                  <IconButton color='secondary' aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               ),
             }}
+            
             error={inputMessage.passwordMessage === "" ? false : true}
             helperText={inputMessage.passwordMessage}
             fullWidth
@@ -77,7 +79,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
               endAdornment: (
                 <InputAdornment position='end'>
                   {" "}
-                  <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                  <IconButton color='secondary' aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>

@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { ColorModeContext } from "../../context/ColorModeContext";
 import useAuth from "../../hooks/useAuth";
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, List, Divider, ListItem, Drawer, ListItemIcon, ListItemText, Switch, ListSubheader } from "@mui/material";
-
+import LeftDrawer from "./LeftDrawer.js";
+import { Paper, styled, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, Drawer } from "@mui/material";
+import guyPhoto from "../../pages/Auth/Register/data/guy.jpeg";
 import MenuIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import BrightnessHighIcon from "@mui/icons-material/BrightnessHigh";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
 import SchoolIcon from "@mui/icons-material/School";
-import JohnDoe from "../../pages/Auth/Register/data/guy.jpeg";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function Navbar() {
+  const { colorMode, setColorMode } = useContext(ColorModeContext);
+  const [showLeftMenu, setShowLeftMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(null);
   const [auth, setAuth] = useAuth();
 
   const logout = (e) => {
@@ -15,9 +22,6 @@ function Navbar() {
     handleCloseUserMenu();
     setAuth(false);
   };
-
-  const [showLeftMenu, setShowLeftMenu] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(null);
 
   const handleOpenUserMenu = (event) => {
     setShowUserMenu(event.currentTarget);
@@ -31,196 +35,149 @@ function Navbar() {
     setShowLeftMenu(open);
   };
 
-  const list = () => (
-    <Box sx={{ width: 250 }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-      {auth ? (
-        <>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Znajdź korepetytora' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zostań korepetytorem' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Wirtualna klasa' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Skontaktuj się' />
-            </ListItem>
-          </List>
-          <Divider />
-        </>
-      ) : (
-        <>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Znajdź korepetytora' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zostań korepetytorem' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Skontaktuj się' />
-            </ListItem>
-          </List>
-          <Divider />
-        </>
-      )}
-    </Box>
-  );
+  const handleColorModeChange = () => {
+    setColorMode(!colorMode);
+  };
+
+  const changeColorButton = () => {
+    return (
+      <>
+        {colorMode ? (
+          <IconButton onClick={handleColorModeChange}>
+            <BrightnessHighIcon color='primary' />
+          </IconButton>
+        ) : (
+          <IconButton onClick={handleColorModeChange}>
+            <Brightness4Icon color='primary' />
+          </IconButton>
+        )}
+      </>
+    );
+  };
+
+  const LinkButton = styled(Button)({
+    my: 2,
+    marginRight: "5px",
+    textTransform: "none",
+    display: "block",
+    color: "inherit",
+    fontWeight: "600",
+  });
   return (
-    <AppBar>
-      <Container maxWidth='xl'>
-        <Toolbar disableGutters>
-          <SchoolIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
-            href='/'
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}>
-            TEACHLY
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton size='large' aria-label='account of current user' aria-controls='menu-appbar' aria-haspopup='true' onClick={toggleDrawer(true)} color='inherit'>
-              <MenuIcon />
-            </IconButton>
-            <>
-              <Drawer open={showLeftMenu} onClose={toggleDrawer(false)}>
-                {list()}
-              </Drawer>
-            </>
-          </Box>
-
-          <SchoolIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            href=''
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}>
-            TEACHLY
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {auth ? (
-              <>
-                <Button sx={{ my: 2, color: "white", display: "block" }}>Znajdź korepetytora</Button>
-                <Button sx={{ my: 2, color: "white", display: "block" }}>Zostań korepetytorem</Button>
-                <Button sx={{ my: 2, color: "white", display: "block" }}>Wirtualna klasa</Button>
-                <Button sx={{ my: 2, color: "white", display: "block" }}>Skontaktuj się</Button>
-              </>
-            ) : (
-              <>
-                <Button sx={{ my: 2, color: "white", display: "block" }}>Znajdź korepetytora</Button>
-                <Button sx={{ my: 2, color: "white", display: "block" }}>Zostań korepetytorem</Button>
-                <Button sx={{ my: 2, color: "white", display: "block" }}>Skontaktuj się</Button>
-              </>
-            )}
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            {auth ? (
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='John Doe' src={JohnDoe} />
+    <AppBar square={false} elevation={0}>
+      <Paper elevation={1}>
+        <Container>
+          <Toolbar disableGutters>
+            <SchoolIcon color='primary' sx={{ display: { xs: "none", md: "flex" }, mr: 1, fontSize: "30px" }} />
+            <Typography
+              variant='h6'
+              noWrap
+              component={Link}
+              to={"/"}
+              sx={{
+                fontSize: "30px",
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontWeight: 600,
+                color: "inherit",
+                textDecoration: "none",
+              }}>
+              teachly
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton size='large' aria-label='account of current user' aria-controls='menu-appbar' aria-haspopup='true' onClick={toggleDrawer(true)} color='inherit'>
+                <MenuIcon />
               </IconButton>
-            ) : (
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt='John Doe' />
-              </IconButton>
-            )}
-            <Menu
-              sx={{ mt: "45px" }}
-              id='menu-appbar'
-              anchorEl={showUserMenu}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              onClick={handleCloseUserMenu}
-              open={Boolean(showUserMenu)}>
+              <>
+                <Drawer open={showLeftMenu} onClose={toggleDrawer(false)}>
+                  {LeftDrawer(auth, colorMode, toggleDrawer, handleColorModeChange)}
+                </Drawer>
+              </>
+            </Box>
+            <SchoolIcon color='primary' sx={{ display: { xs: "flex", md: "none" }, mr: 1, fontSize: "30px" }} />
+            <Typography
+              variant='h5'
+              noWrap
+              component={Link}
+              to={"/"}
+              href=''
+              sx={{
+                fontSize: "30px",
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontWeight: 600,
+                color: "inherit",
+                textDecoration: "none",
+              }}>
+              teachly
+            </Typography>
+            <Box sx={{ justifyContent: "flex-start", flexGrow: 2, display: { xs: "none", md: "flex" } }}>
+              <LinkButton>Znajdź korepetytora</LinkButton>
+              <LinkButton>Zostań korepetytorem</LinkButton>
+              <LinkButton>Jak to działa</LinkButton>
+            </Box>
+            <Box sx={{ justifyContent: "flex-end", flexGrow: 2, display: { xs: "none", md: "flex" } }}>{changeColorButton()}</Box>
+
+            <Box sx={{ flexGrow: 0 }}>
               {auth ? (
-                <>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign='center'>Moje konto</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign='center'>Moje zajęcia</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign='center'>Ustawienia</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={logout}>
-                    <Typography textAlign='center'>Wyloguj</Typography>
-                  </MenuItem>
-                </>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar sx={{ width: 32, height: 32 }} alt='John Doe' src={guyPhoto} />
+                </IconButton>
               ) : (
-                <>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign='center'>Zarejestruj się</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign='center'>Zaloguj się</Typography>
-                  </MenuItem>
-                </>
+                <IconButton color='primary' onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <AccountCircleIcon />
+                </IconButton>
               )}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+
+              <Menu
+                sx={{ mt: "45px" }}
+                id='menu-appbar'
+                anchorEl={showUserMenu}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                onClick={handleCloseUserMenu}
+                open={Boolean(showUserMenu)}>
+                {auth ? (
+                  <div>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>Moje konto</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>Moje zajęcia</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>Wiadomości</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>Ustawienia</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={logout}>
+                      <Typography textAlign='center'>Wyloguj</Typography>
+                    </MenuItem>
+                  </div>
+                ) : (
+                  <div>
+                    <MenuItem component={Link} to={"/login"} onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>Zaloguj się</Typography>
+                    </MenuItem>
+                    <MenuItem component={Link} to={"/register"} onClick={handleCloseUserMenu}>
+                      <Typography textAlign='center'>Zarejestruj się</Typography>
+                    </MenuItem>
+                  </div>
+                )}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </Paper>
     </AppBar>
   );
 }
