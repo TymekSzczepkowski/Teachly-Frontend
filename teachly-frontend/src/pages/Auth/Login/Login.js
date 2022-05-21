@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react";
-import useAuth from "../../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
+import AuthContext from "../../../context/authContext";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Container, Paper, Typography, Grid, TextField, Stack, Button, Box, IconButton, InputAdornment, Link as LinkUI } from "@mui/material/";
+import { Container, Typography, Grid, TextField, Stack, Button, Box, IconButton, InputAdornment, Link as LinkUI } from "@mui/material/";
 
 const API_URL = process.env.REACT_APP_API_URL;
 function Login() {
-  const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
+  const { userDetails, setUserDetails } = useContext(AuthContext);
+  const [auth, setAuth] = useAuth();
   const [showPassword, setShowPassword] = useState(true);
   const [click, setClick] = useState(false);
   const [state, setState] = useState({
     email: "",
     password: "",
   });
+
   const [inputMessage, setInputMessage] = useState({
     emailMessage: "",
     passwordMessage: "",
@@ -36,15 +38,11 @@ function Login() {
         refresh: response.data.refresh,
         access: response.data.access,
       });
-      console.log(response);
-      navigate("/profile");
+      navigate("/");
     } catch (ex) {
       console.log(ex);
     }
   };
-  useEffect(() => {
-    auth && navigate("/");
-  }, []);
 
   useEffect(() => {
     if (click) {
@@ -56,6 +54,10 @@ function Login() {
     }
   }, [click, state]);
 
+  useEffect(() => {
+    auth && navigate("/");
+  }, []);
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -65,9 +67,9 @@ function Login() {
   };
 
   return (
-    <Container maxWidth='sm' sx={{ mb: 4 }}>
-      <Paper elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
-        <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' data-testid='signin'>
+    <Container maxWidth='sm'>
+      <Box sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
+        <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' data-testid='signin' gutterBottom>
           Zaloguj się
         </Typography>
         <Grid container spacing={3}>
@@ -75,7 +77,6 @@ function Login() {
             <TextField
               autoComplete='off'
               fullWidth
-              variant='standard'
               error={inputMessage.emailMessage === "" ? false : true}
               helperText={inputMessage.emailMessage}
               fullWidth
@@ -92,7 +93,7 @@ function Login() {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
-                    <IconButton color='secondary' aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                    <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
@@ -128,11 +129,11 @@ function Login() {
             display: "flex",
             justifyContent: "center",
           }}>
-          <LinkUI color='secondary' component={Link} to={"/register"} variant='body2'>
+          <LinkUI component={Link} to={"/register"} variant='body2'>
             Nie masz konta? Zarejestruj się
           </LinkUI>
         </Box>
-      </Paper>
+      </Box>
     </Container>
   );
 }

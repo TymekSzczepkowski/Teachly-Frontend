@@ -54,7 +54,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
-                  <IconButton color='secondary' aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                  <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
@@ -79,7 +79,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
               endAdornment: (
                 <InputAdornment position='end'>
                   {" "}
-                  <IconButton color='secondary' aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                  <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>

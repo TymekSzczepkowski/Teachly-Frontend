@@ -9,7 +9,7 @@ import Confirmation from "./Confirmation";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { validateProfileType, validateRepeatPassowrd, validateDetails } from "../../../hooks/Auth/registerVerification";
-import { Container, Paper, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
+import { Container, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
 
 const API_URL = process.env.REACT_APP_API_URL;
 function Register() {
@@ -127,7 +127,7 @@ function Register() {
 
   return (
     <Container maxWidth='sm' sx={{ mb: 4 }}>
-      <Paper elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
+      <Box elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
         {step !== 4 && (
           <Box>
             <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' data-testid='signup'>
@@ -142,6 +142,7 @@ function Register() {
             </Stepper>
           </Box>
         )}
+
         {getStepContent(step)}
         <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
           {step !== 1 && step !== 4 && (
@@ -184,12 +185,12 @@ function Register() {
             justifyContent: "center",
           }}>
           {step === 1 && (
-            <LinkUI color='secondary' component={Link} to={"/login"} variant='body2'>
+            <LinkUI component={Link} to={"/login"} variant='body2'>
               Masz już konto? Zaloguj się
             </LinkUI>
           )}
         </Box>
-      </Paper>
+      </Box>
     </Container>
   );
 }

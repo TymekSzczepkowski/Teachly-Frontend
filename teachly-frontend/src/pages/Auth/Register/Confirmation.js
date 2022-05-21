@@ -45,7 +45,7 @@ function Confirmation({ state }) {
           </ListItem>
           <ListItem>
             <ListItemAvatar>
-              <Avatar>{state.sex === "Kobieta" ? <FemaleOutlinedIcon /> : <MaleOutlinedIcon />}</Avatar>
+              <Avatar>{state.sex === "Female" ? <FemaleOutlinedIcon /> : <MaleOutlinedIcon />}</Avatar>
             </ListItemAvatar>
             <ListItemText primary='Płeć' secondary={state.sex} />
           </ListItem>

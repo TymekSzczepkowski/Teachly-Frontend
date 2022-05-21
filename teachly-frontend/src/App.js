@@ -1,28 +1,33 @@
+import { useState, useReducer } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { reducer, intialState } from "./reducer";
-import { useState, useReducer } from "react";
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
 import Navbar from "./components/Navbar/Navbar.js";
+import Settings from "./pages/Settings/Settings.js";
 import VerifyEmail from "./pages/Auth/VerifyEmail/VerifyEmail";
 import Home from "./pages/Home/Home";
-import myColorPalette from "./hooks/Utils/myColorPallete";
-import AuthContext from "./context/authContext";
-import { ColorModeContext } from "./context/ColorModeContext";
-import ReducerContext from "./context/reducerContext";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { GlobalStyles } from "@mui/material";
 import MyAccount from "./pages/MyAccount/MyAccount.js";
+import AuthContext from "./context/authContext";
+import ReducerContext from "./context/reducerContext";
 import AuthenticatedRoute from "./hoc/AuthenticatedRoute.js";
+import myColorPalette from "./hooks/Utils/myColorPallete";
+import { GlobalStyles } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import EditEmail from "./components/EditAccountInfo/EditEmail";
+import EditPassword from "./components/EditAccountInfo/EditPassword";
 
 function App() {
-  const [colorMode, setColorMode] = useState(true);
+  const [userDetails, setUserDetails] = useState(" ");
   const [state, dispatch] = useReducer(reducer, intialState);
-  const colorTheme = createTheme(myColorPalette(colorMode ? "dark" : "light"));
+  const colorTheme = createTheme(myColorPalette);
+
   return (
     <>
       <AuthContext.Provider
         value={{
+          userDetails,
+          setUserDetails,
           user: state.user,
           login: (user) => dispatch({ type: "login", user }),
           logout: () => dispatch({ type: "logout" }),
@@ -36,20 +41,52 @@ function App() {
             <ThemeProvider theme={colorTheme}>
               <GlobalStyles
                 styles={{
-                  body: { backgroundColor: colorMode ? "#121212" : "#F8F8F8" },
+                  body: { backgroundColor: "#F8F8F8" },
                 }}
               />
-              <ColorModeContext.Provider value={{ colorMode, setColorMode }}>
-                <Navbar />
-                <Routes>
-                  {/* <AuthenticatedRoute path='/profile' element={<MojaStaraSzybkoTanczy />}/> */}
-                  <Route path='/' element={<Home />}></Route>
-                  <Route path='/profile' element={<AuthenticatedRoute element={<MyAccount />} />}></Route>
-                  <Route exact path='/login' element={<Login />}></Route>
-                  <Route path='/register' element={<Register />}></Route>
-                  <Route path='/activate/:uidURL/:tokenURL' element={<VerifyEmail />}></Route>
-                </Routes>
-              </ColorModeContext.Provider>
+              <Navbar />
+              <Routes>
+                <Route path='/' element={<Home />}></Route>
+                <Route
+                  path='/myaccount'
+                  element={
+                    <AuthenticatedRoute>
+                      <MyAccount />
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path='/settings'
+                  element={
+                    <AuthenticatedRoute>
+                      <Settings />
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path='/settings/editemail'
+                  element={
+                    <AuthenticatedRoute>
+                      <Settings>
+                        <EditEmail />
+                      </Settings>
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path='/settings/editpassword'
+                  element={
+                    <AuthenticatedRoute>
+                      <Settings>
+                        <EditPassword />
+                      </Settings>
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route exact path='/login' element={<Login />}></Route>
+                <Route path='/register' element={<Register />}></Route>
+                <Route path='/activate/:uidURL/:tokenURL' element={<VerifyEmail />}></Route>
+              </Routes>
             </ThemeProvider>
           </Router>
         </ReducerContext.Provider>

@@ -4,9 +4,7 @@ import { Box, List, Divider, ListItem, ListItemText, ListItemIcon, Switch } from
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
-import BrightnessHighIcon from "@mui/icons-material/BrightnessHigh";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-function LeftDrawer(auth, colorMode, toggleDrawer, handleColorModeChange) {
+function LeftDrawer(auth, toggleDrawer) {
   return (
     <Box sx={{ width: 250 }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
       <List>
@@ -54,13 +52,6 @@ function LeftDrawer(auth, colorMode, toggleDrawer, handleColorModeChange) {
           <Divider />
         </>
       )}
-      <List>
-        <ListItem>
-          <ListItemIcon>{colorMode ? <BrightnessHighIcon /> : <Brightness4Icon />}</ListItemIcon>
-          <ListItemText primary={!colorMode ? "Light mode" : "Dark mode"} />
-          <Switch edge='end' checked={colorMode} onChange={handleColorModeChange} />
-        </ListItem>
-      </List>
     </Box>
   );
 }

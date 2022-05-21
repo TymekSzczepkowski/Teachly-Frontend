@@ -1,21 +1,35 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ColorModeContext } from "../../context/ColorModeContext";
+import axios from "axios";
+import AuthContext from "../../context/authContext";
 import useAuth from "../../hooks/useAuth";
 import LeftDrawer from "./LeftDrawer.js";
-import { Paper, styled, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, Drawer } from "@mui/material";
+import { Divider, Card, styled, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, Drawer } from "@mui/material";
 import guyPhoto from "../../pages/Auth/Register/data/guy.jpeg";
 import MenuIcon from "@mui/icons-material/Menu";
-import BrightnessHighIcon from "@mui/icons-material/BrightnessHigh";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
 import SchoolIcon from "@mui/icons-material/School";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function Navbar() {
-  const { colorMode, setColorMode } = useContext(ColorModeContext);
+  const API_URL = process.env.REACT_APP_API_URL;
+  const { userDetails, setUserDetails } = useContext(AuthContext);
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(null);
   const [auth, setAuth] = useAuth();
+
+  useEffect(() => {
+    if (auth) {
+      axios
+        .get(API_URL + `accounts/users/me`, {
+          headers: {
+            Authorization: `Bearer ${auth.access}`,
+          },
+        })
+        .then((response) => {
+          setUserDetails(response.data);
+        });
+    }
+  }, [auth]);
 
   const logout = (e) => {
     e.preventDefault();
@@ -35,26 +49,6 @@ function Navbar() {
     setShowLeftMenu(open);
   };
 
-  const handleColorModeChange = () => {
-    setColorMode(!colorMode);
-  };
-
-  const changeColorButton = () => {
-    return (
-      <>
-        {colorMode ? (
-          <IconButton onClick={handleColorModeChange}>
-            <BrightnessHighIcon color='primary' />
-          </IconButton>
-        ) : (
-          <IconButton onClick={handleColorModeChange}>
-            <Brightness4Icon color='primary' />
-          </IconButton>
-        )}
-      </>
-    );
-  };
-
   const LinkButton = styled(Button)({
     my: 2,
     marginRight: "5px",
@@ -65,10 +59,12 @@ function Navbar() {
   });
   return (
     <AppBar square={false} elevation={0}>
-      <Paper elevation={1}>
+      <Card variant='outlined'>
         <Container>
           <Toolbar disableGutters>
-            <SchoolIcon color='primary' sx={{ display: { xs: "none", md: "flex" }, mr: 1, fontSize: "30px" }} />
+            <IconButton component={Link} to={"/"} sx={{ display: { xs: "none", md: "flex" } }}>
+              <SchoolIcon color='primary' sx={{ mr: 1, fontSize: "30px" }} />
+            </IconButton>
             <Typography
               variant='h6'
               noWrap
@@ -90,48 +86,34 @@ function Navbar() {
               </IconButton>
               <>
                 <Drawer open={showLeftMenu} onClose={toggleDrawer(false)}>
-                  {LeftDrawer(auth, colorMode, toggleDrawer, handleColorModeChange)}
+                  {LeftDrawer(auth, toggleDrawer)}
                 </Drawer>
               </>
             </Box>
-            <SchoolIcon color='primary' sx={{ display: { xs: "flex", md: "none" }, mr: 1, fontSize: "30px" }} />
-            <Typography
-              variant='h5'
-              noWrap
-              component={Link}
-              to={"/"}
-              href=''
-              sx={{
-                fontSize: "30px",
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontWeight: 600,
-                color: "inherit",
-                textDecoration: "none",
-              }}>
-              teachly
-            </Typography>
+            <IconButton component={Link} to={"/"} size='large'>
+              <SchoolIcon color='primary' sx={{ display: { xs: "flex", md: "none" }, mr: 1, fontSize: "30px" }} />
+            </IconButton>
+
             <Box sx={{ justifyContent: "flex-start", flexGrow: 2, display: { xs: "none", md: "flex" } }}>
               <LinkButton>Znajdź korepetytora</LinkButton>
               <LinkButton>Zostań korepetytorem</LinkButton>
               <LinkButton>Jak to działa</LinkButton>
             </Box>
-            <Box sx={{ justifyContent: "flex-end", flexGrow: 2, display: { xs: "none", md: "flex" } }}>{changeColorButton()}</Box>
 
             <Box sx={{ flexGrow: 0 }}>
               {auth ? (
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0.5 }}>
                   <Avatar sx={{ width: 32, height: 32 }} alt='John Doe' src={guyPhoto} />
                 </IconButton>
               ) : (
-                <IconButton color='primary' onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <AccountCircleIcon />
+                <IconButton color='primary' onClick={handleOpenUserMenu} sx={{ p: 0.5 }}>
+                  <AccountCircleIcon fontSize='large' />
                 </IconButton>
               )}
 
               <Menu
                 sx={{ mt: "45px" }}
+                elevation={1}
                 id='menu-appbar'
                 anchorEl={showUserMenu}
                 anchorOrigin={{
@@ -145,39 +127,60 @@ function Navbar() {
                 }}
                 onClick={handleCloseUserMenu}
                 open={Boolean(showUserMenu)}>
-                {auth ? (
-                  <div>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>Moje konto</Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>Moje zajęcia</Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>Wiadomości</Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>Ustawienia</Typography>
-                    </MenuItem>
-                    <MenuItem onClick={logout}>
-                      <Typography textAlign='center'>Wyloguj</Typography>
-                    </MenuItem>
-                  </div>
-                ) : (
-                  <div>
-                    <MenuItem component={Link} to={"/login"} onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>Zaloguj się</Typography>
-                    </MenuItem>
-                    <MenuItem component={Link} to={"/register"} onClick={handleCloseUserMenu}>
-                      <Typography textAlign='center'>Zarejestruj się</Typography>
-                    </MenuItem>
-                  </div>
-                )}
+                <Box
+                  sx={{
+                    width: "200px",
+                    p: 0.5,
+                    ml: 0.75,
+                    "& .MuiMenuItem-root": {
+                      typography: "body2",
+                      borderRadius: 0.75,
+                    },
+                  }}>
+                  {auth ? (
+                    <>
+                      <Box sx={{ my: 1.5, px: 2.5 }}>
+                        <Typography variant='subtitle2' noWrap>
+                          {`${userDetails.first_name} ${userDetails.last_name}`}
+                        </Typography>
+                        <Typography variant='body2' sx={{ color: "text.secondary" }} noWrap>
+                          {userDetails.email}
+                        </Typography>
+                      </Box>
+                      <Divider />
+                      <MenuItem component={Link} to={"/"} onClick={handleCloseUserMenu}>
+                        <Typography textAlign='center'>Strona główna</Typography>
+                      </MenuItem>
+                      <MenuItem component={Link} to={"/myaccount"} onClick={handleCloseUserMenu}>
+                        <Typography textAlign='center'>Moje konto</Typography>
+                      </MenuItem>
+                      <MenuItem component={Link} to={"/settings"} onClick={handleCloseUserMenu}>
+                        <Typography textAlign='center'>Ustawienia</Typography>
+                      </MenuItem>
+                      <Divider />
+
+                      <MenuItem onClick={logout}>
+                        <Typography textAlign='center'>Wyloguj</Typography>
+                      </MenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <MenuItem component={Link} to={"/login"} onClick={handleCloseUserMenu}>
+                        <Typography textAlign='center'>Zaloguj się</Typography>
+                      </MenuItem>
+                      <Divider />
+
+                      <MenuItem component={Link} to={"/register"} onClick={handleCloseUserMenu}>
+                        <Typography textAlign='center'>Zarejestruj się</Typography>
+                      </MenuItem>
+                    </>
+                  )}
+                </Box>
               </Menu>
             </Box>
           </Toolbar>
         </Container>
-      </Paper>
+      </Card>
     </AppBar>
   );
 }
