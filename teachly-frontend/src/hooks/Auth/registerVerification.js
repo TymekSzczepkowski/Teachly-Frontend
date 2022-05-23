@@ -5,11 +5,11 @@ export const validateProfileType = (profileType) => {
     return "";
   }
 };
-export const validateRepeatPassowrd = (password, repeatPassword) => {
+export const validateRepeatInput = (password, repeatPassword) => {
   if (repeatPassword === "") {
-    return "Proszę wpisać powtórzone hasło";
+    return "Proszę powtórzyć dane";
   } else if (password !== repeatPassword) {
-    return "Hasło nie jest takie same";
+    return "Dane nie jest takie same";
   } else return "";
 };
 
@@ -26,7 +26,6 @@ export const validateFileTypeUpload = (fileName) => {
 };
 export const validateFileSizeUpload = (fileName) => {
   let fileSize = (fileName = Math.round(fileName / 1024 / 1024));
-  //3MB
   if (fileSize <= 3) {
     return true;
   }

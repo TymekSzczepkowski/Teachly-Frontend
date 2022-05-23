@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
-import AuthContext from "../../../context/authContext";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Container, Typography, Grid, TextField, Stack, Button, Box, IconButton, InputAdornment, Link as LinkUI } from "@mui/material/";
@@ -12,7 +11,6 @@ import { Container, Typography, Grid, TextField, Stack, Button, Box, IconButton,
 const API_URL = process.env.REACT_APP_API_URL;
 function Login() {
   const navigate = useNavigate();
-  const { userDetails, setUserDetails } = useContext(AuthContext);
   const [auth, setAuth] = useAuth();
   const [showPassword, setShowPassword] = useState(true);
   const [click, setClick] = useState(false);
@@ -79,7 +77,6 @@ function Login() {
               fullWidth
               error={inputMessage.emailMessage === "" ? false : true}
               helperText={inputMessage.emailMessage}
-              fullWidth
               variant='standard'
               label='E-mail'
               value={state.email}

@@ -8,11 +8,9 @@ export default function useAuth() {
 
   const setAuth = (user) => {
     if (user) {
-      // login
       authContext.login(user);
       window.localStorage.setItem("token-data", JSON.stringify(user));
     } else {
-      // logout
       authContext.logout();
       window.localStorage.removeItem("token-data");
     }

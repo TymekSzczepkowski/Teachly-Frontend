@@ -4,11 +4,11 @@ import axios from "axios";
 import AuthContext from "../../context/authContext";
 import useAuth from "../../hooks/useAuth";
 import LeftDrawer from "./LeftDrawer.js";
-import { Divider, Card, styled, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, Drawer } from "@mui/material";
-import guyPhoto from "../../pages/Auth/Register/data/guy.jpeg";
+import { Badge, Divider, Card, styled, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SchoolIcon from "@mui/icons-material/School";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MailIcon from "@mui/icons-material/Mail";
 
 function Navbar() {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -16,7 +16,7 @@ function Navbar() {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(null);
   const [auth, setAuth] = useAuth();
-
+  console.log(userDetails);
   useEffect(() => {
     if (auth) {
       axios
@@ -50,12 +50,13 @@ function Navbar() {
   };
 
   const LinkButton = styled(Button)({
+    fontSize: "14px",
     my: 2,
     marginRight: "5px",
     textTransform: "none",
     display: "block",
     color: "inherit",
-    fontWeight: "600",
+    fontWeight: "550",
   });
   return (
     <AppBar square={false} elevation={0}>
@@ -63,25 +64,10 @@ function Navbar() {
         <Container>
           <Toolbar disableGutters>
             <IconButton component={Link} to={"/"} sx={{ display: { xs: "none", md: "flex" } }}>
-              <SchoolIcon color='primary' sx={{ mr: 1, fontSize: "30px" }} />
+              <SchoolIcon color='primary' sx={{ fontSize: "40px" }} />
             </IconButton>
-            <Typography
-              variant='h6'
-              noWrap
-              component={Link}
-              to={"/"}
-              sx={{
-                fontSize: "30px",
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontWeight: 600,
-                color: "inherit",
-                textDecoration: "none",
-              }}>
-              teachly
-            </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton size='large' aria-label='account of current user' aria-controls='menu-appbar' aria-haspopup='true' onClick={toggleDrawer(true)} color='inherit'>
+              <IconButton size='large' onClick={toggleDrawer(true)} color='inherit'>
                 <MenuIcon />
               </IconButton>
               <>
@@ -90,31 +76,34 @@ function Navbar() {
                 </Drawer>
               </>
             </Box>
-            <IconButton component={Link} to={"/"} size='large'>
-              <SchoolIcon color='primary' sx={{ display: { xs: "flex", md: "none" }, mr: 1, fontSize: "30px" }} />
-            </IconButton>
 
             <Box sx={{ justifyContent: "flex-start", flexGrow: 2, display: { xs: "none", md: "flex" } }}>
-              <LinkButton>Znajdź korepetytora</LinkButton>
+              <LinkButton>Korepetycje</LinkButton>
               <LinkButton>Zostań korepetytorem</LinkButton>
-              <LinkButton>Jak to działa</LinkButton>
+              <LinkButton>Pomoc</LinkButton>
+              <LinkButton></LinkButton>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
+              <IconButton size='large'>
+                <Badge badgeContent={2} color='primary'>
+                  <MailIcon color='action' />
+                </Badge>
+              </IconButton>
+
               {auth ? (
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0.5 }}>
-                  <Avatar sx={{ width: 32, height: 32 }} alt='John Doe' src={guyPhoto} />
+                <IconButton onClick={handleOpenUserMenu}>
+                  <Avatar sx={{ width: 20, height: 20 }} sx={{ width: 24, height: 24 }} alt='John Doe' src={userDetails.avatar} />
                 </IconButton>
               ) : (
-                <IconButton color='primary' onClick={handleOpenUserMenu} sx={{ p: 0.5 }}>
-                  <AccountCircleIcon fontSize='large' />
+                <IconButton onClick={handleOpenUserMenu} size='large'>
+                  <AccountCircleIcon />
                 </IconButton>
               )}
 
               <Menu
                 sx={{ mt: "45px" }}
                 elevation={1}
-                id='menu-appbar'
                 anchorEl={showUserMenu}
                 anchorOrigin={{
                   vertical: "top",

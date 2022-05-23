@@ -26,10 +26,10 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
   return (
     <div>
       <ToggleButtonGroup sx={{ mb: 1.5 }} fullWidth color='primary' exclusive onChange={handleChange} value={alignment}>
-        <ToggleButton value='student' type='radio' name='profileType' data-testid='student'>
+        <ToggleButton value='Student' type='radio' name='profileType' data-testid='student'>
           Uczeń
         </ToggleButton>
-        <ToggleButton value='teacher' type='radio' name='profileType' data-testid='teacher'>
+        <ToggleButton value='Teacher' type='radio' name='profileType' data-testid='teacher'>
           Korepetytor
         </ToggleButton>
       </ToggleButtonGroup>
@@ -60,7 +60,6 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
                 </InputAdornment>
               ),
             }}
-            
             error={inputMessage.passwordMessage === "" ? false : true}
             helperText={inputMessage.passwordMessage}
             fullWidth
@@ -78,7 +77,6 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
-                  {" "}
                   <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>

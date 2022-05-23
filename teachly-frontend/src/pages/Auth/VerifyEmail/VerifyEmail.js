@@ -11,18 +11,13 @@ function VerifyEmail() {
   //TODO
   //Zweryfikować czy nie wchodzimy na linka aktywacyjnego drugi raz
   useEffect(() => {
-    try {
-      const response = axios.post(API_URL + "accounts/users/verify-email/", {
-        uid: uidURL,
-        token: tokenURL,
-      });
-      setTimeout(() => {
-        navigate("/login");
-      }, 100000000);
-      // console.log(response);
-    } catch (ex) {
-      // console.log(ex);
-    }
+    axios.post(API_URL + "accounts/users/verify-email/", {
+      uid: uidURL,
+      token: tokenURL,
+    });
+    setTimeout(() => {
+      navigate("/login");
+    }, 100000000);
   }, []);
 
   return (

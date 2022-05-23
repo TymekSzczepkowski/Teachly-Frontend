@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import authContext from "../../context/authContext";
-import guyPhoto from "../../pages/Auth/Register/data/guy.jpeg";
 import { Box, Container, Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from "@mui/material/";
 function MyAccount() {
   const { userDetails } = useContext(authContext);
@@ -10,7 +9,7 @@ function MyAccount() {
       <Box elevation={1} sx={{ my: { xs: 8, md: 8 }, p: { xs: 3.5, md: 3 } }}>
         <Card>
           <CardActionArea>
-            <CardMedia component='img' height='400' image={guyPhoto} />
+            <CardMedia component='img' height='400' image={userDetails.avatar} />
             <CardContent>
               <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
                 {userDetails.email}

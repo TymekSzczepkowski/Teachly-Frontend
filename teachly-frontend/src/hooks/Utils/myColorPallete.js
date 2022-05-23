@@ -63,6 +63,5 @@ export default function myColorPallete() {
         light: red[700],
       },
     },
-    // }),
   };
 }

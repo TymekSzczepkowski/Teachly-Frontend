@@ -8,14 +8,13 @@ import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
-import { validateProfileType, validateRepeatPassowrd, validateDetails } from "../../../hooks/Auth/registerVerification";
+import { validateProfileType, validateRepeatInput, validateDetails } from "../../../hooks/Auth/registerVerification";
 import { Container, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
 
 const API_URL = process.env.REACT_APP_API_URL;
 function Register() {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
-
   const [click, setClick] = useState(false);
   const [profileTypeSelection, setProfileTypeSelection] = useState("");
   const [step, setStep] = useState(1);
@@ -55,7 +54,7 @@ function Register() {
 
   async function continueHandler() {
     if (step === 1) {
-      if (validateProfileType(profileTypeSelection) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatPassowrd(state.password, state.repeatPassword) === "") {
+      if (validateProfileType(profileTypeSelection) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatInput(state.password, state.repeatPassword) === "") {
         nextStep();
       }
     } else if (step === 2) {
@@ -67,7 +66,6 @@ function Register() {
         nextStep();
       }
     } else if (step === 3) {
-      //first name i last name nie jest uwzględnione w rejetracji
       try {
         const response = await axios.post(
           API_URL + `accounts/users/`,
@@ -118,7 +116,7 @@ function Register() {
         profileTypeMessage: validateProfileType(profileTypeSelection),
         emailMessage: validateEmail(state.email),
         passwordMessage: validatePassword(state.password),
-        repeatPasswordMessage: validateRepeatPassowrd(state.password, state.repeatPassword),
+        repeatPasswordMessage: validateRepeatInput(state.password, state.repeatPassword),
       });
     }
   }, [click, state]);

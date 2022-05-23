@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import useAuth from "../../hooks/useAuth";
 import { Collapse, Card, List, ListSubheader, ListItemButton, ListItemIcon, ListItemText } from "@mui/material/";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -14,38 +12,8 @@ import PasswordIcon from "@mui/icons-material/Password";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 
-const API_URL = process.env.REACT_APP_API_URL;
 function NavbarSettings({ setSettingsName }) {
   const [open, setOpen] = useState(false);
-  const [auth, setAuth] = useAuth();
-  const onChangeEmail = () => {
-    console.log(auth.access);
-    axios
-      .post(
-        API_URL + `accounts/users/reset-email-send-mail/`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      });
-  };
-
-  const onChangePassword = () => {
-    axios
-      .post(API_URL + `accounts/users/reset_password/`, {
-        headers: {
-          Authorization: `Bearer ${auth.access}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      });
-  };
 
   const handleSetSettingsName = (e) => {
     setSettingsName(e.target.innerText);
@@ -113,7 +81,6 @@ function NavbarSettings({ setSettingsName }) {
               to={"/settings/editemail"}
               sx={{ pl: 3 }}
               onClick={(e) => {
-                onChangeEmail();
                 handleSetSettingsName(e);
               }}>
               <ListItemIcon>
@@ -123,10 +90,9 @@ function NavbarSettings({ setSettingsName }) {
             </ListItemButton>
             <ListItemButton
               component={Link}
-              to={"/settings/editpassword"}
+              to={"/settings/editpasswordrequest"}
               sx={{ pl: 3 }}
               onClick={(e) => {
-                onChangePassword();
                 handleSetSettingsName(e);
               }}>
               <ListItemIcon>
