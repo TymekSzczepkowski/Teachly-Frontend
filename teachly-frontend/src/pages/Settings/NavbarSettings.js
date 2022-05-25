@@ -51,7 +51,7 @@ function NavbarSettings({ setSettingsName }) {
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary='Dane o profilu' />
+          <ListItemText id='profile-data' primary='Dane o profilu' />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout='auto' unmountOnExit>
@@ -77,6 +77,7 @@ function NavbarSettings({ setSettingsName }) {
               <ListItemText primary='Zmień zdjęcie profilowe' />
             </ListItemButton>
             <ListItemButton
+              id='change-email'
               component={Link}
               to={"/settings/editemail"}
               sx={{ pl: 3 }}
@@ -89,8 +90,9 @@ function NavbarSettings({ setSettingsName }) {
               <ListItemText primary='Zmień email' />
             </ListItemButton>
             <ListItemButton
+              id='change-password'
               component={Link}
-              to={"/settings/editpasswordrequest"}
+              to={"/settings/editpassword"}
               sx={{ pl: 3 }}
               onClick={(e) => {
                 handleSetSettingsName(e);

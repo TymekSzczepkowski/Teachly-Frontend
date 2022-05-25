@@ -33,7 +33,8 @@ function EditEmail() {
   const handleClose = () => setOpen(false);
 
   const submit = async () => {
-      axios.post(
+    axios
+      .post(
         API_URL + `accounts/users/reset-email/`,
         {
           uid: uidFromUrl,
@@ -46,10 +47,17 @@ function EditEmail() {
             Authorization: `Bearer ${auth.access}`,
           },
         }
-      );
-      if (inputMessage.emailMessage === "" && inputMessage.repeateEmailMessage === "") {
+      )
+      .then(() => {
         handleOpen();
-      }
+      })
+      .catch((error) => {
+        setInputMessage({
+          ...inputMessage,
+          emailMessage: error.response.data.non_field_errors[0],
+          repeateEmailMessage: error.response.data.non_field_errors[0],
+        });
+      });
   };
 
   useEffect(() => {
@@ -69,6 +77,7 @@ function EditEmail() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
+                id="new-email-input"
                 autoComplete='off'
                 error={inputMessage.emailMessage === "" ? false : true}
                 helperText={inputMessage.emailMessage}
@@ -85,6 +94,7 @@ function EditEmail() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
+                id="repeat-email-input"
                 autoComplete='off'
                 fullWidth
                 error={inputMessage.repeateEmailMessage === "" ? false : true}
@@ -101,6 +111,7 @@ function EditEmail() {
           <ListItem>
             <Grid item xs={12}>
               <Button
+                id="change-email-button-send"
                 variant='contained'
                 onClick={() => {
                   setClick(true);

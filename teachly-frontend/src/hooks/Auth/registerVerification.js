@@ -9,7 +9,7 @@ export const validateRepeatInput = (password, repeatPassword) => {
   if (repeatPassword === "") {
     return "Proszę powtórzyć dane";
   } else if (password !== repeatPassword) {
-    return "Dane nie jest takie same";
+    return "Dane nie są takie same";
   } else return "";
 };
 

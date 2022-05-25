@@ -107,7 +107,7 @@ function App() {
                   }
                 />
                 <Route
-                  path='/settings/editpasswordrequest'
+                  path='/settings/editpassword'
                   element={
                     <AuthenticatedRoute>
                       <Settings>

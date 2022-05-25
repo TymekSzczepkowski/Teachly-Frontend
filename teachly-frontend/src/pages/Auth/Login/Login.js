@@ -37,8 +37,12 @@ function Login() {
         access: response.data.access,
       });
       navigate("/");
-    } catch (ex) {
-      console.log(ex);
+    } catch (error) {
+      setInputMessage({
+        ...inputMessage,
+        emailMessage: error.response.data.non_field_errors[0],
+        passwordMessage: error.response.data.non_field_errors[0],
+      });
     }
   };
 
@@ -67,12 +71,13 @@ function Login() {
   return (
     <Container maxWidth='sm'>
       <Box sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
-        <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' data-testid='signin' gutterBottom>
+        <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' gutterBottom>
           Zaloguj się
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
+              id='email-input'
               autoComplete='off'
               fullWidth
               error={inputMessage.emailMessage === "" ? false : true}
@@ -97,6 +102,7 @@ function Login() {
                 ),
               }}
               error={inputMessage.passwordMessage === "" ? false : true}
+              id='password-input'
               helperText={inputMessage.passwordMessage}
               fullWidth
               variant='standard'
@@ -111,12 +117,12 @@ function Login() {
         </Grid>
         <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
           <Button
+            id='sign-in-button'
             sx={{ p: 1 }}
             onClick={(e) => {
               submit(e);
             }}
             fullWidth
-            data-testid='buttonContinue'
             variant='contained'>
             Kontynuuj
           </Button>

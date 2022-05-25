@@ -16,7 +16,6 @@ function Navbar() {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(null);
   const [auth, setAuth] = useAuth();
-  console.log(userDetails);
   useEffect(() => {
     if (auth) {
       axios
@@ -92,11 +91,11 @@ function Navbar() {
               </IconButton>
 
               {auth ? (
-                <IconButton onClick={handleOpenUserMenu}>
+                <IconButton onClick={handleOpenUserMenu} id='profile-avatar'>
                   <Avatar sx={{ width: 20, height: 20 }} sx={{ width: 24, height: 24 }} alt='John Doe' src={userDetails.avatar} />
                 </IconButton>
               ) : (
-                <IconButton onClick={handleOpenUserMenu} size='large'>
+                <IconButton onClick={handleOpenUserMenu} size='large' id='profile-icon'>
                   <AccountCircleIcon />
                 </IconButton>
               )}
@@ -144,7 +143,8 @@ function Navbar() {
                         <Typography textAlign='center'>Moje konto</Typography>
                       </MenuItem>
                       <MenuItem component={Link} to={"/settings"} onClick={handleCloseUserMenu}>
-                        <Typography textAlign='center'>Ustawienia</Typography>
+                        <Typography 
+                        id="settings" textAlign='center'>Ustawienia</Typography>
                       </MenuItem>
                       <Divider />
 
@@ -155,12 +155,16 @@ function Navbar() {
                   ) : (
                     <>
                       <MenuItem component={Link} to={"/login"} onClick={handleCloseUserMenu}>
-                        <Typography textAlign='center'>Zaloguj się</Typography>
+                        <Typography id='sign-in' textAlign='center'>
+                          Zaloguj się
+                        </Typography>
                       </MenuItem>
                       <Divider />
 
                       <MenuItem component={Link} to={"/register"} onClick={handleCloseUserMenu}>
-                        <Typography textAlign='center'>Zarejestruj się</Typography>
+                        <Typography id='sign-up' textAlign='center'>
+                          Zarejestruj się
+                        </Typography>
                       </MenuItem>
                     </>
                   )}

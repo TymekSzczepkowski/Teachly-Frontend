@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
@@ -23,7 +23,6 @@ function EditPassword() {
   const [state, setState] = useState({ newPassword: "", reNewPassword: "" });
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const style = {
     position: "absolute",
     top: "50%",
@@ -34,9 +33,9 @@ function EditPassword() {
     boxShadow: 24,
     p: 4,
   };
-  const submit = async (e) => {
-    e.preventDefault();
-      axios.post(
+  const submit = async () => {
+    axios
+      .post(
         API_URL + `accounts/users/reset_password_confirm/`,
         {
           uid: uidFromUrl,
@@ -49,11 +48,10 @@ function EditPassword() {
             Authorization: `Bearer ${auth.access}`,
           },
         }
-      );
-      if (inputMessage.passwordMessage === "" && inputMessage.repeatPasswordMessage === "") {
+      )
+      .then(() => {
         handleOpen();
-      }
-      handleOpen();
+      });
   };
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -79,6 +77,7 @@ function EditPassword() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
+                id="new-password-input"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
@@ -104,6 +103,7 @@ function EditPassword() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
+                id="repeat-password-input"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
@@ -129,6 +129,7 @@ function EditPassword() {
           <ListItem>
             <Grid item xs={12}>
               <Button
+                id="change-password-button-send"
                 variant='contained'
                 onClick={() => {
                   submit();
@@ -141,9 +142,15 @@ function EditPassword() {
           </ListItem>
         </Grid>
       </Box>
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={open}>
         <Box sx={style}>
-          <Typography variant='h6'>Hasło zostało zmienione</Typography>
+          <Typography variant='h6'>Hasło zostało zmienione</Typography>{" "}
+          <Typography gutterBottom sx={{ mt: 2 }}>
+            Poprawnie zaktualizowano hasło. Naciśnij poniższy przycisk, aby wrócić do strony głownej.
+          </Typography>
+          <Button component={Link} to={"/settings"}>
+            Wróc do strony głównej
+          </Button>
         </Box>
       </Modal>
     </Container>

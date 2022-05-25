@@ -67,7 +67,7 @@ function Register() {
       }
     } else if (step === 3) {
       try {
-        const response = await axios.post(
+        axios.post(
           API_URL + `accounts/users/`,
           {
             first_name: state.firstName,
@@ -87,7 +87,9 @@ function Register() {
           }
         );
         nextStep();
-      } catch (exception) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
   useEffect(() => {
@@ -128,7 +130,7 @@ function Register() {
       <Box elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
         {step !== 4 && (
           <Box>
-            <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' data-testid='signup'>
+            <Typography sx={{ fontWeight: 400 }} variant='h4' align='center'>
               Zarejestruj się
             </Typography>
             <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 2 }}>
@@ -157,8 +159,8 @@ function Register() {
           )}
           {step !== 4 && (
             <Button
+              id='continue-button'
               sx={{ p: 1 }}
-              data-testid='continue-button'
               fullWidth
               variant='contained'
               onClick={(e) => {

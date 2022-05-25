@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Box, Typography, Paper, Container, Link as LinkUI } from "@mui/material";
+import { Box, Typography, Paper, Container } from "@mui/material";
 
 function VerifyEmail() {
   const API_URL = process.env.REACT_APP_API_URL;
