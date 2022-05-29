@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import NavbarSettings from "./NavbarSettings.js";
 import ContentSettings from "./ContentSettings.js";
-import { Box, Grid } from "@mui/material/";
+import { Container, Grid } from "@mui/material/";
 
 function Settings({ children }) {
   const [settingsSubheader, setSettingsSubheader] = useState("Ustawienia");
   return (
     <>
-      <Box sx={{ my: { xs: 8.5, md: 8.5 }, p: { xs: 2.5, md: 2.5 }, mx: { md: 21 } }}>
+      <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, p: { xs: 3.5, md: 3 } }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12} lg={3}>
             <NavbarSettings setSettingsName={setSettingsSubheader} />
@@ -16,7 +16,7 @@ function Settings({ children }) {
             <ContentSettings children={children} settingsName={settingsSubheader} />
           </Grid>
         </Grid>
-      </Box>
+      </Container>
     </>
   );
 }

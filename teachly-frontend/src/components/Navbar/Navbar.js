@@ -80,7 +80,6 @@ function Navbar() {
               <LinkButton>Korepetycje</LinkButton>
               <LinkButton>Zostań korepetytorem</LinkButton>
               <LinkButton>Pomoc</LinkButton>
-              <LinkButton></LinkButton>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -143,8 +142,9 @@ function Navbar() {
                         <Typography textAlign='center'>Moje konto</Typography>
                       </MenuItem>
                       <MenuItem component={Link} to={"/settings"} onClick={handleCloseUserMenu}>
-                        <Typography 
-                        id="settings" textAlign='center'>Ustawienia</Typography>
+                        <Typography id='settings' textAlign='center'>
+                          Ustawienia
+                        </Typography>
                       </MenuItem>
                       <Divider />
 
