@@ -4,6 +4,7 @@ import axios from "axios";
 import AuthContext from "../../context/authContext";
 import useAuth from "../../hooks/useAuth";
 import LeftDrawer from "./LeftDrawer.js";
+import { styledButton } from "./stylesNavbar";
 import { Badge, Divider, Card, styled, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SchoolIcon from "@mui/icons-material/School";
@@ -48,15 +49,8 @@ function Navbar() {
     setShowLeftMenu(open);
   };
 
-  const LinkButton = styled(Button)({
-    fontSize: "14px",
-    my: 2,
-    marginRight: "5px",
-    textTransform: "none",
-    display: "block",
-    color: "inherit",
-    fontWeight: "550",
-  });
+  const LinkButton = styled(Button)({ styledButton });
+
   return (
     <AppBar square={false} elevation={0}>
       <Card variant='outlined'>
@@ -143,8 +137,9 @@ function Navbar() {
                         <Typography textAlign='center'>Moje konto</Typography>
                       </MenuItem>
                       <MenuItem component={Link} to={"/settings"} onClick={handleCloseUserMenu}>
-                        <Typography 
-                        id="settings" textAlign='center'>Ustawienia</Typography>
+                        <Typography id='settings' textAlign='center'>
+                          Ustawienia
+                        </Typography>
                       </MenuItem>
                       <Divider />
 

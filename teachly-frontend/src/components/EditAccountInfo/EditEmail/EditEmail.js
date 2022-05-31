@@ -2,21 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import { styledBox } from "../stylesEditAccount";
 import { validateRepeatInput } from "../../../hooks/Auth/registerVerification";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { Modal, Typography, TextField, Grid, Container, Box, ListItem, Button } from "@mui/material/";
 import SendIcon from "@mui/icons-material/Send";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 400,
+//   bgcolor: "background.paper",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 function EditEmail() {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -77,7 +78,7 @@ function EditEmail() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
-                id="new-email-input"
+                id='new-email-input'
                 autoComplete='off'
                 error={inputMessage.emailMessage === "" ? false : true}
                 helperText={inputMessage.emailMessage}
@@ -94,7 +95,7 @@ function EditEmail() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
-                id="repeat-email-input"
+                id='repeat-email-input'
                 autoComplete='off'
                 fullWidth
                 error={inputMessage.repeateEmailMessage === "" ? false : true}
@@ -111,7 +112,7 @@ function EditEmail() {
           <ListItem>
             <Grid item xs={12}>
               <Button
-                id="change-email-button-send"
+                id='change-email-button-send'
                 variant='contained'
                 onClick={() => {
                   setClick(true);
@@ -125,7 +126,7 @@ function EditEmail() {
         </Grid>
       </Box>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
+        <Box sx={styledBox}>
           <Typography variant='h6'>Potwierdź zmianę e-maila</Typography>
           <Typography sx={{ mt: 2 }}>Aby potwiedzić zmieniony adres e-mail, kliknij w link aktywacyjny który znajdziesz w skrzynce pocztowej.</Typography>
         </Box>
