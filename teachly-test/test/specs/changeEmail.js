@@ -1,7 +1,6 @@
 import { login } from "./login";
 describe("Testing e-mail change request", () => {
   it("Should send a request to change the e-mail", async () => {
-    // await browser.url("http://localhost:3000/");
     await login;
     //step 1
     await $("#profile-icon").click();
