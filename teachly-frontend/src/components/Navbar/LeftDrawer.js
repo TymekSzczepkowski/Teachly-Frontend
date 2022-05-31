@@ -4,6 +4,7 @@ import { Box, List, Divider, ListItem, ListItemText, ListItemIcon, Switch } from
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+
 function LeftDrawer(auth, toggleDrawer) {
   return (
     <Box sx={{ width: 250 }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>

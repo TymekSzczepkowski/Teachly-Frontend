@@ -8,14 +8,13 @@ import PersonalDetails from "./PersonalDetails";
 import Confirmation from "./Confirmation";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
-import { validateProfileType, validateRepeatPassowrd, validateDetails } from "../../../hooks/Auth/registerVerification";
+import { validateProfileType, validateRepeatInput, validateDetails } from "../../../hooks/Auth/registerVerification";
 import { Container, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
 
 const API_URL = process.env.REACT_APP_API_URL;
 function Register() {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
-
   const [click, setClick] = useState(false);
   const [profileTypeSelection, setProfileTypeSelection] = useState("");
   const [step, setStep] = useState(1);
@@ -55,7 +54,7 @@ function Register() {
 
   async function continueHandler() {
     if (step === 1) {
-      if (validateProfileType(profileTypeSelection) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatPassowrd(state.password, state.repeatPassword) === "") {
+      if (validateProfileType(profileTypeSelection) === "" && validateEmail(state.email) === "" && validatePassword(state.password) === "" && validateRepeatInput(state.password, state.repeatPassword) === "") {
         nextStep();
       }
     } else if (step === 2) {
@@ -67,9 +66,8 @@ function Register() {
         nextStep();
       }
     } else if (step === 3) {
-      //first name i last name nie jest uwzględnione w rejetracji
       try {
-        const response = await axios.post(
+        axios.post(
           API_URL + `accounts/users/`,
           {
             first_name: state.firstName,
@@ -89,7 +87,9 @@ function Register() {
           }
         );
         nextStep();
-      } catch (exception) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
   useEffect(() => {
@@ -118,7 +118,7 @@ function Register() {
         profileTypeMessage: validateProfileType(profileTypeSelection),
         emailMessage: validateEmail(state.email),
         passwordMessage: validatePassword(state.password),
-        repeatPasswordMessage: validateRepeatPassowrd(state.password, state.repeatPassword),
+        repeatPasswordMessage: validateRepeatInput(state.password, state.repeatPassword),
       });
     }
   }, [click, state]);
@@ -130,7 +130,7 @@ function Register() {
       <Box elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
         {step !== 4 && (
           <Box>
-            <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' data-testid='signup'>
+            <Typography sx={{ fontWeight: 400 }} variant='h4' align='center'>
               Zarejestruj się
             </Typography>
             <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 2 }}>
@@ -159,8 +159,8 @@ function Register() {
           )}
           {step !== 4 && (
             <Button
+              id='continue-button'
               sx={{ p: 1 }}
-              data-testid='continue-button'
               fullWidth
               variant='contained'
               onClick={(e) => {

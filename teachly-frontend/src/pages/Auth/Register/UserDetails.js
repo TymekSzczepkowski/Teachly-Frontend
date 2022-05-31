@@ -26,10 +26,10 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
   return (
     <div>
       <ToggleButtonGroup sx={{ mb: 1.5 }} fullWidth color='primary' exclusive onChange={handleChange} value={alignment}>
-        <ToggleButton value='student' type='radio' name='profileType' data-testid='student'>
+        <ToggleButton value='Student' type='radio' name='profileType'>
           Uczeń
         </ToggleButton>
-        <ToggleButton value='teacher' type='radio' name='profileType' data-testid='teacher'>
+        <ToggleButton value='Teacher' type='radio' name='profileType'>
           Korepetytor
         </ToggleButton>
       </ToggleButtonGroup>
@@ -37,6 +37,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
+            id='email-input'
             autoComplete='off'
             error={inputMessage.emailMessage === "" ? false : true}
             helperText={inputMessage.emailMessage}
@@ -47,7 +48,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             onChange={(e) => {
               setState({ ...state, email: e.target.value });
             }}
-          />
+            />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -60,7 +61,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
                 </InputAdornment>
               ),
             }}
-            
+            id='password-input'
             error={inputMessage.passwordMessage === "" ? false : true}
             helperText={inputMessage.passwordMessage}
             fullWidth
@@ -71,20 +72,20 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             onChange={(e) => {
               setState({ ...state, password: e.target.value });
             }}
-          />
+            />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
-                  {" "}
                   <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               ),
             }}
+            id='repassword-input'
             error={inputMessage.repeatPasswordMessage === "" ? false : true}
             helperText={inputMessage.repeatPasswordMessage}
             fullWidth

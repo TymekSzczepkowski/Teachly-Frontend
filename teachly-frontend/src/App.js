@@ -7,15 +7,18 @@ import Navbar from "./components/Navbar/Navbar.js";
 import Settings from "./pages/Settings/Settings.js";
 import VerifyEmail from "./pages/Auth/VerifyEmail/VerifyEmail";
 import Home from "./pages/Home/Home";
-import MyAccount from "./pages/MyAccount/MyAccount.js";
+import MyAccount from "./pages/MyAccount/MyAccount";
+import EditEmail from "./components/EditAccountInfo/EditEmail/EditEmail";
+import EditEmailRequest from "./components/EditAccountInfo/EditEmail/EditEmailRequest";
+import EditPassword from "./components/EditAccountInfo/EditPassword/EditPassword";
+import EditPasswordRequest from "./components/EditAccountInfo/EditPassword/EditPasswordRequest";
+import EditEmailConfirm from "./components/EditAccountInfo/EditEmail/EditEmailConfirm";
 import AuthContext from "./context/authContext";
 import ReducerContext from "./context/reducerContext";
 import AuthenticatedRoute from "./hoc/AuthenticatedRoute.js";
 import myColorPalette from "./hooks/Utils/myColorPallete";
 import { GlobalStyles } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import EditEmail from "./components/EditAccountInfo/EditEmail";
-import EditPassword from "./components/EditAccountInfo/EditPassword";
 
 function App() {
   const [userDetails, setUserDetails] = useState(" ");
@@ -68,7 +71,37 @@ function App() {
                   element={
                     <AuthenticatedRoute>
                       <Settings>
+                        <EditEmailRequest />
+                      </Settings>
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path='/email-reset/:uidFromUrl/:tokenFromUrl'
+                  element={
+                    <AuthenticatedRoute>
+                      <Settings>
                         <EditEmail />
+                      </Settings>
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path='/email-reset-confirm/:uidFromUrl/:tokenFromUrl/:hashedEmail'
+                  element={
+                    <AuthenticatedRoute>
+                      <Settings>
+                        <EditEmailConfirm />
+                      </Settings>
+                    </AuthenticatedRoute>
+                  }
+                />
+                <Route
+                  path='/password/reset/confirm/:uidFromUrl/:tokenFromUrl'
+                  element={
+                    <AuthenticatedRoute>
+                      <Settings>
+                        <EditPassword />
                       </Settings>
                     </AuthenticatedRoute>
                   }
@@ -78,7 +111,7 @@ function App() {
                   element={
                     <AuthenticatedRoute>
                       <Settings>
-                        <EditPassword />
+                        <EditPasswordRequest />
                       </Settings>
                     </AuthenticatedRoute>
                   }

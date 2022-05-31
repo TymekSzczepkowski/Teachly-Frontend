@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import cities from "./data/cities.json";
-import countries from "./data/countries.json";
-import region from "./data/region.json";
+import cities from "../../../data/cities.json";
+import countries from "../../../data/countries.json";
+import region from "../../../data/region.json";
 import { validateFileTypeUpload, validateFileSizeUpload } from "../../../hooks/Auth/registerVerification";
 import { Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
 
@@ -23,6 +23,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            id='firstname-input'
             autoComplete='off'
             fullWidth
             variant='standard'
@@ -35,6 +36,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            id='lastname-input'
             autoComplete='off'
             fullWidth
             variant='standard'
@@ -46,9 +48,9 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl variant='standard' fullWidth>
+          <FormControl variant='standard' fullWidth id='sex-input'>
             <InputLabel>Płeć</InputLabel>
-            <Select data-testid='sex-input' value={state.sex} onChange={(e) => setState({ ...state, sex: e.target.value })}>
+            <Select value={state.sex} onChange={(e) => setState({ ...state, sex: e.target.value })}>
               <MenuItem value='male'>Mężczyzna</MenuItem>
               <MenuItem value='female'>Kobieta</MenuItem>
             </Select>
@@ -56,6 +58,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
+            id='city-input'
             options={citiesInPoland}
             renderInput={(params) => <TextField {...params} label='Miasto' variant='standard' />}
             defaultValue={state.city === "" ? selectedCity : state.city}
@@ -68,6 +71,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
+            id='region-input'
             options={allRegions}
             renderInput={(params) => <TextField {...params} label='Województwo' variant='standard' />}
             defaultValue={state.region === "" ? selectedRegion : state.region}
@@ -80,6 +84,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
+            id='country-input'
             options={allCountries}
             renderInput={(params) => <TextField {...params} label='Narodowość' variant='standard' />}
             defaultValue={state.country === "" ? selectedCountry : state.country}
@@ -91,10 +96,11 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
           />
         </Grid>
         <Grid item xs={12}>
-          <label>
+          <Button fullWidth variant='contained' component='label'>
+            Upload your photo
             <input
-              data-testid='upload-file'
               style={{ display: "none" }}
+              id='fileUpload-input'
               onChange={(event) => {
                 if (validateFileTypeUpload(event.target.files[0].name) && validateFileSizeUpload(event.target.files[0].size)) {
                   setState({ ...state, image: event.target.files[0] });
@@ -107,10 +113,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
               }}
               type='file'
             />
-            <Button fullWidth variant='contained' component='span' name='upload'>
-              Upload your photo
-            </Button>
-          </label>
+          </Button>
           {alertOpen && (
             <Alert
               onClose={() => {

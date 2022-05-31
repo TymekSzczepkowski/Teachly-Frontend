@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import useAuth from "../../hooks/useAuth";
+import ListItemSettings from "./ListItemSettings";
 import { Collapse, Card, List, ListSubheader, ListItemButton, ListItemIcon, ListItemText } from "@mui/material/";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -14,38 +13,8 @@ import PasswordIcon from "@mui/icons-material/Password";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 
-const API_URL = process.env.REACT_APP_API_URL;
 function NavbarSettings({ setSettingsName }) {
   const [open, setOpen] = useState(false);
-  const [auth, setAuth] = useAuth();
-  const onChangeEmail = () => {
-    console.log(auth.access);
-    axios
-      .post(
-        API_URL + `accounts/users/reset-email-send-mail/`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      });
-  };
-
-  const onChangePassword = () => {
-    axios
-      .post(API_URL + `accounts/users/reset_password/`, {
-        headers: {
-          Authorization: `Bearer ${auth.access}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      });
-  };
 
   const handleSetSettingsName = (e) => {
     setSettingsName(e.target.innerText);
@@ -61,90 +30,24 @@ function NavbarSettings({ setSettingsName }) {
           overflow: "auto",
         }}
         subheader={<ListSubheader>Ustawienia</ListSubheader>}>
-        <ListItemButton
-          onClick={(e) => {
-            handleSetSettingsName(e);
-          }}>
-          <ListItemIcon>
-            <SwitchAccountIcon />
-          </ListItemIcon>
-          <ListItemText primary='Konto' />
-        </ListItemButton>
-        <ListItemButton
-          onClick={(e) => {
-            handleSetSettingsName(e);
-          }}>
-          <ListItemIcon>
-            <PaymentIcon />
-          </ListItemIcon>
-          <ListItemText primary='Płatności' />
-        </ListItemButton>
+        <ListItemSettings id='account-settings' func={handleSetSettingsName} title={"Konto"} icon={<SwitchAccountIcon />}></ListItemSettings>
+        <ListItemSettings id='payment-settings' func={handleSetSettingsName} title={"Płatność"} icon={<PaymentIcon />}></ListItemSettings>
         <ListItemButton onClick={handleExpandMore}>
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary='Dane o profilu' />
+          <ListItemText id='profile-data' primary='Dane o profilu' />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout='auto' unmountOnExit>
-          <List component='div' disablePadding>
-            <ListItemButton
-              sx={{ pl: 3 }}
-              onClick={(e) => {
-                handleSetSettingsName(e);
-              }}>
-              <ListItemIcon>
-                <AbcIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zmień opis' />
-            </ListItemButton>
-            <ListItemButton
-              sx={{ pl: 3 }}
-              onClick={(e) => {
-                handleSetSettingsName(e);
-              }}>
-              <ListItemIcon>
-                <InsertPhotoIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zmień zdjęcie profilowe' />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to={"/settings/editemail"}
-              sx={{ pl: 3 }}
-              onClick={(e) => {
-                onChangeEmail();
-                handleSetSettingsName(e);
-              }}>
-              <ListItemIcon>
-                <ContactMailIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zmień email' />
-            </ListItemButton>
-            <ListItemButton
-              component={Link}
-              to={"/settings/editpassword"}
-              sx={{ pl: 3 }}
-              onClick={(e) => {
-                onChangePassword();
-                handleSetSettingsName(e);
-              }}>
-              <ListItemIcon>
-                <PasswordIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zmień hasło' />
-            </ListItemButton>
+          <List sx={{ pl: 1 }} component='div' disablePadding>
+            <ListItemSettings id='description-settings' func={handleSetSettingsName} title={"Zmień opis"} icon={<AbcIcon />}></ListItemSettings>
+            <ListItemSettings id='avatar-settings' func={handleSetSettingsName} title={"Zmień zdjęcie profilowe"} icon={<InsertPhotoIcon />}></ListItemSettings>
+            <ListItemSettings component={Link} to={"/settings/editemail"} id='change-email' func={handleSetSettingsName} title={"Zmień email"} icon={<ContactMailIcon />}></ListItemSettings>
+            <ListItemSettings component={Link} to={"/settings/editpassword"} id='change-password' func={handleSetSettingsName} title={"Zmień hasło"} icon={<PasswordIcon />}></ListItemSettings>
           </List>
         </Collapse>
-        <ListItemButton
-          onClick={(e) => {
-            handleSetSettingsName(e);
-          }}>
-          <ListItemIcon>
-            <QuestionMarkIcon />
-          </ListItemIcon>
-          <ListItemText primary='Inne' />
-        </ListItemButton>
+        <ListItemSettings func={handleSetSettingsName} title={"Inne"} icon={<QuestionMarkIcon />}></ListItemSettings>
       </List>
     </Card>
   );
