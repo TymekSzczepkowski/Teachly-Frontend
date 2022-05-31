@@ -4,6 +4,7 @@ import countries from "../../../data/countries.json";
 import region from "../../../data/region.json";
 import { validateFileTypeUpload, validateFileSizeUpload } from "../../../hooks/Auth/registerVerification";
 import { Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
+import Fade from "react-reveal/Fade";
 
 function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const [alertOpen, setAlertOpen] = useState(false);
@@ -16,7 +17,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const allRegions = region;
 
   return (
-    <div>
+    <Fade right>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           {inputMessage.detailsMessage !== "" && <Alert severity='error'>{inputMessage.detailsMessage}</Alert>}
@@ -125,7 +126,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
           )}
         </Grid>
       </Grid>
-    </div>
+    </Fade>
   );
 }
 

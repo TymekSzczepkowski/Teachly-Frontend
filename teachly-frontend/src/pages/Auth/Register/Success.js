@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, LinearProgress, Fade, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, Grid, Card } from "@mui/material";
+import Fade from "react-reveal/Fade";
 
 function Success({ state }) {
   const [show, setShow] = useState(false);
@@ -10,19 +11,19 @@ function Success({ state }) {
     <Box sx={{ width: "100%", pt: 5 }}>
       {show ? (
         <>
-          <Fade in>
-            <Typography sx={{ mb: 3 }} gutterBottom align='center' variant='h2'>
+          <Fade>
+            <Typography sx={{ mb: 1 }} color='primary' align='center' variant='h2'>
               {`Witaj ${state.firstName} ${state.lastName}`}
             </Typography>
-          </Fade>
-          <Fade in>
             <Typography sx={{ mb: 4 }} gutterBottom align='center' variant='body1'>
               Na Twojego maila wysłaliśmy link weryfikacyjny, kliknij w niego, aby potwierdzić rejestracje.
             </Typography>
           </Fade>
         </>
       ) : (
-        <LinearProgress />
+        <Grid container justifyContent='center'>
+          <CircularProgress />
+        </Grid>
       )}
     </Box>
   );

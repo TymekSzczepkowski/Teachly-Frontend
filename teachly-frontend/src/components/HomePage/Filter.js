@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useMediaQuery, Collapse, Slider, Typography, ListItem, Checkbox, ListSubheader, ListItemIcon, Autocomplete, List, Card, TextField, ListItemText, ListItemButton, Box, InputAdornment } from "@mui/material";
+import ListItemCheckbox from "./ListItemCheckbox";
+import ListItemTitle from "./ListItemTitle";
+import { Divider, useMediaQuery, Collapse, Slider, ListItem, ListSubheader, ListItemIcon, Autocomplete, List, Card, TextField, ListItemText, ListItemButton, Box, InputAdornment } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
@@ -7,6 +9,8 @@ import MapIcon from "@mui/icons-material/Map";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import SortIcon from "@mui/icons-material/Sort";
+import cities from "../../data/cities.json";
+
 function Filter({ parameters, setParameters }) {
   const marks = [
     {
@@ -24,14 +28,26 @@ function Filter({ parameters, setParameters }) {
     },
   ];
   const [valueSlider, setValueSlider] = useState([0, 300]);
+  const [checked, setChecked] = useState();
 
-  const handleChange = (event, newValue) => {
+  const handleChangeCheckbox = (event) => {
+    if (checked === event.target.value) {
+      setChecked(null);
+      setParameters({ ...parameters, level: "" });
+    } else {
+      setChecked(event.target.value);
+      setParameters({ ...parameters, level: event.target.value });
+    }
+  };
+
+  const handleChangeSlider = (event, newValue) => {
     setValueSlider(newValue);
     setParameters({ ...parameters, price_from: valueSlider[0], price_to: valueSlider[1] });
   };
   const [open, setOpen] = useState(false);
 
   const matches = useMediaQuery("(min-width:900px)");
+
   const handleClick = () => {
     if (matches === false) {
       setOpen(!open);
@@ -58,64 +74,21 @@ function Filter({ parameters, setParameters }) {
       )}
       <Collapse in={open} timeout='auto' unmountOnExit>
         <List sx={{ width: "100%", marginBottom: "10px" }} subheader={matches && <ListSubheader>Filtrowanie</ListSubheader>}>
-          <ListItem>
-            <ListItemIcon>
-              <AutoStoriesIcon />
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant='h6'>Poziom</Typography>} />
-          </ListItem>
-          <ListItem secondaryAction={<Checkbox edge='end' />} disablePadding>
-            <ListItemButton>
-              <ListItemText secondary={`Szkoła podstawowa`} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem secondaryAction={<Checkbox edge='end' />} disablePadding>
-            <ListItemButton>
-              <ListItemText secondary={`Liceum`} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem secondaryAction={<Checkbox edge='end' />} disablePadding>
-            <ListItemButton>
-              <ListItemText secondary={`Szkoła wyższa`} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <AccountBalanceWalletIcon />
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant='h6'>Cena</Typography>} />
-          </ListItem>
-          <ListItem>
-            <Box sx={{ width: "100%", mx: 2, mt: 4 }}>
-              <Slider value={valueSlider} step={10} max={300} onChange={handleChange} valueLabelDisplay='on' marks={marks} />
-            </Box>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <MapIcon />
-            </ListItemIcon>
-            <ListItemText primary={<Typography variant='h6'>Lokalizacja</Typography>}></ListItemText>
-          </ListItem>
-          <ListItem>
+          <ListItemTitle title={"Lokalizacja"} icon={<MapIcon />} />
+          <ListItem sx={{ marginBottom: "1rem" }}>
             <Box sx={{ width: "100%" }}>
               <Autocomplete
-                // options={options}
-                // value={valueAutocomplete}
-                // onChange={(newValue) => {
-                //   setValueAutocomplete(newValue);
-                // }}
-                // inputValue={inputValue}
-                // onInputChange={(newInputValue) => {
-                //   setInputValue(newInputValue);
-                // }}
+                options={cities.map((city) => city.city)}
+                onChange={(e, newCity) => {
+                  setParameters({ ...parameters, localization: newCity });
+                }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    variant='standard'
-                    placeholder='Gdzie chcesz szukać korepetycji'
+                    variant='outlined'
+                    placeholder='Gdzie chcesz się nauczyć'
                     InputProps={{
                       ...params.InputProps,
-                      type: "search",
                       startAdornment: (
                         <InputAdornment position='start'>
                           <LocationOnIcon sx={{ ml: 1, width: 20, height: 20, color: "text.disabled" }} />
@@ -127,6 +100,18 @@ function Filter({ parameters, setParameters }) {
               />
             </Box>
           </ListItem>
+          <Divider light />
+          <ListItemTitle title={"Cena"} icon={<AccountBalanceWalletIcon />} />
+          <ListItem sx={{ marginBottom: "1rem" }}>
+            <Box sx={{ width: "100%", mx: 2 }}>
+              <Slider value={valueSlider} step={10} max={300} onChange={handleChangeSlider} valueLabelDisplay='auto' marks={marks} />
+            </Box>
+          </ListItem>
+          <Divider light />
+          <ListItemTitle title={"Poziom"} icon={<AutoStoriesIcon />} />
+          <ListItemCheckbox value='Primary' checked={checked} title='Szkoła podstawowa' func={handleChangeCheckbox} />
+          <ListItemCheckbox value='High School' checked={checked} title='Liceum' func={handleChangeCheckbox} />
+          <ListItemCheckbox value='University' checked={checked} title='Szkoła wyższa' func={handleChangeCheckbox} />
         </List>
       </Collapse>
     </Card>

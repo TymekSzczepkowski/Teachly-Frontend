@@ -1,10 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../context/authContext";
 import useAuth from "../../hooks/useAuth";
 import LeftDrawer from "./LeftDrawer.js";
-import { styledButton } from "./stylesNavbar";
+import UserMenuItem from "./UserMenuItem";
+import { styledButton } from "./style/stylesNavbar";
 import { Badge, Divider, Card, styled, AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, MenuItem, Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SchoolIcon from "@mui/icons-material/School";
@@ -129,37 +130,19 @@ function Navbar() {
                         </Typography>
                       </Box>
                       <Divider />
-                      <MenuItem component={Link} to={"/"} onClick={handleCloseUserMenu}>
-                        <Typography textAlign='center'>Strona główna</Typography>
-                      </MenuItem>
-                      <MenuItem component={Link} to={"/myaccount"} onClick={handleCloseUserMenu}>
-                        <Typography textAlign='center'>Moje konto</Typography>
-                      </MenuItem>
-                      <MenuItem component={Link} to={"/settings"} onClick={handleCloseUserMenu}>
-                        <Typography id='settings' textAlign='center'>
-                          Ustawienia
-                        </Typography>
-                      </MenuItem>
+                      <UserMenuItem component={Link} to={"/"} onClick={handleCloseUserMenu} title={"Strona główna"} />
+                      <UserMenuItem component={Link} to={"/myaccount"} onClick={handleCloseUserMenu} title={"Moje konto"} />
+                      <UserMenuItem id={"settings"} component={Link} to={"/settings"} onClick={handleCloseUserMenu} title={"Ustawienia"} />
                       <Divider />
-
                       <MenuItem onClick={logout}>
                         <Typography textAlign='center'>Wyloguj</Typography>
                       </MenuItem>
                     </>
                   ) : (
                     <>
-                      <MenuItem component={Link} to={"/login"} onClick={handleCloseUserMenu}>
-                        <Typography id='sign-in' textAlign='center'>
-                          Zaloguj się
-                        </Typography>
-                      </MenuItem>
+                      <UserMenuItem id={"sign-in"} component={Link} to={"/login"} onClick={handleCloseUserMenu} title={"Zaloguj się"} />
                       <Divider />
-
-                      <MenuItem component={Link} to={"/register"} onClick={handleCloseUserMenu}>
-                        <Typography id='sign-up' textAlign='center'>
-                          Zarejestruj się
-                        </Typography>
-                      </MenuItem>
+                      <UserMenuItem id={"sign-up"} component={Link} to={"/register"} onClick={handleCloseUserMenu} title={"Zarejestruj się"} />
                     </>
                   )}
                 </Box>

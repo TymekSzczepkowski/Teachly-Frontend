@@ -48,7 +48,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             onChange={(e) => {
               setState({ ...state, email: e.target.value });
             }}
-            />
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -72,7 +72,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             onChange={(e) => {
               setState({ ...state, password: e.target.value });
             }}
-            />
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField

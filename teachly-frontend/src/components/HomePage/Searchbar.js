@@ -5,7 +5,7 @@ import { Card, Autocomplete, TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 const API_URL = process.env.REACT_APP_API_URL;
 
-function Searchbar({ parameters, setParameters }) {
+function Searchbar({ parameters, setParameters, firstname }) {
   const [auth, setAuth] = useAuth([]);
   const [allSubjects, setAllSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -35,7 +35,7 @@ function Searchbar({ parameters, setParameters }) {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder='Czego chcesz się nauczyć'
+            placeholder={"Czego chcesz się nauczyć " + firstname + "?"}
             InputProps={{
               ...params.InputProps,
               startAdornment: (

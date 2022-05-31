@@ -2,22 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
-import { styledBox } from "../stylesEditAccount";
+import { styledBox } from "../style/stylesEditAccount";
 import { validateRepeatInput } from "../../../hooks/Auth/registerVerification";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { Modal, Typography, TextField, Grid, Container, Box, ListItem, Button } from "@mui/material/";
 import SendIcon from "@mui/icons-material/Send";
-
-// const style = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   width: 400,
-//   bgcolor: "background.paper",
-//   boxShadow: 24,
-//   p: 4,
-// };
 
 function EditEmail() {
   const API_URL = process.env.REACT_APP_API_URL;
