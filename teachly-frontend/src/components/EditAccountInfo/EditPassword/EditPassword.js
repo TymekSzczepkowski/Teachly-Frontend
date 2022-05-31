@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import { styledBox } from "../stylesEditAccount";
 import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import { validateRepeatInput } from "../../../hooks/Auth/registerVerification";
 import { IconButton, InputAdornment, Modal, Typography, TextField, Grid, Container, Box, ListItem, Button } from "@mui/material/";
@@ -77,7 +78,7 @@ function EditPassword() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
-                id="new-password-input"
+                id='new-password-input'
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
@@ -103,7 +104,7 @@ function EditPassword() {
           <ListItem>
             <Grid item xs={12}>
               <TextField
-                id="repeat-password-input"
+                id='repeat-password-input'
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
@@ -129,7 +130,7 @@ function EditPassword() {
           <ListItem>
             <Grid item xs={12}>
               <Button
-                id="change-password-button-send"
+                id='change-password-button-send'
                 variant='contained'
                 onClick={() => {
                   submit();
@@ -143,7 +144,7 @@ function EditPassword() {
         </Grid>
       </Box>
       <Modal open={open}>
-        <Box sx={style}>
+        <Box sx={styledBox}>
           <Typography variant='h6'>Hasło zostało zmienione</Typography>{" "}
           <Typography gutterBottom sx={{ mt: 2 }}>
             Poprawnie zaktualizowano hasło. Naciśnij poniższy przycisk, aby wrócić do strony głownej.

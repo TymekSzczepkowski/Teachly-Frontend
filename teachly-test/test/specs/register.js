@@ -24,7 +24,7 @@ describe("Testing the registration process", () => {
     await browser.keys(["\uE015"]);
     await browser.keys(["\uE007"]);
 
-    const filePath = "C:/Users/TymoteuszSzczepkowsk/Desktop/Foldery/PJATK/TEACHLY/teachly-test/test/data/guy.jpeg";
+    const filePath = "./test/data/guy.jpeg";
     const remoteFilePath = await browser.uploadFile(filePath);
 
     browser.execute(function () {
