@@ -10,32 +10,21 @@ function EditEmailRequest() {
   const [open, setOpen] = useState(false);
   const { userDetails } = useContext(authContext);
   const [auth, setAuth] = useAuth();
-
+  
   const onChangeEmail = () => {
     setOpen(true);
-    axios.post(
-      API_URL + `accounts/users/reset-email-send-mail/`,
-      {},
+    axios
+      .post(API_URL + `accounts/users/reset-email-send-mail/`, {},
       {
         headers: {
           Authorization: `Bearer ${auth.access}`,
         },
       }
-    );
+    )
   };
 
   return (
     <>
-      {open && (
-        <Alert
-          severity='success'
-          onClose={() => {
-            setOpen(false);
-          }}>
-          <AlertTitle>Link został wysłany</AlertTitle>
-          Link ze zmianą e-maila został wysłany na adres — <strong>{userDetails.email}</strong>
-        </Alert>
-      )}
       <ListItem>
         <ListItemText secondary='Wyślij link ze zmianą e-maila na Twoją skrzynkę pocztową.' />
         <ListItemButton>

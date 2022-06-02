@@ -17,7 +17,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const allRegions = region;
 
   return (
-    <Fade right>
+    <Fade>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           {inputMessage.detailsMessage !== "" && <Alert severity='error'>{inputMessage.detailsMessage}</Alert>}

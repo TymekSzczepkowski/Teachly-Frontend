@@ -1,4 +1,3 @@
-import React from "react";
 import MailIcon from "@mui/icons-material/Mail";
 import SchoolIcon from "@mui/icons-material/School";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -10,7 +9,7 @@ import Fade from "react-reveal/Fade";
 
 function Confirmation({ state }) {
   return (
-    <Fade right>
+    <Fade >
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Card>

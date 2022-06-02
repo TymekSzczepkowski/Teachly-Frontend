@@ -44,8 +44,8 @@ function EditEmail() {
       .catch((error) => {
         setInputMessage({
           ...inputMessage,
-          emailMessage: error.response.data.non_field_errors[0],
-          repeateEmailMessage: error.response.data.non_field_errors[0],
+          emailMessage: error.response.data.uid,
+          repeateEmailMessage: error.response.data.uid,
         });
       });
   };
