@@ -30,7 +30,7 @@ function OfferCard({ data }) {
         </Box>
       </CardContent>
       <Stack spacing={1} direction='row' sx={{ px: 2, pb: 2 }}>
-        <Button component={Link} to={`/user/${data.author.id}/offer/${data.id}/`} variant='contained'>
+        <Button component={Link} to={`/offer/${data.id}/`} variant='contained'>
           ZOBACZ
         </Button>
         <Button disableRipple variant='outlined'>{`${data.price} zł/h`}</Button>

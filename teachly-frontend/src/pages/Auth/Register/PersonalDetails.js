@@ -8,9 +8,6 @@ import Fade from "react-reveal/Fade";
 
 function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const [alertOpen, setAlertOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedRegion, setSelectedRegion] = useState(null);
 
   const citiesInPoland = cities;
   const allCountries = countries;
@@ -62,10 +59,9 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
             id='city-input'
             options={citiesInPoland}
             renderInput={(params) => <TextField {...params} label='Miasto' variant='standard' />}
-            defaultValue={state.city === "" ? selectedCity : state.city}
+            inputValue={state.city}
             getOptionLabel={(option) => option.city || state.city}
             onChange={(e, newCity) => {
-              setSelectedCity(newCity);
               setState({ ...state, city: newCity.city });
             }}
           />
@@ -75,10 +71,9 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
             id='region-input'
             options={allRegions}
             renderInput={(params) => <TextField {...params} label='Województwo' variant='standard' />}
-            defaultValue={state.region === "" ? selectedRegion : state.region}
+            inputValue={state.region}
             getOptionLabel={(option) => option.name || state.region}
             onChange={(e, newRegion) => {
-              setSelectedRegion(newRegion);
               setState({ ...state, region: newRegion.name });
             }}
           />
@@ -88,10 +83,9 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
             id='country-input'
             options={allCountries}
             renderInput={(params) => <TextField {...params} label='Narodowość' variant='standard' />}
-            defaultValue={state.country === "" ? selectedCountry : state.country}
+            inputValue={state.country}
             getOptionLabel={(option) => option.name || state.country}
             onChange={(e, newCountry) => {
-              setSelectedCountry(newCountry);
               setState({ ...state, country: newCountry.name });
             }}
           />

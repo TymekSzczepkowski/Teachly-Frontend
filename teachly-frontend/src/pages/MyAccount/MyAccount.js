@@ -32,9 +32,7 @@ function MyAccount({ setLoading }) {
         setOffers(response.data);
         setLoading(false);
       });
-  }, []);
 
-  useEffect(() => {
     if (auth) {
       axios
         .get(API_URL + `listings/subjects/`, {
@@ -49,8 +47,7 @@ function MyAccount({ setLoading }) {
   }, []);
 
   const handleChange = (id) => (event, isExpanded) => {
-    setExpanded(isExpanded ? id : false);
-    !expanded &&
+    if (!expanded || expanded !== id) {
       axios
         .get(API_URL + `accounts/users/${userDetails.id}/listings/${id}/`, {
           headers: {
@@ -59,8 +56,12 @@ function MyAccount({ setLoading }) {
         })
         .then((response) => {
           setOfferDetails(response.data);
-          // console.log(response.data);
+          setExpanded(isExpanded ? id : false);
         });
+    } else {
+      setOfferDetails();
+      setExpanded(isExpanded && false);
+    }
   };
 
   return (

@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button, MenuItem, Autocomplete, Grid, TextField, InputAdornment } from "@mui/material/";
 import cities from "../../../../data/cities.json";
 
-function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, buttonText2, allSubjects }) {
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedSubject, setSelectedSubject] = useState(null);
+function LessonForm({ value, defaultValue, state, setState, func1, func2, buttonText1, buttonText2, allSubjects }) {
   const [disabled, setDisabled] = useState(true);
   const citiesInPoland = cities;
   const levels = [
@@ -35,7 +33,7 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
           fullWidth
           label='Tytuł'
           variant='outlined'
-          defaultValue={defaultValue.title}
+          value={state.title === " " ? defaultValue.title : state.title}
           onChange={(e) => {
             setState({ ...state, title: e.target.value });
           }}
@@ -45,10 +43,10 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
         <Autocomplete
           options={citiesInPoland}
           renderInput={(params) => <TextField {...params} label='Miasto' variant='outlined' />}
-          defaultValue={state.city === "" ? selectedCity : state.city}
+          isOptionEqualToValue={(option, value) => option.name === value.name}
+          inputValue={state.city === " " ? defaultValue.city : state.city}
           getOptionLabel={(option) => option.city || state.city}
           onChange={(e, newCity) => {
-            setSelectedCity(newCity);
             setState({ ...state, city: newCity.city });
           }}
         />
@@ -57,7 +55,7 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
         <TextField
           label='Opis'
           fullWidth
-          defaultValue={defaultValue.description}
+          value={state.description === " " ? defaultValue.description : state.description}
           multiline
           onChange={(e) => {
             setState({ ...state, description: e.target.value });
@@ -69,7 +67,7 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
           fullWidth
           label='Cena'
           variant='outlined'
-          defaultValue={defaultValue.price}
+          value={state.price === " " ? defaultValue.price : state.price}
           InputProps={{
             endAdornment: <InputAdornment position='end'>zł</InputAdornment>,
           }}
@@ -80,7 +78,7 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
       </Grid>
       <Grid item xs={6}>
         <Autocomplete
-          defaultValue={state.subject === "" ? selectedSubject : state.subject}
+          inputValue={state.subject === " " ? defaultValue.subject.name : state.subject}
           options={allSubjects.map((subject) => subject.name)}
           renderInput={(params) => <TextField {...params} label='Przedmiot' />}
           onChange={(e, newSubject) => {
@@ -93,7 +91,7 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
           fullWidth
           select
           label='Poziom'
-          defaultValue={defaultValue.level}
+          value={state.level === " " ? defaultValue.level : state.level}
           onChange={(e) => {
             setState({ ...state, level: e.target.value });
           }}>

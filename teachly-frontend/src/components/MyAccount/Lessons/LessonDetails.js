@@ -12,7 +12,7 @@ function LessonDetails({ details, id, allSubjects }) {
   const [auth, setAuth] = useAuth([]);
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [state, setState] = useState({ title: details.title, description: details.description, city: details.city, price: details.price, subject: details.subject.name, level: details.level });
+  const [state, setState] = useState({ title: " ", description: " ", city: " ", price: " ", subject: " ", level: " " });
   const foundedSubject = allSubjects.find((element) => element.name === state.subject);
 
   const windowReload = () => {
@@ -26,12 +26,12 @@ function LessonDetails({ details, id, allSubjects }) {
       .patch(
         API_URL + `accounts/users/${userDetails.id}/listings/${id}/`,
         {
-          title: state.title,
-          description: state.description,
-          city: state.city,
-          price: state.price,
-          // subject: foundedSubject.id,
-          level: state.level,
+          title: state.title === " " ? details.title : state.title,
+          description: state.description === " " ? details.description : state.description,
+          city: state.city === " " ? details.city : state.city,
+          price: state.price === " " ? details.price : state.price,
+          // subject: state.subject === " " ? details.subject : state.subject,
+          level: state.level === " " ? details.level : state.level,
         },
         {
           headers: {

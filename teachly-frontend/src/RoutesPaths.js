@@ -11,6 +11,7 @@ import EditPassword from "./pages/Settings/EditAccountInfo/EditPassword/EditPass
 import EditPasswordRequest from "./pages/Settings/EditAccountInfo/EditPassword/EditPasswordRequest";
 import EditEmailConfirm from "./pages/Settings/EditAccountInfo/EditEmail/EditEmailConfirm";
 import AuthenticatedRoute from "./hoc/AuthenticatedRoute.js";
+import LessonPage from "./pages/LessonPage/LessonPage";
 
 function RoutesPaths() {
   return (
@@ -21,6 +22,14 @@ function RoutesPaths() {
         element={
           <AuthenticatedRoute>
             <MyAccount />
+          </AuthenticatedRoute>
+        }
+      />
+      <Route
+        path='/offer/:id'
+        element={
+          <AuthenticatedRoute>
+            <LessonPage />
           </AuthenticatedRoute>
         }
       />
