@@ -24,7 +24,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
   };
 
   return (
-    <div>
+    <>
       <ToggleButtonGroup sx={{ mb: 1.5 }} fullWidth color='primary' exclusive onChange={handleChange} value={alignment}>
         <ToggleButton value='Student' type='radio' name='profileType'>
           Uczeń
@@ -99,7 +99,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
           />
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
 

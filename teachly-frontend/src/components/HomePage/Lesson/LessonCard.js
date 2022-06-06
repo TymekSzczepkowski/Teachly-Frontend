@@ -1,13 +1,14 @@
 import { Box, CardMedia, Typography, Card, CardContent, Button, Stack, Rating } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import guy from "../../data/guy.jpeg";
+import guy from "../../../data/guy.jpeg";
+import { Link } from "react-router-dom";
 
-function Offer({ data }) {
+function OfferCard({ data }) {
   return (
     <Card>
       <CardMedia component='img' height='180' image={guy} />
       <CardContent>
-        <Typography sx={{ whiteSpace: "nowrap" }} variant='h5'>
+        <Typography noWrap variant='h5'>
           {data.title}
         </Typography>
         <Stack direction='row' spacing={0.5} sx={{ mb: 1, mt: 0.5 }}>
@@ -29,11 +30,13 @@ function Offer({ data }) {
         </Box>
       </CardContent>
       <Stack spacing={1} direction='row' sx={{ px: 2, pb: 2 }}>
-        <Button variant='contained'>ZOBACZ</Button>
+        <Button component={Link} to={`/user/${data.author.id}/offer/${data.id}/`} variant='contained'>
+          ZOBACZ
+        </Button>
         <Button disableRipple variant='outlined'>{`${data.price} zł/h`}</Button>
       </Stack>
     </Card>
   );
 }
 
-export default Offer;
+export default OfferCard;

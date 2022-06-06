@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ListItemCheckbox from "./ListItemCheckbox";
-import ListItemTitle from "./ListItemTitle";
+import ListItemCheckbox from "./Lesson/ListItemCheckbox";
+import ListItemTitle from "./Lesson/ListItemTitle";
 import { Divider, useMediaQuery, Collapse, Slider, ListItem, ListSubheader, ListItemIcon, Autocomplete, List, Card, TextField, ListItemText, ListItemButton, Box, InputAdornment } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";

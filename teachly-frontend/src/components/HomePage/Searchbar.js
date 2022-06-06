@@ -8,7 +8,6 @@ const API_URL = process.env.REACT_APP_API_URL;
 function Searchbar({ parameters, setParameters, firstname }) {
   const [auth, setAuth] = useAuth([]);
   const [allSubjects, setAllSubjects] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState(null);
 
   useEffect(() => {
     if (auth) {
@@ -35,7 +34,7 @@ function Searchbar({ parameters, setParameters, firstname }) {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder={"Czego chcesz się nauczyć " + firstname + "?"}
+            placeholder={`Czego chcesz się nauczyć ${auth ? firstname : ""}`}
             InputProps={{
               ...params.InputProps,
               startAdornment: (

@@ -9,7 +9,7 @@ import Fade from "react-reveal/Fade";
 
 function Confirmation({ state }) {
   return (
-    <Fade >
+    <Fade>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Card>

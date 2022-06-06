@@ -18,6 +18,7 @@ function Navbar() {
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(null);
   const [auth, setAuth] = useAuth();
+
   useEffect(() => {
     if (auth) {
       axios

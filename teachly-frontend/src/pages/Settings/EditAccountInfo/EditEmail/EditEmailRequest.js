@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
-import authContext from "../../../context/authContext";
-import { Alert, AlertTitle, ListItemButton, Button, ListItemText, ListItem } from "@mui/material/";
+import useAuth from "../../../../hooks/useAuth";
+import authContext from "../../../../context/authContext";
+import { ListItemButton, Button, ListItemText, ListItem } from "@mui/material/";
 import SendIcon from "@mui/icons-material/Send";
 
 function EditEmailRequest() {
@@ -10,17 +10,18 @@ function EditEmailRequest() {
   const [open, setOpen] = useState(false);
   const { userDetails } = useContext(authContext);
   const [auth, setAuth] = useAuth();
-  
+
   const onChangeEmail = () => {
     setOpen(true);
-    axios
-      .post(API_URL + `accounts/users/reset-email-send-mail/`, {},
+    axios.post(
+      API_URL + `accounts/users/reset-email-send-mail/`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${auth.access}`,
         },
       }
-    )
+    );
   };
 
   return (

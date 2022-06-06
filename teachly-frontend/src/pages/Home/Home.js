@@ -4,7 +4,7 @@ import authContext from "../../context/authContext";
 import Searchbar from "../../components/HomePage/Searchbar";
 import Filter from "../../components/HomePage/Filter";
 import { Container, Grid, Fab, useMediaQuery } from "@mui/material";
-import Offer from "../../components/HomePage/Offer";
+import LessonCard from "../../components/HomePage/Lesson/LessonCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Fade from "react-reveal/Fade";
 
@@ -39,7 +39,7 @@ function Home() {
               {offers.map((offer) => (
                 <Grid key={offer.id} item xs={12} sm={6} md={6} lg={4} xl={4}>
                   <Fade right>
-                    <Offer data={offer} />
+                    <LessonCard data={offer} />
                   </Fade>
                 </Grid>
               ))}

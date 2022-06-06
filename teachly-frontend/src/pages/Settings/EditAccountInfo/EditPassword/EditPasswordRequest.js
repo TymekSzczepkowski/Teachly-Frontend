@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Alert, AlertTitle, ListItemButton, ListItem, Button, ListItemText } from "@mui/material/";
 import axios from "axios";
-import useAuth from "../../../hooks/useAuth";
-import authContext from "../../../context/authContext";
+import useAuth from "../../../../hooks/useAuth";
+import authContext from "../../../../context/authContext";
 import SendIcon from "@mui/icons-material/Send";
 
 function EditEmailRequest() {

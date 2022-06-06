@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { Box, Typography, Paper, Container } from "@mui/material";
+import { useParams, Link } from "react-router-dom";
+import { Box, Typography, Card, Container } from "@mui/material";
 import Fade from "react-reveal/Fade";
 
 function VerifyEmail() {
@@ -17,19 +17,20 @@ function VerifyEmail() {
         token: tokenURL,
       })
       .catch((response) => {
-        console.log(response.response.status);
-        if (response.response.status === 403) {
+        console.log(response.response);
+        if ((response.response.status === 403, 400)) {
           setErrorAppeared(true);
           setErrorMessage(response.response.data.detail);
+          setErrorMessage(response.response.data.uid);
         }
       });
   }, []);
   return (
     <Fade>
-      <Container maxWidth='sm' sx={{ mb: 4 }}>
-        <Paper sx={{ my: { xs: 10, md: 6 }, p: { xs: 3.5, md: 3 } }}>
+      <Container maxWidth='sm' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>
+        <Card sx={{ width: "100%", pt: 5, pb: 5 }}>
           {!errorAppeared ? (
-            <Box sx={{ width: "100%", pt: 5 }}>
+            <Box>
               <Typography sx={{ mb: 3 }} align='center' variant='h4'>
                 Twoje konto zostało zweryfikowane.
               </Typography>
@@ -44,7 +45,7 @@ function VerifyEmail() {
               </Box>
             </Box>
           ) : (
-            <Box sx={{ width: "100%", pt: 5 }}>
+            <Box>
               <Typography sx={{ mb: 3 }} align='center' variant='h4'>
                 {errorMessage}
               </Typography>
@@ -54,12 +55,14 @@ function VerifyEmail() {
                   justifyContent: "center",
                 }}>
                 <Link style={{ color: "black", textDecoration: "none" }} to='/login'>
-                  <Typography variant='body1'>Klinkij tutaj, aby powrócić do strony logowania.</Typography>
+                  <Typography color='primary' variant='body1' sx={{ textDecoration: "underline" }}>
+                    Klinkij tutaj, aby powrócić do strony logowania.
+                  </Typography>
                 </Link>
               </Box>
             </Box>
           )}
-        </Paper>
+        </Card>
       </Container>
     </Fade>
   );

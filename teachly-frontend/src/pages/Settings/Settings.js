@@ -1,6 +1,6 @@
 import { useState } from "react";
-import NavbarSettings from "./NavbarSettings.js";
-import ContentSettings from "./ContentSettings.js";
+import NavbarSettings from "./../../components/Settings/NavbarSettings";
+import ContentSettings from "../../components/Settings/ContentSettings.js";
 import Fade from "react-reveal/Fade";
 
 import { Container, Grid } from "@mui/material/";
@@ -10,7 +10,7 @@ function Settings({ children }) {
   return (
     <>
       <Fade>
-        <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, p: { xs: 3.5, md: 3 } }}>
+        <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={3}>
               <NavbarSettings setSettingsName={setSettingsSubheader} />
