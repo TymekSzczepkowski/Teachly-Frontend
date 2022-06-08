@@ -10,17 +10,9 @@ function Searchbar({ parameters, setParameters, firstname }) {
   const [allSubjects, setAllSubjects] = useState([]);
 
   useEffect(() => {
-    if (auth) {
-      axios
-        .get(API_URL + `listings/subjects/`, {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-          },
-        })
-        .then((response) => {
-          setAllSubjects(response.data);
-        });
-    }
+    axios.get(API_URL + `listings/subjects/`, {}).then((response) => {
+      setAllSubjects(response.data);
+    });
   }, []);
 
   return (

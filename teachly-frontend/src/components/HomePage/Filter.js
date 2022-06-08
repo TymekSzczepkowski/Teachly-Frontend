@@ -27,7 +27,7 @@ function Filter({ parameters, setParameters }) {
       label: "300zł/h",
     },
   ];
-  const [valueSlider, setValueSlider] = useState([0, 300]);
+  const [valueSlider, setValueSlider] = useState([40, 200]);
   const [checked, setChecked] = useState();
 
   const handleChangeCheckbox = (event) => {

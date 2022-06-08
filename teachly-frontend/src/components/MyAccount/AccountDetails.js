@@ -36,7 +36,7 @@ function AccountDetails() {
       </CardContent>
       <Stack spacing={1} direction='row' sx={{ px: 2, pb: 2 }}>
         <Button component={Link} to='/settings' variant='contained'>
-          Modyfikuj dane
+          Edytuj profil
         </Button>
       </Stack>
     </Card>

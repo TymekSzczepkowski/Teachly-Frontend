@@ -47,6 +47,7 @@ function LessonDetails({ details, id, allSubjects }) {
 
   const deleteOffer = () => {
     axios
+
       .delete(API_URL + `accounts/users/${userDetails.id}/listings/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.access}`,

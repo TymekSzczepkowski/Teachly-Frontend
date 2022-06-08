@@ -4,7 +4,13 @@ function ListItemTitle({ title, icon }) {
   return (
     <ListItem>
       <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={<Typography variant='h6'>{title}</Typography>} />
+      <ListItemText
+        primary={
+          <Typography variant='h6' sx={{ fontWeight: 400 }}>
+            {title}
+          </Typography>
+        }
+      />
     </ListItem>
   );
 }

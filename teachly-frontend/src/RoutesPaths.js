@@ -25,14 +25,7 @@ function RoutesPaths() {
           </AuthenticatedRoute>
         }
       />
-      <Route
-        path='/offer/:id'
-        element={
-          <AuthenticatedRoute>
-            <LessonPage />
-          </AuthenticatedRoute>
-        }
-      />
+      <Route path='/offer/:id' element={<LessonPage />} />
       <Route
         path='/settings'
         element={
