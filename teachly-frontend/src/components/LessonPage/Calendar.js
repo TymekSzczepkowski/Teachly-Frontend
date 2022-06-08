@@ -8,7 +8,7 @@ function Calendar() {
   const [date, setDate] = useState();
 
   return (
-    <Card sx={{ mb: 4 }}>
+    <Card>
       <LocalizationProvider adapterLocale={plLocale} dateAdapter={AdapterDateFns}>
         <StaticDatePicker
           views={["day"]}
