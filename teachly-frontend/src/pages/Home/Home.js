@@ -7,9 +7,9 @@ import { Container, Grid, Fab, useMediaQuery } from "@mui/material";
 import LessonCard from "../../components/HomePage/Lesson/LessonCard";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Fade from "react-reveal/Fade";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Home() {
-  const API_URL = process.env.REACT_APP_API_URL;
   const { userDetails } = useContext(authContext);
   const [offers, setOffers] = useState([]);
   const [params, setParams] = useState({ price_from: "", price_to: "", level: "", subject: "", localization: "" });
@@ -19,7 +19,6 @@ function Home() {
       const response = await axios.get(API_URL + "listings", { params: { price_from: params.price_from, price_to: params.price_to, level: params.level, subject: params.subject, localization: params.localization } });
       setOffers(response.data);
     } catch (ex) {
-      console.log(ex);
     }
   };
 

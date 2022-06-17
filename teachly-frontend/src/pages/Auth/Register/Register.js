@@ -88,9 +88,7 @@ function Register() {
           }
         );
         nextStep();
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }
   useEffect(() => {

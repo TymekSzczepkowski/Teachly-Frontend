@@ -12,6 +12,8 @@ import SortIcon from "@mui/icons-material/Sort";
 import cities from "../../data/cities.json";
 
 function Filter({ parameters, setParameters }) {
+  const [valueSlider, setValueSlider] = useState([40, 200]);
+  const [checked, setChecked] = useState();
   const marks = [
     {
       value: 0,
@@ -27,8 +29,6 @@ function Filter({ parameters, setParameters }) {
       label: "300zł/h",
     },
   ];
-  const [valueSlider, setValueSlider] = useState([40, 200]);
-  const [checked, setChecked] = useState();
 
   const handleChangeCheckbox = (event) => {
     if (checked === event.target.value) {

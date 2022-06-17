@@ -6,7 +6,7 @@ import isLoading from "../../hoc/IsLoading";
 import AccountDetails from "./../../components/MyAccount/AccountDetails";
 import LessonHeading from "../../components/MyAccount/Lessons/LessonHeading";
 import LessonDetails from "../../components/MyAccount/Lessons/LessonDetails";
-import AddLesson from "../../components/MyAccount/Lessons/LessonUtils/AddLesson";
+import AddLesson from "../../components/MyAccount/Lessons/AddLesson";
 import { Accordion, Container, Grid, Button } from "@mui/material/";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Fade from "react-reveal/Fade";
@@ -46,6 +46,11 @@ function MyAccount({ setLoading }) {
     }
   }, []);
 
+  const windowReload = (time) => {
+    setTimeout(() => {
+      window.location.reload();
+    }, time);
+  };
   const handleChange = (id) => (event, isExpanded) => {
     if (!expanded || expanded !== id) {
       axios
@@ -77,7 +82,7 @@ function MyAccount({ setLoading }) {
               offers.map((offer) => (
                 <Accordion expanded={expanded === offer.id} onChange={handleChange(offer.id)} key={offer.id} sx={{ mb: 1 }}>
                   <LessonHeading lessonTitle={offer.title} subject={offer.subject.name} date={offer.modified_date} />
-                  {offerDetails !== undefined && <LessonDetails details={offerDetails} id={offer.id} allSubjects={allSubjects} />}
+                  {offerDetails !== undefined && <LessonDetails windowReload={windowReload} details={offerDetails} id={offer.id} allSubjects={allSubjects} />}
                 </Accordion>
               ))}
             <Button
@@ -90,7 +95,7 @@ function MyAccount({ setLoading }) {
               variant='contained'>
               Dodaj ogłoszenie
             </Button>
-            <AddLesson open={open} setOpen={setOpen} allSubjects={allSubjects} />
+            <AddLesson open={open} setOpen={setOpen} allSubjects={allSubjects} windowReload={windowReload} />
           </Grid>
         </Grid>
       </Container>

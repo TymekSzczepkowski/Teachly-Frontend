@@ -1,14 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
-import authContext from "../../../../context/authContext";
 import { ListItemButton, Button, ListItemText, ListItem } from "@mui/material/";
 import SendIcon from "@mui/icons-material/Send";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmailRequest() {
-  const API_URL = process.env.REACT_APP_API_URL;
   const [open, setOpen] = useState(false);
-  const { userDetails } = useContext(authContext);
   const [auth, setAuth] = useAuth();
 
   const onChangeEmail = () => {

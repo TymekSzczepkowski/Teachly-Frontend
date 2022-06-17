@@ -7,9 +7,9 @@ import { validateRepeatInput } from "../../../../hooks/Auth/registerVerification
 import { validateEmail } from "../../../../hooks/Auth/emailVerification";
 import { Modal, Typography, TextField, Grid, Container, Box, ListItem, Button } from "@mui/material/";
 import SendIcon from "@mui/icons-material/Send";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmail() {
-  const API_URL = process.env.REACT_APP_API_URL;
   const [auth, setAuth] = useAuth();
   const [click, setClick] = useState(false);
   const { uidFromUrl, tokenFromUrl } = useParams();

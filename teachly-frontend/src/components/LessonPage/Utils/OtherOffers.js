@@ -1,36 +1,59 @@
-import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Card } from "@mui/material/";
-import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-function OtherOffers() {
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
+import { List, ListItemButton, ListItemAvatar, ListItemText, Avatar, Card, ListSubheader, Button, Typography, Grid } from "@mui/material/";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
+import Fade from "react-reveal/Fade";
+const API_URL = process.env.REACT_APP_API_URL;
+
+function OtherOffers({ offerDetails }) {
+  const [auth, setAuth] = useAuth();
+  const [otherOffers, setOtherOffers] = useState();
+  useEffect(() => {
+    if (auth)
+      axios
+        .get(API_URL + `accounts/users/${offerDetails.author.id}/listings/`, {
+          headers: {
+            Authorization: `Bearer ${auth.access}`,
+          },
+        })
+        .then((response) => {
+          setOtherOffers(response.data);
+        });
+  }, []);
+
   return (
     <Card sx={{ width: "100%", height: 160 }}>
-      <List sx={{ height: 160, width: "100%", bgcolor: "background.paper", overflow: "scroll" }}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <ImageIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary='Matematyka Dyskretna' secondary='Jan 9, 2014' />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <WorkIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary='Język Angielski z klasą' secondary='Jan 7, 2014' />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <BeachAccessIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary='Przyroda dla ułomnych' secondary='July 20, 2014' />
-        </ListItem>
-      </List>
+      {otherOffers !== undefined && (
+        <List sx={{ height: 160, width: "100%", bgcolor: "background.paper", overflow: "scroll" }} subheader={<ListSubheader>Inne ogłoszenia tego korepetytora</ListSubheader>}>
+          {otherOffers.map((offer) => (
+            <Fade bottom>
+              <ListItemButton key={offer.id}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <CalculateOutlinedIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={offer.title} secondary={`Poziom: ${offer.level}, ${offer.subject.name},`} />
+                <Button
+                  onClick={() => {
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 50);
+                  }}
+                  component={Link}
+                  to={`/offer/${offer.id}`}
+                  variant='contained'
+                  startIcon={<ArrowForwardIcon />}>
+                  ZOBACZ
+                </Button>
+              </ListItemButton>
+            </Fade>
+          ))}
+        </List>
+      )}
     </Card>
   );
 }

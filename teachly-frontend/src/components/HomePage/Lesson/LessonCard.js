@@ -1,12 +1,11 @@
+import { Link } from "react-router-dom";
 import { Box, CardMedia, Typography, Card, CardContent, Button, Stack, Rating } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import guy from "../../../data/guy.jpeg";
-import { Link } from "react-router-dom";
 
 function OfferCard({ data }) {
   return (
     <Card>
-      <CardMedia component='img' height='180' image={guy} />
+      <CardMedia component='img' height='180' image={data.author.avatar} />
       <CardContent>
         <Typography noWrap variant='h5'>
           {data.title}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import authContext from "../../../context/authContext";
 import AlertDialog from "./LessonUtils/AlertDialog";
 import LessonForm from "./LessonUtils/LessonForm";
@@ -7,19 +7,13 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 const API_URL = process.env.REACT_APP_API_URL;
 
-function LessonDetails({ details, id, allSubjects }) {
+function LessonDetails({ details, id, allSubjects, windowReload }) {
   const { userDetails } = useContext(authContext);
   const [auth, setAuth] = useAuth([]);
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [state, setState] = useState({ title: " ", description: " ", city: " ", price: " ", subject: " ", level: " " });
+  const [state, setState] = useState({ title: " ", description: " ", city: " ", price: " ", subject: " ", level: " ", type: " " });
   const foundedSubject = allSubjects.find((element) => element.name === state.subject);
-
-  const windowReload = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
-  };
 
   const editOffer = () => {
     axios
@@ -30,8 +24,9 @@ function LessonDetails({ details, id, allSubjects }) {
           description: state.description === " " ? details.description : state.description,
           city: state.city === " " ? details.city : state.city,
           price: state.price === " " ? details.price : state.price,
-          // subject: state.subject === " " ? details.subject : state.subject,
+          subject: state.subject === " " ? details.subject.id : foundedSubject.id,
           level: state.level === " " ? details.level : state.level,
+          type: state.type === " " ? details.type : state.type,
         },
         {
           headers: {
@@ -41,19 +36,18 @@ function LessonDetails({ details, id, allSubjects }) {
       )
       .then(() => {
         setAlert(true);
-        windowReload();
+        windowReload(1000);
       });
   };
 
   const deleteOffer = () => {
     axios
-
       .delete(API_URL + `accounts/users/${userDetails.id}/listings/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.access}`,
         },
       })
-      .then(setOpen(false), windowReload());
+      .then(setOpen(false), windowReload(1000));
   };
 
   return (

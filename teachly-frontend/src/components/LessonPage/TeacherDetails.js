@@ -1,5 +1,6 @@
-import { CardHeader, Box, Avatar, CardMedia, CardContent, Typography, Stack, Rating } from "@mui/material/";
 import DialogComponent from "./Utils/DialogComponent";
+import { CardHeader, Box, Avatar, CardMedia, CardContent, Typography, Stack, Rating } from "@mui/material/";
+
 function TeacherDetails({ offerDetails }) {
   return (
     <DialogComponent

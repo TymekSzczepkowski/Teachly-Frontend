@@ -11,7 +11,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SchoolIcon from "@mui/icons-material/School";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-
 function Navbar() {
   const API_URL = process.env.REACT_APP_API_URL;
   const { userDetails, setUserDetails } = useContext(AuthContext);
@@ -136,7 +135,7 @@ function Navbar() {
                       <UserMenuItem id={"settings"} component={Link} to={"/settings"} onClick={handleCloseUserMenu} title={"Ustawienia"} />
                       <Divider />
                       <MenuItem onClick={logout}>
-                        <Typography textAlign='center'>Wyloguj</Typography>
+                        <Typography textAlign='center'>Wyloguj </Typography>
                       </MenuItem>
                     </>
                   ) : (

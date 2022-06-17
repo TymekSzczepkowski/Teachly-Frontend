@@ -4,9 +4,9 @@ import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import { Alert, AlertTitle, ListItemText, ListItem, Button, ListItemButton } from "@mui/material/";
 import SendIcon from "@mui/icons-material/Send";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmailConfirm() {
-  const API_URL = process.env.REACT_APP_API_URL;
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useAuth();
   const [errorAppeared, setErrorAppeared] = useState(false);

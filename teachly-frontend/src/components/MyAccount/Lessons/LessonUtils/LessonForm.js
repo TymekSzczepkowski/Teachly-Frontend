@@ -1,10 +1,22 @@
 import { useState, useEffect, useRef } from "react";
-import { Button, MenuItem, Autocomplete, Grid, TextField, InputAdornment } from "@mui/material/";
+import { Button, MenuItem, Autocomplete, Grid, TextField, InputAdornment, ToggleButtonGroup, ToggleButton } from "@mui/material/";
 import cities from "../../../../data/cities.json";
 
-function LessonForm({ value, defaultValue, state, setState, func1, func2, buttonText1, buttonText2, allSubjects }) {
-  const [disabled, setDisabled] = useState(true);
-  const citiesInPoland = cities;
+function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, buttonText2, allSubjects }) {
+  const [disabledAdd, setDisabledAdd] = useState(true);
+  const [disabledEdit, setDisabledEdit] = useState(true);
+  const [value, setValue] = useState({ city: defaultValue.city, subject: defaultValue.subject.name });
+  const [inputValue, setInputValue] = useState({ city: " ", subject: " " });
+  const [alignment, setAlignment] = useState(defaultValue.type);
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+    setState({ ...state, type: newAlignment });
+  };
+
+  let cityValues = cities.map((e) => e.city);
+  let subjectValues = allSubjects.map((e) => e.name);
+
   const levels = [
     {
       value: "Primary",
@@ -16,11 +28,13 @@ function LessonForm({ value, defaultValue, state, setState, func1, func2, button
       value: "University",
     },
   ];
-
   const notInitialRender = useRef(false);
   useEffect(() => {
     if (notInitialRender.current) {
-      setDisabled(false);
+      setDisabledEdit(false);
+      if (state.title !== "" && state.city !== "" && state.description !== "" && state.price !== "" && state.subject !== "" && state.level !== "" && state.type !== "") {
+        setDisabledAdd(false);
+      }
     } else {
       notInitialRender.current = true;
     }
@@ -41,14 +55,17 @@ function LessonForm({ value, defaultValue, state, setState, func1, func2, button
       </Grid>
       <Grid item xs={12} sm={6}>
         <Autocomplete
-          options={citiesInPoland}
-          renderInput={(params) => <TextField {...params} label='Miasto' variant='outlined' />}
-          isOptionEqualToValue={(option, value) => option.name === value.name}
-          inputValue={state.city === " " ? defaultValue.city : state.city}
-          getOptionLabel={(option) => option.city || state.city}
-          onChange={(e, newCity) => {
-            setState({ ...state, city: newCity.city });
+          value={value.city}
+          onChange={(event, newValue) => {
+            setValue({ ...value, city: newValue });
+            setState({ ...state, city: newValue });
           }}
+          inputValue={inputValue.city}
+          onInputChange={(event, newInputValue) => {
+            setInputValue({ ...inputValue, city: newInputValue });
+          }}
+          options={cityValues}
+          renderInput={(params) => <TextField {...params} label='Miasto' />}
         />
       </Grid>
       <Grid item xs={12}>
@@ -78,12 +95,17 @@ function LessonForm({ value, defaultValue, state, setState, func1, func2, button
       </Grid>
       <Grid item xs={6}>
         <Autocomplete
-          inputValue={state.subject === " " ? defaultValue.subject.name : state.subject}
-          options={allSubjects.map((subject) => subject.name)}
-          renderInput={(params) => <TextField {...params} label='Przedmiot' />}
-          onChange={(e, newSubject) => {
-            setState({ ...state, subject: newSubject });
+          value={value.subject}
+          onChange={(event, newValue) => {
+            setValue({ ...value, subject: newValue });
+            setState({ ...state, subject: newValue });
           }}
+          inputValue={inputValue.subject}
+          onInputChange={(event, newInputValue) => {
+            setInputValue({ ...inputValue, subject: newInputValue });
+          }}
+          options={subjectValues}
+          renderInput={(params) => <TextField {...params} label='Przedmiot' />}
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
@@ -102,13 +124,20 @@ function LessonForm({ value, defaultValue, state, setState, func1, func2, button
           ))}
         </TextField>
       </Grid>
-      <Grid item xs={12} sm={12} md={3} lg={4}>
-        <Button disabled={disabled} onClick={func1} fullWidth variant='contained' sx={{ height: "91%" }}>
+      <Grid item xs={12} sm={12} md={6}>
+        <ToggleButtonGroup sx={{ height: "100%" }} fullWidth color='primary' value={alignment} exclusive onChange={handleChange}>
+          <ToggleButton value='Remote'>Remote</ToggleButton>
+          <ToggleButton value='Hybrid'>Hybrid</ToggleButton>
+          <ToggleButton value='Stationary'>stationary</ToggleButton>
+        </ToggleButtonGroup>
+      </Grid>
+      <Grid item xs={12} md={8}>
+        <Button disabled={buttonText1 === "Dodaj ogłoszenie" ? disabledAdd : disabledEdit} onClick={func1} fullWidth variant='contained'>
           {buttonText1}
         </Button>
       </Grid>
-      <Grid item xs={12} sm={12} md={3} lg={2}>
-        <Button color='warning' onClick={func2} fullWidth variant='contained' sx={{ height: "91%" }}>
+      <Grid item xs={12} md={4}>
+        <Button color='warning' onClick={func2} fullWidth variant='contained'>
           {buttonText2}
         </Button>
       </Grid>

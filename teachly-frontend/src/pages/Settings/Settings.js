@@ -1,9 +1,8 @@
 import { useState } from "react";
 import NavbarSettings from "./../../components/Settings/NavbarSettings";
 import ContentSettings from "../../components/Settings/ContentSettings.js";
-import Fade from "react-reveal/Fade";
-
 import { Container, Grid } from "@mui/material/";
+import Fade from "react-reveal/Fade";
 
 function Settings({ children }) {
   const [settingsSubheader, setSettingsSubheader] = useState("Ustawienia");

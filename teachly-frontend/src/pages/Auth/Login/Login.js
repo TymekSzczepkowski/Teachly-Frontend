@@ -8,8 +8,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Container, Typography, Grid, TextField, Stack, Button, Box, IconButton, InputAdornment, Link as LinkUI } from "@mui/material/";
 import Fade from "react-reveal/Fade";
-
 const API_URL = process.env.REACT_APP_API_URL;
+
 function Login() {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();

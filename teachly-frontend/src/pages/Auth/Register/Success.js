@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, CircularProgress, Typography, Grid, Card } from "@mui/material";
+import { Box, CircularProgress, Typography, Grid } from "@mui/material";
 import Fade from "react-reveal/Fade";
 
 function Success({ state }) {

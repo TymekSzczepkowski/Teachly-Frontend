@@ -9,9 +9,9 @@ import { IconButton, InputAdornment, Modal, Typography, TextField, Grid, Contain
 import SendIcon from "@mui/icons-material/Send";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function EditPassword() {
-  const API_URL = process.env.REACT_APP_API_URL;
   const [showPassword, setShowPassword] = useState(true);
   const { uidFromUrl, tokenFromUrl } = useParams();
   const [auth, setAuth] = useAuth();

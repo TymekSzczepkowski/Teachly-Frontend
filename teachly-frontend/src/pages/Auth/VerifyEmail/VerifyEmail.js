@@ -17,7 +17,6 @@ function VerifyEmail() {
         token: tokenURL,
       })
       .catch((response) => {
-        console.log(response.response);
         if ((response.response.status === 403, 400)) {
           setErrorAppeared(true);
           setErrorMessage(response.response.data.detail);
