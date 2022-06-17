@@ -68,7 +68,7 @@ function MyAccount({ setLoading }) {
       setExpanded(isExpanded && false);
     }
   };
-
+  console.log(offerDetails);
   return (
     <Fade>
       <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>

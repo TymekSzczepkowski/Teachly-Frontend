@@ -126,11 +126,12 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
         <ToggleButtonGroup sx={{ height: "100%" }} fullWidth color='primary' value={alignment} exclusive onChange={handleChange}>
-          <ToggleButton value='Remote'>Remote</ToggleButton>
+          <ToggleButton value='Remote'>Online</ToggleButton>
           <ToggleButton value='Hybrid'>Hybrid</ToggleButton>
-          <ToggleButton value='Stationary'>stationary</ToggleButton>
+          <ToggleButton value='Stationary'>IN HOUSE</ToggleButton>
         </ToggleButtonGroup>
       </Grid>
+
       <Grid item xs={12} md={8}>
         <Button disabled={buttonText1 === "Dodaj ogłoszenie" ? disabledAdd : disabledEdit} onClick={func1} fullWidth variant='contained'>
           {buttonText1}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
-import { List, ListItemButton, ListItemAvatar, ListItemText, Avatar, Card, ListSubheader, Button, Typography, Grid } from "@mui/material/";
+import { List, ListItemButton, ListItemAvatar, ListItemText, Avatar, Card, ListSubheader, Button } from "@mui/material/";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
 import Fade from "react-reveal/Fade";

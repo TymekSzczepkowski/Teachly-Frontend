@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ListItemSettings from "./ListItemSettings";
 import { Collapse, Card, List, ListSubheader, ListItemButton, ListItemIcon, ListItemText } from "@mui/material/";
-import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SwitchAccountOutlinedIcon from "@mui/icons-material/SwitchAccountOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import AbcIcon from "@mui/icons-material/Abc";
 import PaymentIcon from "@mui/icons-material/Payment";
-import ContactMailIcon from "@mui/icons-material/ContactMail";
+import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import PasswordIcon from "@mui/icons-material/Password";
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import PhotoLibraryOutlinedIcon from "@mui/icons-material/PhotoLibraryOutlined";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 
 function NavbarSettings({ setSettingsName }) {
@@ -30,11 +30,11 @@ function NavbarSettings({ setSettingsName }) {
           overflow: "auto",
         }}
         subheader={<ListSubheader>Ustawienia</ListSubheader>}>
-        <ListItemSettings id='account-settings' func={handleSetSettingsName} title={"Konto"} icon={<SwitchAccountIcon />}></ListItemSettings>
+        <ListItemSettings id='account-settings' func={handleSetSettingsName} title={"Konto"} icon={<SwitchAccountOutlinedIcon />}></ListItemSettings>
         <ListItemSettings id='payment-settings' func={handleSetSettingsName} title={"Płatność"} icon={<PaymentIcon />}></ListItemSettings>
         <ListItemButton onClick={handleExpandMore}>
           <ListItemIcon>
-            <AccountCircleIcon />
+            <AccountCircleOutlinedIcon />
           </ListItemIcon>
           <ListItemText id='profile-data' primary='Dane o profilu' />
           {open ? <ExpandLess /> : <ExpandMore />}
@@ -42,8 +42,8 @@ function NavbarSettings({ setSettingsName }) {
         <Collapse in={open} timeout='auto' unmountOnExit>
           <List sx={{ pl: 1 }} component='div' disablePadding>
             <ListItemSettings id='description-settings' func={handleSetSettingsName} title={"Zmień opis"} icon={<AbcIcon />}></ListItemSettings>
-            <ListItemSettings id='avatar-settings' func={handleSetSettingsName} title={"Zmień zdjęcie profilowe"} icon={<InsertPhotoIcon />}></ListItemSettings>
-            <ListItemSettings component={Link} to={"/settings/editemail"} id='change-email' func={handleSetSettingsName} title={"Zmień email"} icon={<ContactMailIcon />}></ListItemSettings>
+            <ListItemSettings id='avatar-settings' func={handleSetSettingsName} title={"Zmień zdjęcie profilowe"} icon={<PhotoLibraryOutlinedIcon />}></ListItemSettings>
+            <ListItemSettings component={Link} to={"/settings/editemail"} id='change-email' func={handleSetSettingsName} title={"Zmień email"} icon={<ContactMailOutlinedIcon />}></ListItemSettings>
             <ListItemSettings component={Link} to={"/settings/editpassword"} id='change-password' func={handleSetSettingsName} title={"Zmień hasło"} icon={<PasswordIcon />}></ListItemSettings>
           </List>
         </Collapse>

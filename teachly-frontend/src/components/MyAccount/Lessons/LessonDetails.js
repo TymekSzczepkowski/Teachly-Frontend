@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import authContext from "../../../context/authContext";
 import AlertDialog from "./LessonUtils/AlertDialog";
 import LessonForm from "./LessonUtils/LessonForm";
-import { Alert, CardContent, Box, AccordionDetails } from "@mui/material/";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import { Alert, CardContent, Box, AccordionDetails, CardActions, Button } from "@mui/material/";
+import SearchIcon from "@mui/icons-material/Search";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function LessonDetails({ details, id, allSubjects, windowReload }) {
@@ -49,7 +52,7 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
       })
       .then(setOpen(false), windowReload(1000));
   };
-
+  console.log(details);
   return (
     <AccordionDetails>
       <Box>
@@ -69,6 +72,11 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
             buttonText2='Usuń ogłoszenie'
           />
         </CardContent>
+        <CardActions>
+          <Button component={Link} to={`/offer/${details.id}`} size='small' startIcon={<SearchIcon />}>
+            ZOBACZ OGŁOSZENIE
+          </Button>
+        </CardActions>
       </Box>
     </AccordionDetails>
   );
