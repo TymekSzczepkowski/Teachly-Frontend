@@ -2,7 +2,7 @@ import { useState } from "react";
 import { List, ListItemText, ListItemAvatar, Card, Dialog, ListItemButton, Button } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-function DialogComponent({ component, avatar, text }) {
+function DialogComponent({ component, avatar, text, id }) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -14,7 +14,7 @@ function DialogComponent({ component, avatar, text }) {
   return (
     <Card sx={{ mb: 2 }}>
       <List>
-        <ListItemButton onClick={handleClick}>
+        <ListItemButton onClick={handleClick} id={id}>
           <ListItemAvatar>{avatar}</ListItemAvatar>
           <ListItemText primary={text} />
           <Button>

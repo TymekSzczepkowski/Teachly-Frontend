@@ -9,7 +9,7 @@ function AccountDetails() {
 
   return (
     <Card>
-      <CardHeader avatar={<Avatar sx={{ bgcolor: "#1976d2" }}>{userDetails.type === "Student" ? "S" : "T"}</Avatar>} title={userDetails.type} subheader={userDetails.email} />
+      <CardHeader id={"account-details"} avatar={<Avatar sx={{ bgcolor: "#1976d2" }}>{userDetails.type === "Student" ? "S" : "T"}</Avatar>} title={userDetails.type} subheader={userDetails.email} />
       <CardMedia component='img' height='300' image={userDetails.avatar} />
       <CardContent>
         <Typography sx={{ whiteSpace: "nowrap" }} variant='h5'>

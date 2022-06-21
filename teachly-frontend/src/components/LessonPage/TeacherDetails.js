@@ -4,11 +4,13 @@ import { CardHeader, Box, Avatar, CardMedia, CardContent, Typography, Stack, Rat
 function TeacherDetails({ offerDetails }) {
   return (
     <DialogComponent
+      id={"teacher-details-button"}
       text={"Informacje o korepetytorze"}
       avatar={<Avatar src={offerDetails.author.avatar} />}
       component={
         <>
           <CardHeader
+            id={"card-header"}
             title={<Typography sx={{ fontWeight: 400 }} variant='h6'>{`${offerDetails.author.first_name}  ${offerDetails.author.last_name}`}</Typography>}
             subheader={
               <Typography sx={{ fontWeight: 500, mt: 0.3, textTransform: "uppercase" }} color='primary' variant='subtitle2'>

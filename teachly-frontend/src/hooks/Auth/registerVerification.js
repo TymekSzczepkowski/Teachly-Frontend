@@ -14,7 +14,7 @@ export const validateRepeatInput = (password, repeatPassword) => {
 };
 
 export const validateDetails = (firstName, lastName, sex, country, region, city, image) => {
-  if (firstName === "" || lastName === "" || sex === "" || country === "" || region === "" || city === "" || image === "") {
+  if (firstName === "" || lastName === "" || sex === "" || country === "" || region === "" || city === "" || image === "" || country === null || region === null || city === null) {
     return "Wszystkie pola muszą zostać wypełnione";
   } else return "";
 };

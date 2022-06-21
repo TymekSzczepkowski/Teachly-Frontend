@@ -68,7 +68,6 @@ function MyAccount({ setLoading }) {
       setExpanded(isExpanded && false);
     }
   };
-  console.log(offerDetails);
   return (
     <Fade>
       <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>
@@ -80,12 +79,13 @@ function MyAccount({ setLoading }) {
             {userDetails.type === "Teacher" &&
               offers !== undefined &&
               offers.map((offer) => (
-                <Accordion expanded={expanded === offer.id} onChange={handleChange(offer.id)} key={offer.id} sx={{ mb: 1 }}>
-                  <LessonHeading lessonTitle={offer.title} subject={offer.subject.name} date={offer.modified_date} />
+                <Accordion id={offer.title + "-id"} expanded={expanded === offer.id} onChange={handleChange(offer.id)} key={offer.id} sx={{ mb: 1 }}>
+                  <LessonHeading id={offer.title + "-heading"} lessonTitle={offer.title} subject={offer.subject.name} date={offer.modified_date} />
                   {offerDetails !== undefined && <LessonDetails windowReload={windowReload} details={offerDetails} id={offer.id} allSubjects={allSubjects} />}
                 </Accordion>
               ))}
             <Button
+              id={"addNewLesson-button"}
               color='success'
               onClick={() => {
                 setOpen(true);

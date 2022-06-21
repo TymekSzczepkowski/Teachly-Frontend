@@ -5,7 +5,7 @@ import photo from "../../../data/guy.jpeg";
 function OpinionList() {
   return (
     <>
-      <List subheader={<ListSubheader>Opinie o korepetytorze</ListSubheader>}>
+      <List id={"feedback-list"} subheader={<ListSubheader>Opinie o korepetytorze</ListSubheader>}>
         <ListItem alignItems='flex-start'>
           <ListItemAvatar>
             <Avatar src={photo} />

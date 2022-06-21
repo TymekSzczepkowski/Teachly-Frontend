@@ -26,41 +26,30 @@ function VerifyEmail() {
   }, []);
   return (
     <Fade>
-      <Container maxWidth='sm' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>
+      <Container maxWidth='sm' sx={{ mt: { xs: 13, md: 12 }, p: { xs: 3.5, md: 3 } }}>
         <Card sx={{ width: "100%", pt: 5, pb: 5 }}>
-          {!errorAppeared ? (
-            <Box>
+          <Box>
+            {errorAppeared ? (
               <Typography sx={{ mb: 3 }} align='center' variant='h4'>
                 Twoje konto zostało zweryfikowane.
               </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}>
-                <Link style={{ color: "black", textDecoration: "none" }} to='/login'>
-                  <Typography variant='body1'>Klinkij tutaj, aby powrócić do strony logowania.</Typography>
-                </Link>
-              </Box>
-            </Box>
-          ) : (
-            <Box>
+            ) : (
               <Typography sx={{ mb: 3 }} align='center' variant='h4'>
                 {errorMessage}
               </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}>
-                <Link style={{ color: "black", textDecoration: "none" }} to='/login'>
-                  <Typography color='primary' variant='body1' sx={{ textDecoration: "underline" }}>
-                    Klinkij tutaj, aby powrócić do strony logowania.
-                  </Typography>
-                </Link>
-              </Box>
+            )}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}>
+              <Link style={{ color: "black", textDecoration: "none" }} to='/login'>
+                <Typography color='primary' variant='body1'>
+                  Klinkij tutaj, aby powrócić do strony logowania.
+                </Typography>
+              </Link>
             </Box>
-          )}
+          </Box>
         </Card>
       </Container>
     </Fade>

@@ -18,6 +18,7 @@ function Searchbar({ parameters, setParameters, firstname }) {
   return (
     <Card sx={{ marginBottom: "20px" }}>
       <Autocomplete
+        id={"seachbar"}
         options={allSubjects.map((subject) => subject.name)}
         sx={{ boxShadow: "none" }}
         onChange={(e, newSubject) => {

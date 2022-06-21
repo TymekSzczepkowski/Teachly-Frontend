@@ -131,7 +131,7 @@ function Navbar() {
                       </Box>
                       <Divider />
                       <UserMenuItem component={Link} to={"/"} onClick={handleCloseUserMenu} title={"Strona główna"} />
-                      <UserMenuItem component={Link} to={"/myaccount"} onClick={handleCloseUserMenu} title={"Moje konto"} />
+                      <UserMenuItem id={"my-account"} component={Link} to={"/myaccount"} onClick={handleCloseUserMenu} title={"Moje konto"} />
                       <UserMenuItem id={"settings"} component={Link} to={"/settings"} onClick={handleCloseUserMenu} title={"Ustawienia"} />
                       <Divider />
                       <MenuItem onClick={logout}>

@@ -106,7 +106,7 @@ function Register() {
       case 4:
         return <Success state={state} />;
       default:
-        return <div>error</div>;
+        return "error";
     }
   }
 
@@ -126,8 +126,8 @@ function Register() {
 
   return (
     <Fade>
-      <Container maxWidth='sm' sx={{ mb: 4 }}>
-        <Box elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
+      <Container maxWidth='sm'>
+        <Box elevation={1} sx={{ mt: { xs: 13, md: 12 }, p: { xs: 3.5, md: 3 } }}>
           {step !== 4 && (
             <Box>
               <Typography sx={{ fontWeight: 400 }} variant='h4' align='center'>

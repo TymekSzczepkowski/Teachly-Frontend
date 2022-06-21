@@ -78,6 +78,7 @@ function Filter({ parameters, setParameters }) {
           <ListItem sx={{ marginBottom: "1rem" }}>
             <Box sx={{ width: "100%" }}>
               <Autocomplete
+                id={"location-filter"}
                 options={cities.map((city) => city.city)}
                 onChange={(e, newCity) => {
                   setParameters({ ...parameters, localization: newCity });

@@ -38,6 +38,7 @@ function OtherOffers({ offerDetails }) {
                 </ListItemAvatar>
                 <ListItemText primary={offer.title} secondary={`Poziom: ${offer.level}, ${offer.subject.name},`} />
                 <Button
+                  id={"AnotherLessonOffer-button"}
                   onClick={() => {
                     setTimeout(() => {
                       window.location.reload();

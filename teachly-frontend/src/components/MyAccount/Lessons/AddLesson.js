@@ -54,7 +54,24 @@ export default function AddLesson({ open, setOpen, allSubjects, windowReload }) 
       <DialogTitle>{"Dodaj ogłoszenie"}</DialogTitle>
       <Divider />
       <DialogContent>
-        <LessonForm allSubjects={allSubjects} state={state} setState={setState} defaultValue={state} func1={addOffer} func2={handleClose} buttonText1='Dodaj ogłoszenie' buttonText2='Anuluj' />
+        <LessonForm
+          idTitle={"title-input"}
+          idCity={"city-input"}
+          idDescription={"description-input"}
+          idPrice={"price-input"}
+          idSubject={"subject-input"}
+          idLevel={"level-input"}
+          idType={"type-buttonGroup"}
+          idActionButton={"addLesson-button"}
+          allSubjects={allSubjects}
+          state={state}
+          setState={setState}
+          defaultValue={state}
+          func1={addOffer}
+          func2={handleClose}
+          buttonText1='Dodaj ogłoszenie'
+          buttonText2='Anuluj'
+        />
       </DialogContent>
     </Dialog>
   );

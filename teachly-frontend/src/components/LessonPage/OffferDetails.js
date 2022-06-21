@@ -56,7 +56,7 @@ function OffferDetails({ offerDetails }) {
       </Box>
       <Box sx={{ mt: 3, mx: 1, mb: 1 }}>
         <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={2}>
-          <Button sx={{ width: "70%" }} variant='contained'>
+          <Button id={"make-an-appointment-button"} sx={{ width: "70%" }} variant='contained'>
             Umów się
           </Button>
           <Typography sx={{ mt: 0.3 }} variant='body2' color='text.disabled'>

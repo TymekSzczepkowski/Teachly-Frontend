@@ -16,7 +16,7 @@ export default function AlertDialog({ deleteOffer, open, setOpen }) {
         <Button onClick={handleClose} sx={{ color: "#bdbdbd" }}>
           Cofnij
         </Button>
-        <Button onClick={deleteOffer} color='error' variant='contained' autoFocus startIcon={<DeleteIcon />}>
+        <Button id={"deleteOffer-button2"} onClick={deleteOffer} color='error' variant='contained' autoFocus startIcon={<DeleteIcon />}>
           USUŃ
         </Button>
       </DialogActions>

@@ -13,8 +13,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   let regionValues = regions.map((e) => e.name);
   let countryValues = countries.map((e) => e.name);
 
-  const [inputValue, setInputValue] = useState({ city: " ", region: " ", country: " " });
-
+  const [inputValue, setInputValue] = useState({ city: state.city, region: " ", country: " " });
   return (
     <Fade>
       <Grid container spacing={3}>
@@ -60,11 +59,12 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
           <Autocomplete
             id='city-input'
             options={cityValues}
+            value={state.city}
             renderInput={(params) => <TextField {...params} label='Miasto' variant='standard' />}
             inputValue={inputValue.city}
             onInputChange={(event, newInputValue) => {
-            setInputValue({ ...inputValue, city: newInputValue });
-          }}
+              setInputValue({ ...inputValue, city: newInputValue });
+            }}
             onChange={(e, newValue) => {
               setState({ ...state, city: newValue });
             }}
@@ -73,12 +73,13 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         <Grid item xs={12} sm={6}>
           <Autocomplete
             id='region-input'
+            value={state.region}
             options={regionValues}
             renderInput={(params) => <TextField {...params} label='Województwo' variant='standard' />}
             inputValue={inputValue.region}
             onInputChange={(event, newInputValue) => {
-            setInputValue({ ...inputValue, region: newInputValue });
-          }}
+              setInputValue({ ...inputValue, region: newInputValue });
+            }}
             onChange={(e, newValue) => {
               setState({ ...state, region: newValue });
             }}
@@ -87,12 +88,13 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         <Grid item xs={12} sm={6}>
           <Autocomplete
             id='country-input'
+            value={state.country}
             options={countryValues}
             renderInput={(params) => <TextField {...params} label='Państwo' variant='standard' />}
             inputValue={inputValue.country}
             onInputChange={(event, newInputValue) => {
-            setInputValue({ ...inputValue, country: newInputValue });
-          }}
+              setInputValue({ ...inputValue, country: newInputValue });
+            }}
             onChange={(e, newValue) => {
               setState({ ...state, country: newValue });
             }}

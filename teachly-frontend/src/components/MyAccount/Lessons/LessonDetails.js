@@ -52,7 +52,6 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
       })
       .then(setOpen(false), windowReload(1000));
   };
-  console.log(details);
   return (
     <AccordionDetails>
       <Box>
@@ -60,6 +59,9 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
         {alert && <Alert severity='success'>Ogłoszenie zostało zmodyfikowane pomyślnie</Alert>}
         <CardContent>
           <LessonForm
+            idActionButton={"saveOffer-button"}
+            deleteOfferButton={"deleteOffer-button"}
+            idSubject={"subject-input"}
             defaultValue={details}
             state={state}
             setState={setState}
@@ -73,7 +75,7 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
           />
         </CardContent>
         <CardActions>
-          <Button component={Link} to={`/offer/${details.id}`} size='small' startIcon={<SearchIcon />}>
+          <Button id={"checkoutThatLesson-button"} component={Link} to={`/offer/${details.id}`} size='small' startIcon={<SearchIcon />}>
             ZOBACZ OGŁOSZENIE
           </Button>
         </CardActions>

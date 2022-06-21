@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Box, CardMedia, Typography, Card, CardContent, Button, Stack, Rating } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 
 function OfferCard({ data }) {
   return (
@@ -11,7 +12,11 @@ function OfferCard({ data }) {
           {data.title}
         </Typography>
         <Stack direction='row' spacing={0.5} sx={{ mb: 1, mt: 0.5 }}>
-          <LocationOnOutlinedIcon color='primary' sx={{ fontSize: "21px" }} />
+          <ListAltIcon color='primary' sx={{ fontSize: "21px" }} />
+          <Typography sx={{ fontWeight: 500, mt: 0.3 }} color='primary' variant='subtitle2'>
+            {data.subject.name.toUpperCase()}
+          </Typography>
+          <LocationOnOutlinedIcon color='primary' sx={{ pl: 1, fontSize: "21px" }} />
           <Typography sx={{ fontWeight: 500, mt: 0.3 }} color='primary' variant='subtitle2'>
             {data.city.toUpperCase()}, POLAND
           </Typography>
@@ -29,7 +34,7 @@ function OfferCard({ data }) {
         </Box>
       </CardContent>
       <Stack spacing={1} direction='row' sx={{ px: 2, pb: 2 }}>
-        <Button component={Link} to={`/offer/${data.id}/`} variant='contained'>
+        <Button id={"open-lesson-card-button"} component={Link} to={`/offer/${data.id}/`} variant='contained'>
           ZOBACZ
         </Button>
         <Button disableRipple variant='outlined'>{`${data.price} zł/h`}</Button>

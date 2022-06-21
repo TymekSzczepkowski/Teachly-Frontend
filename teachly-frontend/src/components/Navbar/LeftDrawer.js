@@ -1,37 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, List, Divider, ListItem, ListItemText, ListItemIcon } from "@mui/material";
+import LeftDrawerItem from "./LeftDrawerItem";
+import { Box, Divider } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 function LeftDrawer(auth, toggleDrawer) {
   return (
     <Box sx={{ width: 250 }} onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-      <List>
-        <ListItem component={Link} to={"/"} button>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary='Strona głowna' />
-        </ListItem>
-      </List>
+      <LeftDrawerItem component={Link} to='/' title='Strona Głowna' icon={<HomeIcon />} />
       {!auth && (
         <>
-          <List>
-            <ListItem component={Link} to={"/login"} button>
-              <ListItemIcon>
-                <LiveHelpIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zaloguj się' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem component={Link} to={"/register"} button>
-              <ListItemIcon>
-                <LiveHelpIcon />
-              </ListItemIcon>
-              <ListItemText primary='Zarejestruj się' />
-            </ListItem>
-          </List>
+          <LeftDrawerItem component={Link} to='/login' title='Zaloguj się' icon={<LiveHelpIcon />} />
+          <LeftDrawerItem component={Link} to='/register' title='Zarejestruj się' icon={<LiveHelpIcon />} />
           <Divider />
         </>
       )}
