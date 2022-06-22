@@ -23,13 +23,13 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
       .patch(
         API_URL + `accounts/users/${userDetails.id}/listings/${id}/`,
         {
-          title: editedListing.title === " " ? details.title : editedListing.title,
-          description: editedListing.description === " " ? details.description : editedListing.description,
-          city: editedListing.city === " " ? details.city : editedListing.city,
-          price: editedListing.price === " " ? details.price : editedListing.price,
-          subject: editedListing.subject === " " ? details.subject.id : foundSubject.id,
-          level: editedListing.level === " " ? details.level : editedListing.level,
-          type: editedListing.type === " " ? details.type : editedListing.type,
+          ...(editedListing.title !== " " && { title: editedListing.title }),
+          ...(editedListing.description !== " " && { description: editedListing.description }),
+          ...(editedListing.city !== " " && { city: editedListing.city }),
+          ...(editedListing.price !== " " && { price: editedListing.price }),
+          ...(editedListing.subject !== " " && { subject: foundSubject.id }),
+          ...(editedListing.level !== " " && { level: editedListing.level }),
+          ...(editedListing.type !== " " && { type: editedListing.type }),
         },
         {
           headers: {
