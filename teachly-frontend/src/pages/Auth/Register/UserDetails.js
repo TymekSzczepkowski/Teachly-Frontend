@@ -24,7 +24,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
   };
 
   return (
-    <div>
+    <>
       <ToggleButtonGroup sx={{ mb: 1.5 }} fullWidth color='primary' exclusive onChange={handleChange} value={alignment}>
         <ToggleButton value='Student' type='radio' name='profileType'>
           Uczeń
@@ -48,7 +48,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             onChange={(e) => {
               setState({ ...state, email: e.target.value });
             }}
-            />
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -72,7 +72,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
             onChange={(e) => {
               setState({ ...state, password: e.target.value });
             }}
-            />
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -99,7 +99,7 @@ function UserDetails({ state, setState, alignment, setAlignment, inputMessage, s
           />
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
 

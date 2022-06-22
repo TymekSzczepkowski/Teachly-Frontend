@@ -4,6 +4,5 @@ export const styledButton = {
   marginRight: "5px",
   textTransform: "none",
   display: "block",
-  color: "inherit",
   fontWeight: "550",
 };

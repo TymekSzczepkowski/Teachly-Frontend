@@ -22,10 +22,15 @@ exports.config = {
   //
   specs: ["./test/specs/**/*.js"],
   suites: {
-    login: ["./test/specs/login.js"],
-    register: ["./test/specs/register.js"],
-    changeEmail: ["./test/specs/changeEmail.js"],
-    changePassword: ["./test/specs/changePassword.js"],
+    auth: ["./test/specs/Auth/*.js"],
+    settings: ["./test/specs/Settings/*.js"],
+    listings: ["./test/specs/Listings/*.js"],
+    myaccount: ["./test/specs/MyAccount/*.js"],
+    login: ["./test/specs/Auth/login.js"],
+    register: ["./test/specs/Auth/register.js"],
+    changeEmail: ["./test/specs/Settings/changeEmail.js"],
+    changePassword: ["./test/specs/Settings/changePassword.js"],
+    openLessonCard: ["./test/specs/Listings/openLessonCard.js"],
     otherFeature: [
       // ...
     ],

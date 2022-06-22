@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
@@ -10,6 +10,7 @@ import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import { validateEmail } from "../../../hooks/Auth/emailVerification";
 import { validateProfileType, validateRepeatInput, validateDetails } from "../../../hooks/Auth/registerVerification";
 import { Container, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
+import Fade from "react-reveal/Fade";
 
 const API_URL = process.env.REACT_APP_API_URL;
 function Register() {
@@ -58,12 +59,10 @@ function Register() {
         nextStep();
       }
     } else if (step === 2) {
-      setInputMessage({
-        ...inputMessage,
-        detailsMessage: validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image),
-      });
-      if (validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image) === "") {
+      if (validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image)) {
         nextStep();
+      } else {
+        setInputMessage({ ...inputMessage, detailsMessage: "Wszystkie pola muszą zostać wypełnione." });
       }
     } else if (step === 3) {
       try {
@@ -87,9 +86,7 @@ function Register() {
           }
         );
         nextStep();
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }
   useEffect(() => {
@@ -107,7 +104,7 @@ function Register() {
       case 4:
         return <Success state={state} />;
       default:
-        return <div>error</div>;
+        return "error";
     }
   }
 
@@ -126,72 +123,74 @@ function Register() {
   const steps = ["Dane rejestracji", "Dane osobowe", "Weryfikacja danych"];
 
   return (
-    <Container maxWidth='sm' sx={{ mb: 4 }}>
-      <Box elevation={1} sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
-        {step !== 4 && (
-          <Box>
-            <Typography sx={{ fontWeight: 400 }} variant='h4' align='center'>
-              Zarejestruj się
-            </Typography>
-            <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 2 }}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Box>
-        )}
-
-        {getStepContent(step)}
-        <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
-          {step !== 1 && step !== 4 && (
-            <Button
-              sx={{ p: 1 }}
-              fullWidth
-              color='inherit'
-              variant='text'
-              onClick={() => {
-                previousStep();
-              }}>
-              Powrót
-            </Button>
-          )}
+    <Fade>
+      <Container maxWidth='sm'>
+        <Box elevation={1} sx={{ mt: { xs: 13, md: 12 }, p: { xs: 3.5, md: 3 } }}>
           {step !== 4 && (
-            <Button
-              id='continue-button'
-              sx={{ p: 1 }}
-              fullWidth
-              variant='contained'
-              onClick={(e) => {
-                e.preventDefault();
-                continueHandler();
-                setClick(true);
-                if (step === 2)
-                  if (state.firstName !== "" && state.lastName !== "")
-                    setState({
-                      ...state,
-                      firstName: toBigLetter(state.firstName),
-                      lastName: toBigLetter(state.lastName),
-                    });
-              }}>
-              Dalej
-            </Button>
+            <Box>
+              <Typography sx={{ fontWeight: 400 }} variant='h4' align='center'>
+                Zarejestruj się
+              </Typography>
+              <Stepper activeStep={step - 1} sx={{ pt: 3, pb: 2 }}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            </Box>
           )}
-        </Stack>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}>
-          {step === 1 && (
-            <LinkUI component={Link} to={"/login"} variant='body2'>
-              Masz już konto? Zaloguj się
-            </LinkUI>
-          )}
+
+          {getStepContent(step)}
+          <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
+            {step !== 1 && step !== 4 && (
+              <Button
+                sx={{ p: 1 }}
+                fullWidth
+                color='inherit'
+                variant='text'
+                onClick={() => {
+                  previousStep();
+                }}>
+                Powrót
+              </Button>
+            )}
+            {step !== 4 && (
+              <Button
+                id='continue-button'
+                sx={{ p: 1 }}
+                fullWidth
+                variant='contained'
+                onClick={(e) => {
+                  e.preventDefault();
+                  continueHandler();
+                  setClick(true);
+                  if (step === 2)
+                    if (state.firstName !== "" && state.lastName !== "")
+                      setState({
+                        ...state,
+                        firstName: toBigLetter(state.firstName),
+                        lastName: toBigLetter(state.lastName),
+                      });
+                }}>
+                Dalej
+              </Button>
+            )}
+          </Stack>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}>
+            {step === 1 && (
+              <LinkUI component={Link} to={"/login"} variant='body2'>
+                Masz już konto? Zaloguj się
+              </LinkUI>
+            )}
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Fade>
   );
 }
 

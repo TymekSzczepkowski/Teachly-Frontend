@@ -7,8 +7,9 @@ import { validatePassword } from "../../../hooks/Auth/passwordVerification";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Container, Typography, Grid, TextField, Stack, Button, Box, IconButton, InputAdornment, Link as LinkUI } from "@mui/material/";
-
+import Fade from "react-reveal/Fade";
 const API_URL = process.env.REACT_APP_API_URL;
+
 function Login() {
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
@@ -69,75 +70,77 @@ function Login() {
   };
 
   return (
-    <Container maxWidth='sm'>
-      <Box sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
-        <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' gutterBottom>
-          Zaloguj się
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              id='email-input'
-              autoComplete='off'
-              fullWidth
-              error={inputMessage.emailMessage === "" ? false : true}
-              helperText={inputMessage.emailMessage}
-              variant='standard'
-              label='E-mail'
-              value={state.email}
-              onChange={(e) => {
-                setState({ ...state, email: e.target.value });
-              }}
-            />
+    <Fade>
+      <Container maxWidth='sm'>
+        <Box sx={{ my: { xs: 13, md: 16 }, p: { xs: 3.5, md: 3 } }}>
+          <Typography sx={{ fontWeight: 400 }} variant='h4' align='center' gutterBottom>
+            Zaloguj się
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                id='email-input'
+                autoComplete='off'
+                fullWidth
+                error={inputMessage.emailMessage === "" ? false : true}
+                helperText={inputMessage.emailMessage}
+                variant='standard'
+                label='E-mail'
+                value={state.email}
+                onChange={(e) => {
+                  setState({ ...state, email: e.target.value });
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                error={inputMessage.passwordMessage === "" ? false : true}
+                id='password-input'
+                helperText={inputMessage.passwordMessage}
+                fullWidth
+                variant='standard'
+                label='Hasło'
+                value={state.password}
+                type={showPassword ? "password" : "text"}
+                onChange={(e) => {
+                  setState({ ...state, password: e.target.value });
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton aria-label='toggle password visibility' onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+          <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
+            <Button
+              id='sign-in-button'
+              sx={{ p: 1 }}
+              onClick={(e) => {
+                submit(e);
               }}
-              error={inputMessage.passwordMessage === "" ? false : true}
-              id='password-input'
-              helperText={inputMessage.passwordMessage}
               fullWidth
-              variant='standard'
-              label='Hasło'
-              value={state.password}
-              type={showPassword ? "password" : "text"}
-              onChange={(e) => {
-                setState({ ...state, password: e.target.value });
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Stack direction='row' spacing={2} sx={{ my: 4, mb: 1 }}>
-          <Button
-            id='sign-in-button'
-            sx={{ p: 1 }}
-            onClick={(e) => {
-              submit(e);
-            }}
-            fullWidth
-            variant='contained'>
-            Kontynuuj
-          </Button>
-        </Stack>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}>
-          <LinkUI component={Link} to={"/register"} variant='body2'>
-            Nie masz konta? Zarejestruj się
-          </LinkUI>
+              variant='contained'>
+              Kontynuuj
+            </Button>
+          </Stack>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}>
+            <LinkUI component={Link} to={"/register"} variant='body2'>
+              Nie masz konta? Zarejestruj się
+            </LinkUI>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Fade>
   );
 }
 

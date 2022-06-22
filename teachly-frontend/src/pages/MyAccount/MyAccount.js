@@ -1,44 +1,106 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
 import authContext from "../../context/authContext";
-import { Box, Container, Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from "@mui/material/";
-function MyAccount() {
-  const { userDetails } = useContext(authContext);
-  return (
-    <Container>
-      <Box elevation={1} sx={{ my: { xs: 8, md: 8 }, p: { xs: 3.5, md: 3 } }}>
-        <Card>
-          <CardActionArea>
-            <CardMedia component='img' height='400' image={userDetails.avatar} />
-            <CardContent>
-              <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                {userDetails.email}
-              </Typography>
-              <Typography variant='h5'>{userDetails.first_name + " " + userDetails.last_name}</Typography>
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import isLoading from "../../hoc/IsLoading";
+import AccountDetails from "./../../components/MyAccount/AccountDetails";
+import LessonHeading from "../../components/MyAccount/Lessons/LessonHeading";
+import LessonDetails from "../../components/MyAccount/Lessons/LessonDetails";
+import AddLesson from "../../components/MyAccount/Lessons/AddLesson";
+import { Accordion, Container, Grid, Button } from "@mui/material/";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Fade from "react-reveal/Fade";
+const API_URL = process.env.REACT_APP_API_URL;
 
-              <Typography gutterBottom sx={{ mb: 1.5 }} color='text.secondary'>
-                {userDetails.type}
-              </Typography>
-              <Typography variant='body2' color='text.secondary' gutterBottom>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </Typography>
-              <Typography gutterBottom variant='body2'>
-                {userDetails.county + ", " + userDetails.city}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button component={Link} to={"/settings"} size='small' color='primary'>
-              Modyfikuj dane
-            </Button>
-          </CardActions>
-        </Card>
+function MyAccount({ setLoading }) {
+  const { userDetails } = useContext(authContext);
+  const [offers, setOffers] = useState();
+  const [open, setOpen] = useState(false);
+  const [offerDetails, setOfferDetails] = useState();
+  const [auth, setAuth] = useAuth();
+  const [expanded, setExpanded] = useState(false);
+  const [allSubjects, setAllSubjects] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(API_URL + `accounts/users/${userDetails.id}/listings/`, {
+        headers: {
+          Authorization: `Bearer ${auth.access}`,
+        },
+      })
+      .then((response) => {
+        setOffers(response.data);
+        setLoading(false);
+      });
+
+    if (auth) {
+      axios
+        .get(API_URL + `listings/subjects/`, {
+          headers: {
+            Authorization: `Bearer ${auth.access}`,
+          },
+        })
+        .then((response) => {
+          setAllSubjects(response.data);
+        });
+    }
+  }, []);
+
+  const windowReload = (time) => {
+    setTimeout(() => {
+      window.location.reload();
+    }, time);
+  };
+  const handleChange = (id) => (event, isExpanded) => {
+    if (!expanded || expanded !== id) {
+      axios
+        .get(API_URL + `accounts/users/${userDetails.id}/listings/${id}/`, {
+          headers: {
+            Authorization: `Bearer ${auth.access}`,
+          },
+        })
+        .then((response) => {
+          setOfferDetails(response.data);
+          setExpanded(isExpanded ? id : false);
+        });
+    } else {
+      setOfferDetails();
+      setExpanded(isExpanded && false);
+    }
+  };
+  return (
+    <Fade>
+      <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}></Grid>
+          <Grid item xs={12} md={4} lg={3}>
+            <AccountDetails />
+          </Grid>
+          <Grid item xs={12} md={8} lg={9}>
+            {userDetails.type === "Teacher" &&
+              offers !== undefined &&
+              offers.map((offer) => (
+                <Accordion id={offer.title + "-id"} expanded={expanded === offer.id} onChange={handleChange(offer.id)} key={offer.id} sx={{ mb: 1 }}>
+                  <LessonHeading id={offer.title + "-heading"} lessonTitle={offer.title} subject={offer.subject.name} date={offer.modified_date} />
+                  {offerDetails !== undefined && <LessonDetails windowReload={windowReload} details={offerDetails} id={offer.id} allSubjects={allSubjects} />}
+                </Accordion>
+              ))}
+            <Button
+              id={"addNewLesson-button"}
+              color='success'
+              onClick={() => {
+                setOpen(true);
+              }}
+              endIcon={<AddCircleIcon />}
+              fullWidth
+              variant='contained'>
+              Dodaj ogłoszenie
+            </Button>
+            <AddLesson open={open} setOpen={setOpen} allSubjects={allSubjects} windowReload={windowReload} />
+          </Grid>
         </Grid>
-      </Box>
-    </Container>
+      </Container>
+    </Fade>
   );
 }
 
-export default MyAccount;
+export default isLoading(MyAccount);

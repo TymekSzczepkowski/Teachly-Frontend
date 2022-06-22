@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import cities from "../../../data/cities.json";
 import countries from "../../../data/countries.json";
-import region from "../../../data/region.json";
+import regions from "../../../data/region.json";
 import { validateFileTypeUpload, validateFileSizeUpload } from "../../../hooks/Auth/registerVerification";
 import { Button, TextField, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete, Alert } from "@mui/material/";
+import Fade from "react-reveal/Fade";
 
 function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
   const [alertOpen, setAlertOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedRegion, setSelectedRegion] = useState(null);
 
-  const citiesInPoland = cities;
-  const allCountries = countries;
-  const allRegions = region;
+  let cityValues = cities.map((e) => e.city);
+  let regionValues = regions.map((e) => e.name);
+  let countryValues = countries.map((e) => e.name);
 
+  const [inputValue, setInputValue] = useState({ city: state.city, region: " ", country: " " });
   return (
-    <div>
+    <Fade>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           {inputMessage.detailsMessage !== "" && <Alert severity='error'>{inputMessage.detailsMessage}</Alert>}
@@ -59,39 +58,45 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
         <Grid item xs={12} sm={6}>
           <Autocomplete
             id='city-input'
-            options={citiesInPoland}
+            options={cityValues}
+            value={state.city}
             renderInput={(params) => <TextField {...params} label='Miasto' variant='standard' />}
-            defaultValue={state.city === "" ? selectedCity : state.city}
-            getOptionLabel={(option) => option.city || state.city}
-            onChange={(e, newCity) => {
-              setSelectedCity(newCity);
-              setState({ ...state, city: newCity.city });
+            inputValue={inputValue.city}
+            onInputChange={(event, newInputValue) => {
+              setInputValue({ ...inputValue, city: newInputValue });
+            }}
+            onChange={(e, newValue) => {
+              setState({ ...state, city: newValue });
             }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
             id='region-input'
-            options={allRegions}
+            value={state.region}
+            options={regionValues}
             renderInput={(params) => <TextField {...params} label='Województwo' variant='standard' />}
-            defaultValue={state.region === "" ? selectedRegion : state.region}
-            getOptionLabel={(option) => option.name || state.region}
-            onChange={(e, newRegion) => {
-              setSelectedRegion(newRegion);
-              setState({ ...state, region: newRegion.name });
+            inputValue={inputValue.region}
+            onInputChange={(event, newInputValue) => {
+              setInputValue({ ...inputValue, region: newInputValue });
+            }}
+            onChange={(e, newValue) => {
+              setState({ ...state, region: newValue });
             }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
             id='country-input'
-            options={allCountries}
-            renderInput={(params) => <TextField {...params} label='Narodowość' variant='standard' />}
-            defaultValue={state.country === "" ? selectedCountry : state.country}
-            getOptionLabel={(option) => option.name || state.country}
-            onChange={(e, newCountry) => {
-              setSelectedCountry(newCountry);
-              setState({ ...state, country: newCountry.name });
+            value={state.country}
+            options={countryValues}
+            renderInput={(params) => <TextField {...params} label='Państwo' variant='standard' />}
+            inputValue={inputValue.country}
+            onInputChange={(event, newInputValue) => {
+              setInputValue({ ...inputValue, country: newInputValue });
+            }}
+            onChange={(e, newValue) => {
+              setState({ ...state, country: newValue });
             }}
           />
         </Grid>
@@ -125,7 +130,7 @@ function PersonalDetails({ state, setState, inputMessage, setInputMessage }) {
           )}
         </Grid>
       </Grid>
-    </div>
+    </Fade>
   );
 }
 
