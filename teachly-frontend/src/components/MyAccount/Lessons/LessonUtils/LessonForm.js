@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button, MenuItem, Autocomplete, Grid, TextField, InputAdornment, ToggleButtonGroup, ToggleButton } from "@mui/material/";
 import cities from "../../../../data/cities.json";
 
-function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, buttonText2, allSubjects, idTitle, idCity, idDescription, idPrice, idSubject, idLevel, idType, idActionButton, deleteOfferButton }) {
+function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, buttonText2, allSubjects, idTitle, idCity, idDescription, idPrice, idSubject, idLevel, idType, idActionButton, deleteOfferButton, ref }) {
   const [disabledAdd, setDisabledAdd] = useState(true);
   const [disabledEdit, setDisabledEdit] = useState(true);
   const [value, setValue] = useState({ city: defaultValue.city, subject: defaultValue.subject.name });
