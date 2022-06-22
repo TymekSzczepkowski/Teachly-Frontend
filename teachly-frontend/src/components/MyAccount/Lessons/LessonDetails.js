@@ -15,21 +15,21 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
   const [auth, setAuth] = useAuth([]);
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [state, setState] = useState({ title: " ", description: " ", city: " ", price: " ", subject: " ", level: " ", type: " " });
-  const foundedSubject = allSubjects.find((element) => element.name === state.subject);
+  const [editedListing, setEditedListing] = useState({ title: " ", description: " ", city: " ", price: " ", subject: " ", level: " ", type: " " });
+  const foundSubject = allSubjects.find((element) => element.name === editedListing.subject);
 
   const editOffer = () => {
     axios
       .patch(
         API_URL + `accounts/users/${userDetails.id}/listings/${id}/`,
         {
-          title: state.title === " " ? details.title : state.title,
-          description: state.description === " " ? details.description : state.description,
-          city: state.city === " " ? details.city : state.city,
-          price: state.price === " " ? details.price : state.price,
-          subject: state.subject === " " ? details.subject.id : foundedSubject.id,
-          level: state.level === " " ? details.level : state.level,
-          type: state.type === " " ? details.type : state.type,
+          title: editedListing.title === " " ? details.title : editedListing.title,
+          description: editedListing.description === " " ? details.description : editedListing.description,
+          city: editedListing.city === " " ? details.city : editedListing.city,
+          price: editedListing.price === " " ? details.price : editedListing.price,
+          subject: editedListing.subject === " " ? details.subject.id : foundSubject.id,
+          level: editedListing.level === " " ? details.level : editedListing.level,
+          type: editedListing.type === " " ? details.type : editedListing.type,
         },
         {
           headers: {
@@ -63,8 +63,8 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
             deleteOfferButton={"deleteOffer-button"}
             idSubject={"subject-input"}
             defaultValue={details}
-            state={state}
-            setState={setState}
+            state={editedListing}
+            setState={setEditedListing}
             allSubjects={allSubjects}
             func1={editOffer}
             func2={() => {

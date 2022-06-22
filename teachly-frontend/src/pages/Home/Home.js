@@ -15,15 +15,14 @@ function Home() {
   const [params, setParams] = useState({ price_from: "", price_to: "", level: "", subject: "", localization: "" });
   const isMobileDevice = useMediaQuery("(min-width:600px)");
   const searchOffers = async (e) => {
-    try {
-      const response = await axios.get(API_URL + "listings", { params: { price_from: params.price_from, price_to: params.price_to, level: params.level, subject: params.subject, localization: params.localization } });
-      setOffers(response.data);
-    } catch (ex) {}
+    const response = await axios.get(API_URL + "listings", { params: { price_from: params.price_from, price_to: params.price_to, level: params.level, subject: params.subject, localization: params.localization } });
+    setOffers(response.data);
   };
 
   useEffect(() => {
     searchOffers();
   }, [params]);
+
   return (
     <Fade>
       <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>

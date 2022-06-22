@@ -15,8 +15,8 @@ export const validateRepeatInput = (password, repeatPassword) => {
 
 export const validateDetails = (firstName, lastName, sex, country, region, city, image) => {
   if (firstName === "" || lastName === "" || sex === "" || country === "" || region === "" || city === "" || image === "" || country === null || region === null || city === null) {
-    return "Wszystkie pola muszą zostać wypełnione";
-  } else return "";
+    return false;
+  } else return true;
 };
 export const validateFileTypeUpload = (fileName) => {
   const allowedExtensions = new Array("jpg", "png", "jpeg");

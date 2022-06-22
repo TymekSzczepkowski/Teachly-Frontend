@@ -135,7 +135,7 @@ function Navbar() {
                       <UserMenuItem id={"settings"} component={Link} to={"/settings"} onClick={handleCloseUserMenu} title={"Ustawienia"} />
                       <Divider />
                       <MenuItem onClick={logout}>
-                        <Typography textAlign='center'>Wyloguj </Typography>
+                        <Typography textAlign='center'>Wyloguj</Typography>
                       </MenuItem>
                     </>
                   ) : (

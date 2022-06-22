@@ -59,12 +59,10 @@ function Register() {
         nextStep();
       }
     } else if (step === 2) {
-      setInputMessage({
-        ...inputMessage,
-        detailsMessage: validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image),
-      });
-      if (validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image) === "") {
+      if (validateDetails(state.firstName, state.lastName, state.sex, state.country, state.region, state.city, state.image)) {
         nextStep();
+      } else {
+        setInputMessage({ ...inputMessage, detailsMessage: "Wszystkie pola muszą zostać wypełnione." });
       }
     } else if (step === 3) {
       try {

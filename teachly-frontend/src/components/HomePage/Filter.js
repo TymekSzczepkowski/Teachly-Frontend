@@ -105,7 +105,7 @@ function Filter({ parameters, setParameters }) {
           <ListItemTitle title={"Cena"} icon={<AccountBalanceWalletIcon />} />
           <ListItem sx={{ marginBottom: "1rem" }}>
             <Box sx={{ width: "100%", mx: 2 }}>
-              <Slider value={valueSlider} step={10} max={300} onChange={handleChangeSlider} valueLabelDisplay='auto' marks={marks} />
+              <Slider value={valueSlider} step={5} max={300} onChange={handleChangeSlider} valueLabelDisplay='auto' marks={marks} />
             </Box>
           </ListItem>
           <Divider light />

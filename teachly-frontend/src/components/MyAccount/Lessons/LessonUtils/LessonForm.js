@@ -32,7 +32,7 @@ function LessonForm({ defaultValue, state, setState, func1, func2, buttonText1, 
   useEffect(() => {
     if (notInitialRender.current) {
       setDisabledEdit(false);
-      if (state.title !== "" && state.city !== "" && state.description !== "" && state.price !== "" && state.subject !== "" && state.level !== "" && state.type !== "") {
+      if (!Object.values(state).some((val) => val === "")) {
         setDisabledAdd(false);
       }
     } else {

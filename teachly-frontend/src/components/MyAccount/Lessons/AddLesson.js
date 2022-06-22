@@ -9,9 +9,9 @@ const API_URL = process.env.REACT_APP_API_URL;
 export default function AddLesson({ open, setOpen, allSubjects, windowReload }) {
   const [auth, setAuth] = useAuth([]);
   const { userDetails } = useContext(authContext);
-  const [state, setState] = useState({ title: "", description: "", city: "", price: "", subject: "", level: "", type: "" });
+  const [newListing, setNewListing] = useState({ title: "", description: "", city: "", price: "", subject: "", level: "", type: "" });
   const [showAlert, setShowAlert] = useState(false);
-  const foundedSubject = allSubjects.find((element) => element.name === state.subject);
+  const foundSubject = allSubjects.find((element) => element.name === newListing.subject);
 
   const handleClose = () => {
     setOpen(false);
@@ -22,13 +22,13 @@ export default function AddLesson({ open, setOpen, allSubjects, windowReload }) 
       .post(
         API_URL + `accounts/users/${userDetails.id}/listings/`,
         {
-          title: state.title,
-          description: state.description,
-          city: state.city,
-          price: state.price,
-          subject: foundedSubject.id,
-          level: state.level,
-          type: state.type,
+          title: newListing.title,
+          description: newListing.description,
+          city: newListing.city,
+          price: newListing.price,
+          subject: foundSubject.id,
+          level: newListing.level,
+          type: newListing.type,
         },
         {
           headers: {
@@ -64,9 +64,9 @@ export default function AddLesson({ open, setOpen, allSubjects, windowReload }) 
           idType={"type-buttonGroup"}
           idActionButton={"addLesson-button"}
           allSubjects={allSubjects}
-          state={state}
-          setState={setState}
-          defaultValue={state}
+          state={newListing}
+          setState={setNewListing}
+          defaultValue={newListing}
           func1={addOffer}
           func2={handleClose}
           buttonText1='Dodaj ogłoszenie'
