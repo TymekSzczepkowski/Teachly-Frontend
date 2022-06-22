@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
-import { ListItemButton, Button, ListItemText, ListItem } from "@mui/material/";
+import { ListItemButton, Button, ListItemText, ListItem, Alert, AlertTitle } from "@mui/material/";
+import authContext from "../../../../context/authContext";
 import SendIcon from "@mui/icons-material/Send";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmailRequest() {
+  const { userDetails } = useContext(authContext);
   const [open, setOpen] = useState(false);
   const [auth, setAuth] = useAuth();
 
@@ -24,6 +26,16 @@ function EditEmailRequest() {
 
   return (
     <>
+      {open && (
+        <Alert
+          severity='success'
+          onClose={() => {
+            setOpen(false);
+          }}>
+          <AlertTitle>Link został wysłany</AlertTitle>
+          Link ze zmianą hasła został wysłany na adres — <strong>{userDetails.email}</strong>
+        </Alert>
+      )}
       <ListItem>
         <ListItemText secondary='Wyślij link ze zmianą e-maila na Twoją skrzynkę pocztową.' />
         <ListItemButton>

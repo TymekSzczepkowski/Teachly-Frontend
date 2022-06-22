@@ -18,7 +18,7 @@ function OfferCard({ data }) {
           </Typography>
           <LocationOnOutlinedIcon color='primary' sx={{ pl: 1, fontSize: "21px" }} />
           <Typography sx={{ fontWeight: 500, mt: 0.3 }} color='primary' variant='subtitle2'>
-            {data.city.toUpperCase()}, POLAND
+            {data.city.toUpperCase()}
           </Typography>
         </Stack>
         <Stack direction='row' sx={{ mb: 1, mt: 0.5 }}>

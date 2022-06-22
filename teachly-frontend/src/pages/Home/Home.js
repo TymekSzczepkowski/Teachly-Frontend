@@ -18,8 +18,7 @@ function Home() {
     try {
       const response = await axios.get(API_URL + "listings", { params: { price_from: params.price_from, price_to: params.price_to, level: params.level, subject: params.subject, localization: params.localization } });
       setOffers(response.data);
-    } catch (ex) {
-    }
+    } catch (ex) {}
   };
 
   useEffect(() => {
