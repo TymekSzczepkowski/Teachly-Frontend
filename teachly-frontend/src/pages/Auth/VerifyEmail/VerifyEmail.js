@@ -19,8 +19,7 @@ function VerifyEmail() {
       .catch((response) => {
         if ((response.response.status === 403, 400)) {
           setErrorAppeared(true);
-          setErrorMessage(response.response.data.detail);
-          setErrorMessage(response.response.data.uid);
+          setErrorMessage("Link weryfikacyjny jest już nieaktualny");
         }
       });
   }, []);
@@ -29,12 +28,12 @@ function VerifyEmail() {
       <Container maxWidth='sm' sx={{ mt: { xs: 13, md: 12 }, p: { xs: 3.5, md: 3 } }}>
         <Card sx={{ width: "100%", pt: 5, pb: 5 }}>
           <Box>
-            {errorAppeared ? (
-              <Typography sx={{ mb: 3 }} align='center' variant='h4'>
+            {!errorAppeared ? (
+              <Typography sx={{ mb: 2 }} align='center' variant='h4'>
                 Twoje konto zostało zweryfikowane.
               </Typography>
             ) : (
-              <Typography sx={{ mb: 3 }} align='center' variant='h4'>
+              <Typography sx={{ mb: 2 }} align='center' variant='h4'>
                 {errorMessage}
               </Typography>
             )}

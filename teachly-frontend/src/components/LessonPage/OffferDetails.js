@@ -10,13 +10,13 @@ function OffferDetails({ offerDetails }) {
   return (
     <Card>
       <Box sx={{ my: 3, mx: 2 }}>
-        <Grid container alignItems='center'>
+        <Grid container alignItems='center' spacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item>
             <Typography gutterBottom variant='h4'>
               {offerDetails.title}
             </Typography>
           </Grid>
-          <Grid item xs sx={{ pl: 2 }}>
+          <Grid item xs>
             <Typography gutterBottom variant='h6' color='primary'>
               {offerDetails.subject.name}
             </Typography>
@@ -27,7 +27,7 @@ function OffferDetails({ offerDetails }) {
             </Typography>{" "}
           </Grid>
         </Grid>
-        <Typography color='text.secondary' variant='body2'>
+        <Typography sx={{ maxHeight: 300, textOverflow: "ellipsis", overflow: "hidden", height: 124 }} color='text.secondary' variant='body2'>
           {offerDetails.description}
         </Typography>
       </Box>

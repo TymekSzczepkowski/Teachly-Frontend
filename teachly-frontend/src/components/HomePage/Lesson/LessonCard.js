@@ -27,7 +27,7 @@ function OfferCard({ data }) {
             56 opinii
           </Typography>
         </Stack>
-        <Box sx={{ maxHeight: "78px", textOverflow: "ellipsis", overflow: "hidden" }}>
+        <Box sx={{ maxHeight: 78, textOverflow: "ellipsis", overflow: "hidden", height: 78 }}>
           <Typography variant='body2' color='text.secondary'>
             {data.description}
           </Typography>

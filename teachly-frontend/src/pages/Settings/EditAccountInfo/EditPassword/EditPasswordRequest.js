@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Alert, AlertTitle, ListItemButton, ListItem, Button, ListItemText } from "@mui/material/";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import authContext from "../../../../context/authContext";
-import SendIcon from "@mui/icons-material/Send";
+import ListItemSettingsDetails from "../../../../components/Settings/ListItemSettingsDetails";
+import { Alert, AlertTitle } from "@mui/material/";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmailRequest() {
@@ -38,22 +38,7 @@ function EditEmailRequest() {
           Link ze zmianą hasła został wysłany na adres — <strong>{userDetails.email}</strong>
         </Alert>
       )}
-      <ListItem>
-        <ListItemText secondary='Wyślij link ze zmianą hasła na Twoją skrzynkę pocztową.' />
-        <ListItemButton>
-          <Button
-            id='change-password-button'
-            fullWidth
-            edge='end'
-            onClick={() => {
-              submit();
-            }}
-            variant='contained'
-            endIcon={<SendIcon />}>
-            Wyślij
-          </Button>
-        </ListItemButton>
-      </ListItem>
+      <ListItemSettingsDetails id='change-password-button' func={submit} text='Wyślij link ze zmianą hasła na Twoją skrzynkę pocztową.' buttonText='Wyślij'></ListItemSettingsDetails>
     </>
   );
 }

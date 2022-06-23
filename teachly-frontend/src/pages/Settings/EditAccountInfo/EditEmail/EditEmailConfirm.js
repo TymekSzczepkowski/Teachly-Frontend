@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import { Alert, AlertTitle, ListItemText, ListItem, Button, ListItemButton } from "@mui/material/";
+import ListItemSettingsDetails from "../../../../components/Settings/ListItemSettingsDetails";
 import SendIcon from "@mui/icons-material/Send";
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -53,14 +54,7 @@ function EditEmailConfirm() {
             Twój adres e-mail został zmieniony
           </Alert>
         ))}
-      <ListItem>
-        <ListItemText secondary='Potwierdź zmianę e-maila.' />
-        <ListItemButton>
-          <Button id='change-email-button-confirm' fullWidth edge='end' onClick={submit} variant='contained' endIcon={<SendIcon />}>
-            Potwierdź
-          </Button>
-        </ListItemButton>
-      </ListItem>
+      <ListItemSettingsDetails id='change-email-button-confirm' func={submit} text='Potwierdź zmianę e-maila.' buttonText='Potwierdź'></ListItemSettingsDetails>
     </>
   );
 }
