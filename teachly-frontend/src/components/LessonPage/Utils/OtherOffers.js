@@ -23,14 +23,13 @@ function OtherOffers({ offerDetails }) {
           setOtherOffers(response.data);
         });
   }, []);
-
   return (
     <Card sx={{ width: "100%", height: 160 }}>
       {otherOffers !== undefined && (
         <List sx={{ height: 160, width: "100%", bgcolor: "background.paper", overflow: "scroll" }} subheader={<ListSubheader>Inne ogłoszenia tego korepetytora</ListSubheader>}>
           {otherOffers.map((offer) => (
-            <Fade bottom>
-              <ListItemButton key={offer.id}>
+            <Fade bottom key={offer.id}>
+              <ListItemButton>
                 <ListItemAvatar>
                   <Avatar>
                     <CalculateOutlinedIcon />

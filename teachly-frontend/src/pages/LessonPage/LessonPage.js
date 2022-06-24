@@ -28,10 +28,10 @@ function LessonPage({ setLoading }) {
       <Container maxWidth='xl' sx={{ my: { xs: 8, md: 9 }, px: { xl: 4 }, p: { xs: 3.5, md: 3 } }}>
         {offerDetails !== undefined && (
           <Grid container spacing={4}>
-            <Grid item xs={12} md={7} lg={8} xl={9}>
+            <Grid item xs={12} md={5}>
               <OfferDetails offerDetails={offerDetails} />
             </Grid>
-            <Grid item xs={12} md={5} lg={4} xl={3}>
+            <Grid item xs={12} md={7}>
               <Calendar />
             </Grid>
             <Grid item xs={12} md={4}>
