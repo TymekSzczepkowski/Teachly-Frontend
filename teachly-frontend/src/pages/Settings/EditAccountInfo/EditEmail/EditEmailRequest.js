@@ -4,7 +4,7 @@ import useAuth from "../../../../hooks/useAuth";
 import { Alert, AlertTitle } from "@mui/material/";
 import ListItemSettingsDetails from "../../../../components/Settings/ListItemSettingsDetails";
 import authContext from "../../../../context/authContext";
-const API_URL = process.env.REACT_APP_API_URL;
+
 
 function EditEmailRequest() {
   const { userDetails } = useContext(authContext);
@@ -14,7 +14,7 @@ function EditEmailRequest() {
   const onChangeEmail = () => {
     setOpen(true);
     axios.post(
-      API_URL + `accounts/users/reset-email-send-mail/`,
+      process.env.REACT_APP_API_URL + `accounts/users/reset-email-send-mail/`,
       {},
       {
         headers: {

@@ -12,7 +12,6 @@ import SchoolIcon from "@mui/icons-material/School";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 function Navbar() {
-  const API_URL = process.env.REACT_APP_API_URL;
   const { userDetails, setUserDetails } = useContext(AuthContext);
   const [showLeftMenu, setShowLeftMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(null);
@@ -21,7 +20,7 @@ function Navbar() {
   useEffect(() => {
     if (auth) {
       axios
-        .get(API_URL + `accounts/users/me`, {
+        .get(process.env.REACT_APP_API_URL + `accounts/users/me`, {
           headers: {
             Authorization: `Bearer ${auth.access}`,
           },

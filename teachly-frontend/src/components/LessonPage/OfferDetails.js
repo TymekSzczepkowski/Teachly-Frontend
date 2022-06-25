@@ -6,7 +6,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import CastForEducationOutlinedIcon from "@mui/icons-material/CastForEducationOutlined";
-function OffferDetails({ offerDetails }) {
+function OfferDetails({ offerDetails }) {
   return (
     <Card>
       <Box sx={{ my: 3, mx: 2 }}>
@@ -27,7 +27,7 @@ function OffferDetails({ offerDetails }) {
             </Typography>{" "}
           </Grid>
         </Grid>
-        <Typography sx={{ maxHeight: 300, textOverflow: "ellipsis", overflow: "hidden", height: 124 }} color='text.secondary' variant='body2'>
+        <Typography sx={{ textOverflow: "ellipsis", overflow: "hidden" }} color='text.secondary' variant='body2'>
           {offerDetails.description}
         </Typography>
       </Box>
@@ -68,4 +68,4 @@ function OffferDetails({ offerDetails }) {
   );
 }
 
-export default OffferDetails;
+export default OfferDetails;

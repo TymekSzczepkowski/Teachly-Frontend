@@ -12,7 +12,6 @@ import { validateProfileType, validateRepeatInput, validateDetails } from "../..
 import { Container, Typography, Button, Stepper, Step, StepLabel, Stack, Box, Link as LinkUI } from "@mui/material/";
 import Fade from "react-reveal/Fade";
 
-const API_URL = process.env.REACT_APP_API_URL;
 function Register() {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
@@ -67,7 +66,7 @@ function Register() {
     } else if (step === 3) {
       try {
         axios.post(
-          API_URL + `accounts/users/`,
+          process.env.REACT_APP_API_URL + `accounts/users/`,
           {
             first_name: state.firstName,
             last_name: state.lastName,

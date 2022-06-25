@@ -1,12 +1,13 @@
-import DialogComponent from "./Utils/DialogComponent";
+import CollapseList from "./CollapseList";
 import { CardHeader, Box, Avatar, CardMedia, CardContent, Typography, Stack, Rating } from "@mui/material/";
 
 function TeacherDetails({ offerDetails }) {
+
   return (
-    <DialogComponent
+    <CollapseList
       id={"teacher-details-button"}
       text={"Informacje o korepetytorze"}
-      avatar={<Avatar src={offerDetails.author.avatar} />}
+      avatar={<Avatar />}
       component={
         <>
           <CardHeader
@@ -34,7 +35,7 @@ function TeacherDetails({ offerDetails }) {
             </Stack>
           </CardContent>
         </>
-      }></DialogComponent>
+      }></CollapseList>
   );
 }
 

@@ -4,7 +4,7 @@ export const login = describe("Testing the login process", () => {
     await $("#profile-icon").click();
     await $("#sign-in").click();
     await $("#email-input").setValue("jeh@gmail.com");
-    await $("#password-input").setValue("Password1%");
+    await $("#password-input").setValue("Password1$");
     await $("#sign-in-button").click();
   });
 });

@@ -12,7 +12,7 @@ import SortIcon from "@mui/icons-material/Sort";
 import cities from "../../data/cities.json";
 
 function Filter({ parameters, setParameters }) {
-  const [valueSlider, setValueSlider] = useState([40, 200]);
+  const [valueSlider, setValueSlider] = useState([10, 290]);
   const [checked, setChecked] = useState();
   const marks = [
     {

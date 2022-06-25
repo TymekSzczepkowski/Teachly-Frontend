@@ -5,14 +5,13 @@ import { Box, Typography, Card, Container } from "@mui/material";
 import Fade from "react-reveal/Fade";
 
 function VerifyEmail() {
-  const API_URL = process.env.REACT_APP_API_URL;
   const { uidURL, tokenURL } = useParams();
   const [errorAppeared, setErrorAppeared] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
     axios
-      .post(API_URL + "accounts/users/verify-email/", {
+      .post(process.env.REACT_APP_API_URL + "accounts/users/verify-email/", {
         uid: uidURL,
         token: tokenURL,
       })

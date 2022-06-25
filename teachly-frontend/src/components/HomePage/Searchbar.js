@@ -3,14 +3,13 @@ import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import { Card, Autocomplete, TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-const API_URL = process.env.REACT_APP_API_URL;
 
 function Searchbar({ parameters, setParameters, firstname }) {
   const [auth, setAuth] = useAuth([]);
   const [allSubjects, setAllSubjects] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL + `listings/subjects/`, {}).then((response) => {
+    axios.get(process.env.REACT_APP_API_URL + `listings/subjects/`, {}).then((response) => {
       setAllSubjects(response.data);
     });
   }, []);

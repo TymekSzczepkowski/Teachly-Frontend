@@ -9,7 +9,6 @@ import { IconButton, InputAdornment, Modal, Typography, TextField, Grid, Contain
 import SendIcon from "@mui/icons-material/Send";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-const API_URL = process.env.REACT_APP_API_URL;
 
 function EditPassword() {
   const [showPassword, setShowPassword] = useState(true);
@@ -28,7 +27,7 @@ function EditPassword() {
   const submit = async () => {
     axios
       .post(
-        API_URL + `accounts/users/reset_password_confirm/`,
+        process.env.REACT_APP_API_URL + `accounts/users/reset_password_confirm/`,
         {
           uid: uidFromUrl,
           token: tokenFromUrl,

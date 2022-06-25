@@ -8,7 +8,6 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { Alert, CardContent, Box, AccordionDetails, CardActions, Button } from "@mui/material/";
 import SearchIcon from "@mui/icons-material/Search";
-const API_URL = process.env.REACT_APP_API_URL;
 
 function LessonDetails({ details, id, allSubjects, windowReload }) {
   const { userDetails } = useContext(authContext);
@@ -21,7 +20,7 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
   const editOffer = () => {
     axios
       .patch(
-        API_URL + `accounts/users/${userDetails.id}/listings/${id}/`,
+        process.env.REACT_APP_API_URL + `accounts/users/${userDetails.id}/listings/${id}/`,
         {
           ...(editedListing.title !== " " && { title: editedListing.title }),
           ...(editedListing.description !== " " && { description: editedListing.description }),
@@ -45,7 +44,7 @@ function LessonDetails({ details, id, allSubjects, windowReload }) {
 
   const deleteOffer = () => {
     axios
-      .delete(API_URL + `accounts/users/${userDetails.id}/listings/${id}`, {
+      .delete(process.env.REACT_APP_API_URL + `accounts/users/${userDetails.id}/listings/${id}`, {
         headers: {
           Authorization: `Bearer ${auth.access}`,
         },

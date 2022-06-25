@@ -10,7 +10,6 @@ import AddLesson from "../../components/MyAccount/Lessons/AddLesson";
 import { Accordion, Container, Grid, Button } from "@mui/material/";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Fade from "react-reveal/Fade";
-const API_URL = process.env.REACT_APP_API_URL;
 
 function MyAccount({ setLoading }) {
   const { userDetails } = useContext(authContext);
@@ -23,7 +22,7 @@ function MyAccount({ setLoading }) {
 
   useEffect(() => {
     axios
-      .get(API_URL + `accounts/users/${userDetails.id}/listings/`, {
+      .get(process.env.REACT_APP_API_URL + `accounts/users/${userDetails.id}/listings/`, {
         headers: {
           Authorization: `Bearer ${auth.access}`,
         },
@@ -35,7 +34,7 @@ function MyAccount({ setLoading }) {
 
     if (auth) {
       axios
-        .get(API_URL + `listings/subjects/`, {
+        .get(process.env.REACT_APP_API_URL + `listings/subjects/`, {
           headers: {
             Authorization: `Bearer ${auth.access}`,
           },
@@ -54,7 +53,7 @@ function MyAccount({ setLoading }) {
   const handleChange = (id) => (event, isExpanded) => {
     if (!expanded || expanded !== id) {
       axios
-        .get(API_URL + `accounts/users/${userDetails.id}/listings/${id}/`, {
+        .get(process.env.REACT_APP_API_URL + `accounts/users/${userDetails.id}/listings/${id}/`, {
           headers: {
             Authorization: `Bearer ${auth.access}`,
           },

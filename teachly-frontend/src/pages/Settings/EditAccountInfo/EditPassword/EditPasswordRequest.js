@@ -4,7 +4,6 @@ import useAuth from "../../../../hooks/useAuth";
 import authContext from "../../../../context/authContext";
 import ListItemSettingsDetails from "../../../../components/Settings/ListItemSettingsDetails";
 import { Alert, AlertTitle } from "@mui/material/";
-const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmailRequest() {
   const [open, setOpen] = useState(false);
@@ -14,7 +13,7 @@ function EditEmailRequest() {
   const submit = async () => {
     setOpen(true);
     axios.post(
-      API_URL + `accounts/users/reset_password/`,
+      process.env.REACT_APP_API_URL + `accounts/users/reset_password/`,
       {
         email: userDetails.email,
       },

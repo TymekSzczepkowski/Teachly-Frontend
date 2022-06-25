@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
-import { Alert, AlertTitle, ListItemText, ListItem, Button, ListItemButton } from "@mui/material/";
+import { Alert, AlertTitle } from "@mui/material/";
 import ListItemSettingsDetails from "../../../../components/Settings/ListItemSettingsDetails";
-import SendIcon from "@mui/icons-material/Send";
-const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmailConfirm() {
   const [open, setOpen] = useState(false);
@@ -15,7 +13,7 @@ function EditEmailConfirm() {
   const submit = async () => {
     await axios
       .post(
-        API_URL + `accounts/users/reset-email-confirm/`,
+        process.env.REACT_APP_API_URL + `accounts/users/reset-email-confirm/`,
         {
           uid: uidFromUrl,
           token: tokenFromUrl,

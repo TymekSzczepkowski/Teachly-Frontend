@@ -7,7 +7,6 @@ import { validateRepeatInput } from "../../../../hooks/Auth/registerVerification
 import { validateEmail } from "../../../../hooks/Auth/emailVerification";
 import { Modal, Typography, TextField, Grid, Container, Box, ListItem, Button } from "@mui/material/";
 import SendIcon from "@mui/icons-material/Send";
-const API_URL = process.env.REACT_APP_API_URL;
 
 function EditEmail() {
   const [auth, setAuth] = useAuth();
@@ -25,7 +24,7 @@ function EditEmail() {
   const submit = async () => {
     axios
       .post(
-        API_URL + `accounts/users/reset-email/`,
+        process.env.REACT_APP_API_URL + `accounts/users/reset-email/`,
         {
           uid: uidFromUrl,
           token: tokenFromUrl,

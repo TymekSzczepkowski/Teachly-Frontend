@@ -4,7 +4,6 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import authContext from "../../../context/authContext";
 import { Dialog, DialogContent, DialogTitle, Divider, Snackbar, Alert } from "@mui/material";
-const API_URL = process.env.REACT_APP_API_URL;
 
 export default function AddLesson({ open, setOpen, allSubjects, windowReload }) {
   const [auth, setAuth] = useAuth([]);
@@ -20,7 +19,7 @@ export default function AddLesson({ open, setOpen, allSubjects, windowReload }) 
     !disabled &&
       axios
         .post(
-          API_URL + `accounts/users/${userDetails.id}/listings/`,
+          process.env.REACT_APP_API_URL + `accounts/users/${userDetails.id}/listings/`,
           {
             title: newListing.title,
             description: newListing.description,
