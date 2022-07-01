@@ -7,6 +7,7 @@ import AccountDetails from "./../../components/MyAccount/AccountDetails";
 import LessonHeading from "../../components/MyAccount/Lessons/LessonHeading";
 import LessonDetails from "../../components/MyAccount/Lessons/LessonDetails";
 import AddLesson from "../../components/MyAccount/Lessons/AddLesson";
+import Scheduler from "../../components/MyAccount/Scheduler/Scheduler";
 import { Accordion, Container, Grid, Button } from "@mui/material/";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Fade from "react-reveal/Fade";
@@ -19,7 +20,6 @@ function MyAccount({ setLoading }) {
   const [auth, setAuth] = useAuth();
   const [expanded, setExpanded] = useState(false);
   const [allSubjects, setAllSubjects] = useState([]);
-
   useEffect(() => {
     axios
       .get(process.env.REACT_APP_API_URL + `accounts/users/${userDetails.id}/listings/`, {
@@ -75,6 +75,7 @@ function MyAccount({ setLoading }) {
             <AccountDetails />
           </Grid>
           <Grid item xs={12} md={8} lg={9}>
+            <Scheduler windowReload={windowReload} />
             {userDetails.type === "Teacher" &&
               offers !== undefined &&
               offers.map((offer) => (

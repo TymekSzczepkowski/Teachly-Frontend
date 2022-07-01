@@ -4,7 +4,7 @@ import isLoading from "../../hoc/IsLoading";
 import useAuth from "../../hooks/useAuth";
 import TeacherDetails from "../../components/LessonPage/Utils/TeacherDetails";
 import OfferDetails from "../../components/LessonPage/OfferDetails";
-import Calendar from "../../components/LessonPage/Calendar";
+import AvailabilityCalendar from "../../components/LessonPage/AvailabilityCalendar";
 import OpinionList from "../../components/LessonPage/OpinionList";
 import OtherOffers from "../../components/LessonPage/OtherOffers";
 import axios from "axios";
@@ -33,7 +33,7 @@ function LessonPage({ setLoading }) {
               <OpinionList offerDetails={offerDetails} />
             </Grid>
             <Grid item xs={12} md={4}>
-              <Calendar />
+              <AvailabilityCalendar />
               {auth && <OtherOffers offerDetails={offerDetails} />}
               <TeacherDetails offerDetails={offerDetails} />
             </Grid>
