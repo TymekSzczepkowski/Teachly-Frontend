@@ -1,9 +1,9 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { DialogActions, DialogContentText, DialogTitle, DialogContent, Button, Typography, Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 
-function DeleteHours({ open, setOpen, windowReload }) {
+function DeleteHours({ setOpen, windowReload, displayedDate }) {
   const [auth, setAuth] = useAuth([]);
 
   const deleteHours = () => {
@@ -17,9 +17,9 @@ function DeleteHours({ open, setOpen, windowReload }) {
   };
 
   return (
-    <Dialog open={open}>
-      <DialogTitle>{"Czy napewno chcesz usunąć tę godzinę?"}</DialogTitle>
-      <DialogContent>
+    <>
+      <DialogTitle>Czy napewno chcesz usunąć tę godzinę w dniu {displayedDate}?</DialogTitle>
+      <DialogContent sx={{ p: 3 }}>
         <DialogContentText>Po nacisnięciu przycisku usuń, godzina dostępności zostanie usunięta bez możliwości cofnięcia akcji. </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -34,7 +34,7 @@ function DeleteHours({ open, setOpen, windowReload }) {
           USUŃ
         </Button>
       </DialogActions>
-    </Dialog>
+    </>
   );
 }
 

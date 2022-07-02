@@ -24,18 +24,17 @@ function Calendar({ highlightedDays, setHighlightedDays, date, setDate, displaye
   };
 
   const fetchHighlightedDays = () => {
-    if (auth)
-      axios
-        .get(process.env.REACT_APP_API_URL + `lessons/general-working-hours/${userDetails.id}/list/?date=${requestDate}`, {
-          headers: {
-            Authorization: `Bearer ${auth.access}`,
-          },
-        })
-        .then((response) => {
-          allDaysOfTheMonth.push(...response.data);
-          setDaysWithFreeHours(allDaysOfTheMonth.filter((value) => value.hours !== null));
-          setHighlightedDays(allDaysOfTheMonth.filter((value) => value.hours !== null).map((a) => parseInt(a.date.substr(8, 2))));
-        });
+    axios
+      .get(process.env.REACT_APP_API_URL + `lessons/general-working-hours/${userDetails.id}/list/?date=${requestDate}`, {
+        headers: {
+          Authorization: `Bearer ${auth.access}`,
+        },
+      })
+      .then((response) => {
+        allDaysOfTheMonth.push(...response.data);
+        setDaysWithFreeHours(allDaysOfTheMonth.filter((value) => value.hours !== null));
+        setHighlightedDays(allDaysOfTheMonth.filter((value) => value.hours !== null).map((a) => parseInt(a.date.substr(8, 2))));
+      });
   };
 
   useEffect(() => {
@@ -59,7 +58,6 @@ function Calendar({ highlightedDays, setHighlightedDays, date, setDate, displaye
         }}
         disablePast
         views={["day"]}
-        date={date}
         displayStaticWrapperAs='desktop'
         value={displayedDate}
         onChange={(newValue) => {

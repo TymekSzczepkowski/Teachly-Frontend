@@ -3,15 +3,13 @@ import moment from "moment";
 import "moment/locale/pl";
 import { ButtonGroup, Card, Grid, Box, Typography, List, ListItemAvatar, ListItemText, ListItem, Avatar, Divider, Button, ListItemButton } from "@mui/material/";
 import authContext from "../../../context/authContext";
-import Calendar from "../../Utils/Calendar";
+import Calendar from "./../../Utils/Calendar";
 import DialogComponent from "./Utils/DialogComponent";
 import Fade from "react-reveal/Fade";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
 function Scheduler({ windowReload }) {
-  //brak responsywnosci button group
   const { userDetails } = useContext(authContext);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
@@ -21,6 +19,7 @@ function Scheduler({ windowReload }) {
   const [dateWithFreeHours, setDateWithFreeHours] = useState();
   const [highlightedDays, setHighlightedDays] = useState([]);
   const [type, setType] = useState("");
+
   return (
     <Card sx={{ mb: 4 }}>
       <Grid container>
@@ -28,10 +27,10 @@ function Scheduler({ windowReload }) {
           <Calendar
             highlightedDays={highlightedDays}
             setHighlightedDays={setHighlightedDays}
-            requestDate={requestDate}
-            setRequestDate={setRequestDate}
             date={date}
             setDate={setDate}
+            requestDate={requestDate}
+            setRequestDate={setRequestDate}
             displayedDate={displayedDate}
             setDisplayedDate={setDisplayedDate}
             daysWithFreeHours={daysWithFreeHours}
@@ -47,54 +46,61 @@ function Scheduler({ windowReload }) {
             </Typography>
             <List sx={{ width: "100%" }}>
               <>
-                {dateWithFreeHours !== undefined ? (
+                {dateWithFreeHours !== undefined &&
                   dateWithFreeHours.hours.map((hours) => (
                     <Fade key={`${hours.start}key`}>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar src={userDetails.avatar} />
-                        </ListItemAvatar>
-                        <ListItemText primary={`${hours.start} - ${hours.end}`} secondary={`${userDetails.first_name}  ${userDetails.last_name}`} />
-                        <ButtonGroup variant='outlined'>
-                          <Button
-                            onClick={() => {
-                              setOpen(true);
-                              setType("edit");
-                            }}>
-                            <EditIcon />
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              setOpen(true);
-                              setType("delete");
-                            }}>
-                            <DeleteIcon />
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              setOpen(true);
-                              setType("add");
-                            }}>
-                            <AddIcon />
-                          </Button>
-                        </ButtonGroup>
-                      </ListItem>
+                      <Grid container>
+                        <Grid item xs={12} sm={6}>
+                          <ListItem>
+                            <ListItemAvatar>
+                              <Avatar src={userDetails.avatar} />
+                            </ListItemAvatar>
+                            <ListItemText primary={`${hours.start} - ${hours.end}`} secondary={`${userDetails.first_name}  ${userDetails.last_name}`} />
+                          </ListItem>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                          }}>
+                          <ButtonGroup fullWidth variant='outlined'>
+                            <Button
+                              variant='outlined'
+                              onClick={() => {
+                                setOpen(true);
+                                setType("delete");
+                              }}>
+                              <DeleteIcon />
+                            </Button>
+                            <Button
+                              variant='outlined'
+                              onClick={() => {
+                                setOpen(true);
+                                setType("edit");
+                              }}>
+                              <EditIcon />
+                            </Button>
+                          </ButtonGroup>
+                        </Grid>
+                      </Grid>
                     </Fade>
-                  ))
-                ) : (
-                  <ListItemButton>
-                    <ListItemText primary={`Brak zajęć`} secondary={`Dodaj godzinową dostępność tego dnia`} />
-                    <Button
-                      variant='outlined'
-                      onClick={() => {
-                        setOpen(true);
-                        setType("add");
-                      }}
-                      startIcon={<AddIcon />}>
-                      Dodaj
-                    </Button>
-                  </ListItemButton>
-                )}
+                  ))}
+                <ListItemButton>
+                  <ListItemText primary={`Dodaj zajęcia`} secondary={`Dodaj godzinową dostępność tego dnia`} />
+                  <Button
+                    variant='contained'
+                    onClick={() => {
+                      setOpen(true);
+                      setType("add");
+                    }}
+                    startIcon={<AddIcon />}>
+                    Dodaj
+                  </Button>
+                </ListItemButton>
               </>
             </List>
             <DialogComponent date={date} displayedDate={displayedDate} open={open} setOpen={setOpen} type={type} windowReload={windowReload} />

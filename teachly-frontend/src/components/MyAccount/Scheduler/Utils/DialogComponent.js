@@ -1,40 +1,19 @@
-import AddHours from "../AddHours";
+import EditHours from "../EditHours";
 import DeleteHours from "../DeleteHours";
-import { Dialog, DialogTitle, DialogContent, Grid } from "@mui/material/";
+import AddHours from "../AddHours";
+import { Dialog } from "@mui/material/";
 function DialogComponent({ open, setOpen, type, date, displayedDate, windowReload }) {
   const handleClose = () => {
     setOpen(false);
   };
   const getContent = function (type) {
     switch (type) {
-      case "add":
-        return (
-          <DialogTitle>
-            Dodaj nowe godziny dostępności na {displayedDate}
-            <DialogContent>
-              <Grid container>
-                <Grid item xs={12}>
-                  <AddHours date={date} open={open} setOpen={setOpen} windowReload={windowReload} />
-                </Grid>
-              </Grid>
-            </DialogContent>
-          </DialogTitle>
-        );
-      case "delete":
-        return (
-          <DialogTitle>
-            Usuń godzony dostępności w dniu {displayedDate}
-            <DialogContent>
-              <Grid container>
-                <Grid item xs={12}>
-                  <DeleteHours date={date}open={open} setOpen={setOpen} windowReload={windowReload} />
-                </Grid>
-              </Grid>
-            </DialogContent>
-          </DialogTitle>
-        );
       case "edit":
-        return 1;
+        return <EditHours date={date} open={open} setOpen={setOpen} windowReload={windowReload} displayedDate={displayedDate} />;
+      case "delete":
+        return <DeleteHours displayedDate={displayedDate} date={date} open={open} setOpen={setOpen} windowReload={windowReload} />;
+      case "add":
+        return <AddHours displayedDate={displayedDate} date={date} open={open} setOpen={setOpen} windowReload={windowReload} />;
 
       default:
         return "error";
