@@ -167,7 +167,7 @@ function Scheduler({ daysOffDays, userDetails, windowReload, daysToHighlight, cu
               </ListItemButton>
             )}
             <ListItemButton>
-              <ListItemText primary={`Dodaj godzinową dostępność`} />
+              {type !== 2 ? <ListItemText primary={`Dodaj godzinową dostępność`} secondary={"Dodaj dostępność tego dnia"} /> : <ListItemText primary={`Dodaj dzień wolny`} secondary={"Dodaj dzień wolny tego dnia"} />}
               <Button
                 sx={{ width: "110px" }}
                 disabled={selectedDate === undefined && type !== 0 ? true : false}

@@ -99,7 +99,7 @@ function AddHours({ type, date, setOpen, windowReload, displayedDate, weekDays }
     <>
       <DialogTitle>{`Dodaj ${type === 2 ? " nowy dzień wolny" : "nową godzinę dostępności"} w dniu ${displayedDate}?`}</DialogTitle>
       <DialogContent>
-        <DialogContentText>Aby dodać nowe godziny dostępności, naciśnij na godzinę rozpoczęcia zajęć oraz zakończenia zajęć, a następnie wybierz odpowiadający Ci czas dostępności.</DialogContentText>
+        {type !== 2 && <DialogContentText>Aby dodać nowe godziny dostępności, naciśnij na godzinę rozpoczęcia zajęć oraz zakończenia zajęć, a następnie wybierz odpowiadający Ci czas dostępności.</DialogContentText>}
 
         {isSuccess && <Alert severity='success'>{` ${type === 2 ? "Nowy dzień wolny dodany" : "Nowa godzina dostępności dodana"} pomyślnie`}</Alert>}
         {type === 2 ? (

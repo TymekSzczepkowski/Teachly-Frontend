@@ -26,10 +26,10 @@ function TabPanels({ windowReload }) {
   return (
     <Card sx={{ mb: 4 }}>
       <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", display: "flex", justifyContent: "center", width: "100%" }}>
           <Tabs allowScrollButtonsMobile variant='scrollable' scrollButtons value={type} onChange={handleChange}>
             <Tab label='Regularne dni dostępności' />
-            <Tab label='Customowe dni dostępności' />
+            <Tab label='Nieregularne dni dostępności' />
             <Tab label='Dni wolne' />
           </Tabs>
         </Box>
