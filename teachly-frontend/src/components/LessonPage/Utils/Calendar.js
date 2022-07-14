@@ -9,8 +9,8 @@ import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import plLocale from "date-fns/locale/pl";
 import SchoolIcon from "@mui/icons-material/School";
-import authContext from "../../context/authContext";
-import useAuth from "../../hooks/useAuth";
+import authContext from "../../../context/authContext";
+import useAuth from "../../../hooks/useAuth";
 
 function Calendar({ highlightedDays, setHighlightedDays, date, setDate, displayedDate, setDisplayedDate, daysWithFreeHours, setDaysWithFreeHours, setDateWithFreeHours }) {
   const [auth, setAuth] = useAuth();
@@ -22,7 +22,6 @@ function Calendar({ highlightedDays, setHighlightedDays, date, setDate, displaye
     setHighlightedDays([]);
     setDaysWithFreeHours([]);
   };
-
   const fetchHighlightedDays = () => {
     axios
       .get(process.env.REACT_APP_API_URL + `lessons/general-working-hours/${userDetails.id}/list/?date=${requestDate}`, {

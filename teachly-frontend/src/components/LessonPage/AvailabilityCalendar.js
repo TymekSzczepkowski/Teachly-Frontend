@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import moment from "moment";
 import "moment/locale/pl";
 import { Link } from "react-router-dom";
-import Calendar from "../Utils/Calendar";
+import Calendar from "./Utils/Calendar";
 import { Card, Grid, Box, Typography, List, ListItemAvatar, ListItemText, ListItem, Avatar, Divider, Button, ListItemButton } from "@mui/material/";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LoginIcon from "@mui/icons-material/Login";
@@ -18,7 +18,6 @@ function AvailabilityCalendar() {
   const [daysWithFreeHours, setDaysWithFreeHours] = useState([]);
   const [dateWithFreeHours, setDateWithFreeHours] = useState();
   const [highlightedDays, setHighlightedDays] = useState([]);
-
   return (
     <Card sx={{ mb: 4 }}>
       <Grid container>

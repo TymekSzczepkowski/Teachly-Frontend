@@ -1,27 +1,27 @@
-import EditHours from "../EditHours";
-import DeleteHours from "../DeleteHours";
-import AddHours from "../AddHours";
+import EditHours from "../shit/EditHours";
+import DeleteHours from "../shit/DeleteHours";
+import AddHours from "../shit/AddHours";
 import { Dialog } from "@mui/material/";
-function DialogComponent({ open, setOpen, type, date, displayedDate, windowReload }) {
+function DialogComponent({ selectedDate, selectedDateValues, hourID, type, open, setOpen, action, date, displayedDate, windowReload, weekDays }) {
   const handleClose = () => {
     setOpen(false);
   };
-  const getContent = function (type) {
-    switch (type) {
-      case "edit":
-        return <EditHours date={date} open={open} setOpen={setOpen} windowReload={windowReload} displayedDate={displayedDate} />;
-      case "delete":
-        return <DeleteHours displayedDate={displayedDate} date={date} open={open} setOpen={setOpen} windowReload={windowReload} />;
-      case "add":
-        return <AddHours displayedDate={displayedDate} date={date} open={open} setOpen={setOpen} windowReload={windowReload} />;
 
+  const getContent = function (action) {
+    switch (action) {
+      case "edit":
+        return <EditHours selectedDate={selectedDate} selectedDateValues={selectedDateValues} date={date} type={type} open={open} setOpen={setOpen} windowReload={windowReload} displayedDate={displayedDate} />;
+      case "delete":
+        return <DeleteHours hourID={hourID} type={type} displayedDate={displayedDate} date={date} open={open} setOpen={setOpen} windowReload={windowReload} />;
+      case "add":
+        return <AddHours weekDays={weekDays} hourID={hourID} type={type} displayedDate={displayedDate} date={date} open={open} setOpen={setOpen} windowReload={windowReload} />;
       default:
         return "error";
     }
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      {getContent(type)}
+      {getContent(action)}
     </Dialog>
   );
 }

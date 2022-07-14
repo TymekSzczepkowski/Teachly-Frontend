@@ -7,8 +7,8 @@ import AccountDetails from "./../../components/MyAccount/AccountDetails";
 import LessonHeading from "../../components/MyAccount/Lessons/LessonHeading";
 import LessonDetails from "../../components/MyAccount/Lessons/LessonDetails";
 import AddLesson from "../../components/MyAccount/Lessons/AddLesson";
-import Scheduler from "../../components/MyAccount/Scheduler/Scheduler";
-import { Accordion, Container, Grid, Button } from "@mui/material/";
+import TabPanels from "../../components/MyAccount/Scheduler/TabPanels";
+import { Accordion, Container, Grid, Button, Typography } from "@mui/material/";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Fade from "react-reveal/Fade";
 
@@ -75,7 +75,13 @@ function MyAccount({ setLoading }) {
             <AccountDetails />
           </Grid>
           <Grid item xs={12} md={8} lg={9}>
-            <Scheduler windowReload={windowReload} />
+            {/* <Typography variant='h5' sx={{ mb: 3, fontWeight: 450, ml: 1, color: "#303030" }}>
+              Godziny dostępności
+            </Typography> */}
+            <TabPanels windowReload={windowReload} />
+            {/* <Typography variant='h5' sx={{ mb: 3, fontWeight: 450, ml: 1, color: "#303030" }}>
+              Twoje ogłoszenia
+            </Typography> */}
             {userDetails.type === "Teacher" &&
               offers !== undefined &&
               offers.map((offer) => (
